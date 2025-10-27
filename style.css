@@ -1,0 +1,59 @@
+body {
+    font-family: sans-serif;
+}
+
+#log-view {
+    padding: 10px 100px 10px 10px;
+    background: #fafafa;
+}
+
+.msg-controls {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: -80px;
+    height: 100%;
+}
+
+.msg-controls button {
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+#toolbar,
+#final-toolbar,
+#css-tools {
+    margin-top: 10px;
+}
+
+#toolbar button,
+#final-toolbar button,
+#css-tools button {
+    margin-right: 10px;
+}
+
+textarea.inline-editor {
+    width: 100%;
+    height: 80px;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.inline-editor {
+    width: 100%;
+    height: 60px;
+}
+
+.message-placeholder {
+    height: 40px;
+    /* 메시지 높이에 맞춰 조정 */
+    background-color: #f0f0f0;
+    border: 2px dashed #ccc;
+    margin-bottom: 5px;
+}
+
+.move-handle {
+    width: 90px;
+    height: 100%;
+    cursor: move;
+}

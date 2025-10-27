@@ -1,61 +1,28 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
-  <title>HTML + CSS 미리보기 편집기</title>
+  <title>연갈피지: 롤20 로그 편집기</title>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/ui/1.13.3/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="Roll20_style.css">
-  <style>
-    body {
-      font-family: sans-serif;
-    }
-    #log-view {
-      border: 1px solid #aaa;
-      padding: 10px 100px 10px 10px;
-      margin-top: 10px;
-      min-height: 150px;
-      background: #fafafa;
-    }
-    .msg-controls {
-      position: absolute;
-      top: 4px;
-      right: -80px;
-    }
-    .msg-controls button {
-      margin-left: 5px;
-      font-size: 12px;
-    }
-    #toolbar, #final-toolbar, #css-tools {
-      margin-top: 10px;
-    }
-    #toolbar button, #final-toolbar button, #css-tools button {
-      margin-right: 10px;
-    }
-    textarea.inline-editor {
-      width: 100%;
-      height: 80px;
-      box-sizing: border-box;
-      font-family: inherit;
-    }
-.inline-editor { width: 100%; height: 60px; }
-
-.message-placeholder {
-  height: 40px; /* 메시지 높이에 맞춰 조정 */
-  background-color: #f0f0f0;
-  border: 2px dashed #ccc;
-  margin-bottom: 5px;
-}
-
-.move-handle {
-  cursor: move;
-}
-  </style>
+  <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./Roll20_style.css">
 </head>
+
 <body>
-  <h2>파일 업로드</h2>
+  <h4>코드 정리하기 귀찮다 이상한거 올리면 터지니까 ㄴㄴ</h4>
+  <nav>
+    <div id="toolbar" style="display:none;">
+      <button id="undo-btn">⟲ 실행취소</button>
+      <button id="redo-btn">⟳ 다시실행</button>
+    </div>
+    <div id="final-toolbar" style="display:none;">
+      <button id="copy-html">📋 내용 복사</button>
+      <button id="download-html">💾 HTML 파일로 저장</button>
+    </div>
+  </nav>
 
   <div id="upload-section">
     <label>HTML 파일:
@@ -63,15 +30,14 @@
     </label>
     <br><br>
 
-    <label>CSS 파일(여러개 가능):
+    <label>CSS 파일:
       <input type="file" accept="text/css" id="log-css" multiple>
     </label>
 
-    <!-- ✅ CSS 초기화 버튼을 업로드 영역 옆에 배치 -->
     <div id="css-tools" style="display:none;">
-  <button id="reset-css">🧹 CSS 초기화</button>
-  <ul id="css-list"></ul> <!-- 업로드된 CSS 파일명 표시 -->
-</div>
+      <button id="reset-css">CSS 초기화</button>
+      <ul id="css-list"></ul>
+    </div>
 
     <div id="edit-section">
       <h3>HTML 내용</h3>
@@ -81,207 +47,8 @@
     </div>
   </div>
 
-  <div id="toolbar" style="display:none;">
-    <button id="undo-btn">⟲ 실행취소</button>
-    <button id="redo-btn">⟳ 다시실행</button>
-  </div>
-
-  <div id="final-toolbar" style="display:none;">
-    <button id="copy-html">📋 내용 복사</button>
-    <button id="download-html">💾 HTML 파일로 저장</button>
-  </div>
-
   <div id="log-view"></div>
-
-  <script>
-    let undoStack = [];
-    let redoStack = [];
-
-    // HTML 엔티티 변환
-function encodeHTML(str){return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
-function decodeHTML(str){const t=document.createElement('textarea'); t.innerHTML=str; return t.value;}
-
-    // 🔹 상태 저장
-    function saveState() {
-      undoStack.push($('#log-view').html());
-      if (undoStack.length > 30) undoStack.shift();
-      redoStack = [];
-    }
-
-    // 🔹 상태 복원
-    function restoreState(html) {
-      $('#log-view').html(html);
-      attachControls();
-    }
-
-    // 🔹 Undo / Redo
-    function undo() {
-      if (undoStack.length === 0) return;
-      redoStack.push($('#log-view').html());
-      const prev = undoStack.pop();
-      restoreState(prev);
-    }
-    function redo() {
-      if (redoStack.length === 0) return;
-      undoStack.push($('#log-view').html());
-      const next = redoStack.pop();
-      restoreState(next);
-    }
-
-    // 🔹 단축키
-    $(document).on('keydown', function(e) {
-      if (e.ctrlKey && e.key === 'z') { e.preventDefault(); undo(); }
-      else if (e.ctrlKey && (e.key === 'y' || (e.shiftKey && e.key === 'Z'))) { e.preventDefault(); redo(); }
-    });
-
-    // 🔹 HTML 파일 로드
-    $('#log-html').on('change', function(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        $('#log-text').val(e.target.result);
-      };
-      reader.readAsText(file, 'utf-8');
-    });
-
-    // 🔹 CSS 파일 여러 개 (누적 적용)
-    $('#log-css').on('change', function(event) {
-  const files = Array.from(event.target.files);
-  if (files.length > 0) $('#css-tools').show();
-
-  files.forEach(file => {
-    if (!file.name.endsWith('.css')) return;
-
-    // 파일명 목록 표시
-    $('#css-list').append(`<li>${file.name}</li>`);
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const cssText = e.target.result;
-      const styleTag = $('<style data-uploaded="true"></style>').text(cssText);
-      $('head').append(styleTag);
-    };
-    reader.readAsText(file, 'utf-8');
-  });
-});
-
-    // 🔹 CSS 초기화
-    $('#reset-css').on('click', function() {
-        if (confirm('모든 업로드된 CSS를 제거하시겠습니까?')) {
-            $('style[data-uploaded="true"]').remove();
-            $('#css-list').empty(); // 목록 비우기
-            $('#css-tools').hide();
-        }
-    });
-
-    // 🔹 HTML 적용하기
-    $('#show-html').on('click', function() {
-      const htmlCode = $('#log-text').val();
-      $('#log-view').html(htmlCode);
-
-      // 업로드 영역 전체 숨기기
-      $('#upload-section').hide();
-      $('#toolbar').show();
-      $('#final-toolbar').show();
-
-      compress();
-      attachControls();
-      saveState();
-
-      // 🔹 여기가 드래그 순서 변경 적용 코드
-  $(function() {
-  $("#log-view").sortable({
-    items: ".message",   // 드래그로 순서 변경 가능한 요소 지정
-    handle: ".move-handle",
-    cursor: "move",      // 마우스 커서 모양 변경
-    placeholder: "message-placeholder", // 드래그 중 표시되는 자리
-    axis: "y",            // 수직으로만 이동 가능
-    stop: saveState // 드래그 후 순서 변경 기록
-  });
-});
-
-      // 페이지 이탈 경고
-      window.onbeforeunload = function() {
-        return "변경 내용이 사라질 수 있습니다. 페이지를 나가시겠습니까?";
-      };
-    });
-
-    // 🔹 .message 컨트롤 추가
-    function attachControls() {
-      $('#log-view .message').each(function() {
-        const $msg = $(this);
-        if ($msg.find('.msg-controls').length === 0) {
-          const controls = $(`
-            <div class="msg-controls">
-              <span class="move-handle">↕</span>
-              <button class="edit-btn">편집</button>
-              <button class="delete-btn">삭제</button>
-            </div>
-          `);
-          $msg.append(controls);
-        }
-      });
-    }
-
-    // 압축
-    function compress() {
-      $('#log-view .message').removeAttr('data-messageid')
-      $('#log-view .message').remove('.flyout')
-    }
-
-    // 🔹 편집 (div 내부 textarea)
-    $(document).on('click', '.edit-btn', function() {
-      const $msg = $(this).closest('.message');
-      const $controls = $msg.find('.msg-controls');
-      const currentHTML = $msg.clone().children('.msg-controls').remove().end().html().trim();
-
-      if ($msg.find('textarea.inline-editor').length > 0) return;
-      saveState();
-
-      const textarea = $(`<textarea class="inline-editor">${currentHTML}</textarea>`);
-      $msg.html(textarea).append($controls);
-
-      textarea.focus();
-      textarea.on('blur', function() {
-        const newContent = textarea.val();
-        $msg.html(newContent).append($controls);
-        attachControls();
-      });
-    });
-
-    // 🔹 삭제
-    $(document).on('click', '.delete-btn', function() {
-      if (confirm('이 메시지를 삭제하시겠습니까?')) {
-        saveState();
-        $(this).closest('.message').remove();
-      }
-    });
-
-    // 🔹 Undo/Redo 버튼
-    $('#undo-btn').on('click', undo);
-    $('#redo-btn').on('click', redo);
-
-    // 🔹 복사하기 버튼
-    $('#copy-html').on('click', function() {
-    // .msg-controls 제거 후 HTML 추출
-    const htmlContent = $('#log-view').clone().find('.msg-controls').remove().end().html();
-    navigator.clipboard.writeText(htmlContent)
-        .then(() => alert('HTML 내용이 복사되었습니다.'))
-        .catch(() => alert('복사 실패!'));
-    });
-
-    // 🔹 HTML 다운로드 버튼
-    $('#download-html').on('click', function() {
-    const htmlContent = $('#log-view').clone().find('.msg-controls').remove().end().html();
-    const blob = new Blob([htmlContent], { type: "text/html" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'edited.html';
-    a.click();
-    URL.revokeObjectURL(url);
-    });
-  </script>
+  <script src="./script.js"></script>
 </body>
+
 </html>
