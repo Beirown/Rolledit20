@@ -180,6 +180,7 @@ $('#show-html').on('click', async function () {
     updateLoadingProgress(33, "코드 압축 중...");
     await sleep(30);
     compress();
+    saveState();
 
     updateLoadingProgress(66, "편집 기능 로딩 중...");
     await attachControlsAsync();
