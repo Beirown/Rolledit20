@@ -194,7 +194,7 @@ $('#show-html').on('click', async function () {
 
     $('#section-edit').show();
     $('.tool-btn').show();
-    updateLoadingProgress(100, "완료!");
+    updateLoadingProgress(100, "편집 준비 완료!");
     await sleep(300);
 
     $('.message a').each(function() { $(this).attr('target', '_blank'); });
