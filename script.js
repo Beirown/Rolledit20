@@ -167,6 +167,10 @@ $('#show-html').on('click', async function () {
         alert('롤20 형식의 HTML이 아닙니다.');
         return;
     }
+    if ($('#log-text').val().includes('class="no-edit"')) {
+        alert('편집할 로그를 입력해 주세요.');
+        return;
+    }
 
     showLoadingOverlay();
     updateLoadingProgress(0, "HTML 불러오는 중...");
