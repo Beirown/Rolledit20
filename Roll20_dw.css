@@ -1,0 +1,12 @@
+/* Roll20 - Dungeon World by Roll20 stylesheet */
+/* Authors: User Collaboration Team */
+
+.sheet-rolltemplate-move .inlinerollresult,.sheet-rolltemplate-move .inlinerollresult.fullfail, .sheet-rolltemplate-move .inlinerollresult.fullcrit,.sheet-rolltemplate-move .inlinerollresult.importantroll,.sheet-rolltemplate-dwgeneral .inlinerollresult,.sheet-rolltemplate-dwgeneral .inlinerollresult.fullfail,.sheet-rolltemplate-dwgeneral .inlinerollresult.fullcrit,.sheet-rolltemplate-dwgeneral .inlinerollresult.importantroll,.sheet-rolltemplate-spell .inlinerollresult,.sheet-rolltemplate-spell .inlinerollresult.fullfail,.sheet-rolltemplate-spell .inlinerollresult.fullcrit,.sheet-rolltemplate-spell .inlinerollresult.importantroll { background-color: transparent; border: none; font-size: 1.3em; }
+.sheet-rolltemplate-move .sheet-rt-container,.sheet-rolltemplate-spell .sheet-rt-container, .sheet-rolltemplate-dwgeneral .sheet-rt-container { background-color: rgb(35, 31, 32); border-radius: 2px; margin-left: -10px; display: flex; flex-direction: column; }
+.sheet-rolltemplate-move .sheet-rt-header, .sheet-rolltemplate-spell .sheet-rt-header,.sheet-rolltemplate-dwgeneral .sheet-rt-header { font-weight: bold; font-size: medium; padding: 6px 6px 0px 6px; color: white; }
+.sheet-rolltemplate-move .sheet-rt-header-minor,.sheet-rolltemplate-spell .sheet-rt-header-minor,.sheet-rolltemplate-dwgeneral .sheet-rt-header-minor { font-size: 90%; font-style: italic; }
+.sheet-rolltemplate-move .sheet-rt-content,.sheet-rolltemplate-spell .sheet-rt-content,.sheet-rolltemplate-dwgeneral .sheet-rt-content { background-color: white; margin: 5px; padding: 2px; display: flex; flex-direction: column; }
+.sheet-rolltemplate-move .sheet-rt-row,.sheet-rolltemplate-spell .sheet-rt-row,.sheet-rolltemplate-dwgeneral .sheet-rt-row { flex: 1 0 auto; display: flex; padding-top: 6px; padding-bottom: 2px; border-bottom: 1px solid black; }
+.sheet-rolltemplate-move .sheet-rt-label,.sheet-rolltemplate-spell .sheet-rt-label,.sheet-rolltemplate-dwgeneral .sheet-rt-label { font-weight: bold; font-size: 0.9em; display: block; flex: 1; padding-right: 4px; margin-right: 2px; text-align: right; }
+.sheet-rolltemplate-move .sheet-rt-value,.sheet-rolltemplate-spell .sheet-rt-value,.sheet-rolltemplate-dwgeneral .sheet-rt-value { display: block; font-size: 0.9em; flex: 3; text-align: left; }
+.sheet-rolltemplate-dwgeneral .sheet-rt-value { text-align: center; }

@@ -1,0 +1,116 @@
+/* Roll20 - Shinobi Gami & inSANe(~25/02/21) stylesheet */
+/* Authors: Sad */
+
+.sheet-rolltemplate-Ninpo,.sheet-rolltemplate-npc { font-family: sans-serif; }
+
+
+.sheet-rolltemplate-Ninpo a[href^="~"] { background-color: transparent; padding: 0px 0px 0px 0px; color: #182C4A; display: inline-block; border: none; text-align: left; font-family: sans-serif; font-size: 0.95em; line-height: 1em; text-transform: capitalize; white-space: pre; font-weight: bold; }
+.sheet-rolltemplate-Ninpo a:hover { color: #BE202E; }
+
+
+.sheet-rolltemplate-Ninpo .inlinerollresult,.sheet-rolltemplate-npc .inlinerollresult { background-color: transparent; border: none; padding: 0px 0px; font-weight: bold; cursor: help; font-size: 1.25em; padding: 2px; }
+.sheet-rolltemplate-Ninpo .inlinerollresult { color: #182C4A; }
+.sheet-rolltemplate-npc .inlinerollresult { color: #222; }
+
+.sheet-rolltemplate-Ninpo .sheet-resright .inlinerollresult,.sheet-rolltemplate-npc .sheet-bigres .inlinerollresult { font-size: 1.6em; line-height: 1.45em; }
+.sheet-rolltemplate-Ninpo .sheet-success,.sheet-rolltemplate-npc .sheet-success { color: #247305; }
+.sheet-rolltemplate-Ninpo .sheet-failure,.sheet-rolltemplate-npc .sheet-failure { color: #BE202E; }
+.sheet-rolltemplate-Ninpo .inlinerollresult.fullcrit,.sheet-rolltemplate-npc .inlinerollresult.fullcrit { border: none; color: #247305; }
+.sheet-rolltemplate-Ninpo .inlinerollresult.importantroll,.sheet-rolltemplate-npc .inlinerollresult.importantroll { border: none; color: #4A57ED; }
+.sheet-rolltemplate-Ninpo .inlinerollresult.fullfail,.sheet-rolltemplate-npc .inlinerollresult.fullfail { border: none; color: #BE202E; }
+
+
+.sheet-rolltemplate-Ninpo .sheet-flexatk,.sheet-rolltemplate-npc .sheet-flexatk { display: flex; justify-content: space-between; align-items: center; }
+.sheet-rolltemplate-Ninpo .sheet-flexatk { border-top: 1px dotted #182C4A; }
+.sheet-rolltemplate-npc .sheet-flexatk { border-top: 1px dotted #3C2517; }
+
+.sheet-rolltemplate-Ninpo .sheet-spacer,.sheet-rolltemplate-npc .sheet-spacer { flex-grow: 2; }
+.sheet-rolltemplate-Ninpo .sheet-flexdmg,.sheet-rolltemplate-npc .sheet-flexdmg { display: flex; align-items: center; }
+
+
+.sheet-rolltemplate-Ninpo div,.sheet-rolltemplate-Ninpo span,.sheet-rolltemplate-Ninpo img,.sheet-rolltemplate-npc div,.sheet-rolltemplate-npc span,.sheet-rolltemplate-npc img { box-sizing: border-box; }
+.sheet-rolltemplate-Ninpo div,.sheet-rolltemplate-npc div { margin: 0px; padding: 0px; }
+.sheet-rolltemplate-Ninpo img,.sheet-rolltemplate-npc img { margin: 0px; padding: 0px; }
+.sheet-rolltemplate-Ninpo .sheet-center,.sheet-rolltemplate-npc .sheet-center { text-align: center; }
+.sheet-rolltemplate-Ninpo .sheet-right,.sheet-rolltemplate-npc .sheet-right { text-align: right; }
+.sheet-rolltemplate-Ninpo .sheet-ital,.sheet-rolltemplate-npc .sheet-ital { font-style: italic; }
+.sheet-rolltemplate-Ninpo .sheet-inl,.sheet-rolltemplate-npc .sheet-inl { display: inline; }
+.sheet-rolltemplate-Ninpo .sheet-bold,.sheet-rolltemplate-npc .sheet-bold { font-weight: bold; }
+.sheet-rolltemplate-Ninpo .sheet-vtop,.sheet-rolltemplate-npc .sheet-vtop { vertical-align: top; }
+
+.sheet-rolltemplate-Ninpo .sheet-myrow,.sheet-rolltemplate-npc .sheet-myrow { padding: 0px 1px 0px 2px; }
+.sheet-rolltemplate-Ninpo .sheet-bordered .sheet-myrow:nth-child(odd) { background: linear-gradient(to left,white,#D8DBE6); }
+.sheet-rolltemplate-npc .sheet-bordered .sheet-myrow:nth-child(even) { background: linear-gradient(to left,#c3996b7a,white); }
+
+.sheet-rolltemplate-Ninpo div.sheet-charname { border-style: solid; border-width: 1px 1px 0px 1px; padding: 1px 1px 1px 2px; background-color: white; border-color: #182C4A; }
+.sheet-rolltemplate-npc div.sheet-charname { padding: 4px 0px 1px 0px; background-color: transparent; margin-left: -14px; text-shadow: 1px 1px #FDFDFD; font-size: 1em; }
+
+.sheet-rolltemplate-Ninpo div.sheet-notes,.sheet-rolltemplate-npc div.sheet-notes { max-height: 220px; overflow-y: auto; border-width: 1px; border-style: solid; margin-top: 2px; padding: 1px 1px 1px 2px; background-color: #DDD; border-color: #BBB; }
+.sheet-rolltemplate-Ninpo div.sheet-desc,.sheet-rolltemplate-npc div.sheet-desc { max-height: 220px; overflow-y: auto; border-width: 1px; border-style: solid; margin-top: 2px; padding: 1px 1px 1px 2px; }
+.sheet-rolltemplate-Ninpo div.sheet-desc { background-color: white; border-color: #182C4A; }
+.sheet-rolltemplate-npc div.sheet-desc { border-color: #3C2517; background-color: white; }
+
+.sheet-rolltemplate-Ninpo span.sheet-notes,.sheet-rolltemplate-npc span.sheet-notes { font-family: sans-serif; font-size: 0.9em; color: black; }
+
+.sheet-rolltemplate-Ninpo .sheet-lbl,.sheet-rolltemplate-npc .sheet-lbl { text-align: left; font-family: sans-serif; font-size: 0.95em; line-height: 1em; text-transform: capitalize; white-space: pre; }
+.sheet-rolltemplate-Ninpo .sheet-lbl { color: #182C4A; }
+.sheet-rolltemplate-npc .sheet-lbl { color: #3C2517; }
+
+.sheet-rolltemplate-Ninpo .sheet-bordered,.sheet-rolltemplate-npc .sheet-bordered { border-style: solid; border-width: 1px; text-align: left; vertical-align: top; position: relative; }
+
+
+.sheet-rolltemplate-Ninpo .sheet-icon,.sheet-rolltemplate-npc .sheet-icon { position: absolute; top: 6px; left: -40px; width: 40px; text-align: center; }
+.sheet-rolltemplate-Ninpo .sheet-icon::after,.sheet-rolltemplate-npc .sheet-icon::after { font-size: 1.55em; }
+.sheet-rolltemplate-Ninpo .sheet-icon::after { color: #182C4A; }
+.sheet-rolltemplate-npc .sheet-icon::after { color: #3C2517; }
+.sheet-rolltemplate-Ninpo .sheet-icon.sheet-initiative::after,.sheet-rolltemplate-npc .sheet-icon.sheet-initiative::after { font-family: "Pictos"; content: 'g'; font-size: 2em; }
+.sheet-rolltemplate-Ninpo .sheet-icon.sheet-skill::after,.sheet-rolltemplate-npc .sheet-icon.sheet-skill::after { font-family: "Pictos"; content: 'x'; }
+.sheet-rolltemplate-Ninpo .sheet-icon.sheet-hp::after,.sheet-rolltemplate-npc .sheet-icon.sheet-hp::after { font-family: "Pictos"; content: 'k'; }
+.sheet-rolltemplate-Ninpo .sheet-icon.sheet-save::after,.sheet-rolltemplate-npc .sheet-icon.sheet-save::after { font-family: "Pictos Custom"; content: 'e'; }
+.sheet-rolltemplate-Ninpo .sheet-icon.sheet-attackdamage::after,.sheet-rolltemplate-npc .sheet-icon.sheet-attackdamage::after { font-family: "Pictos Custom"; font-weight: bold; content: '⚔t'; }
+.sheet-rolltemplate-Ninpo .sheet-icon.sheet-attack::after,.sheet-rolltemplate-npc .sheet-icon.sheet-attack::after { font-family: "Pictos Custom"; font-weight: bold; content: '⚔'; }
+.sheet-rolltemplate-Ninpo .sheet-icon.sheet-damage::after,.sheet-rolltemplate-npc .sheet-icon.sheet-damage::after { font-family: "Pictos Custom"; font-weight: bold; content: 't'; }
+.sheet-rolltemplate-Ninpo .sheet-icon.sheet-ability::after,.sheet-rolltemplate-npc .sheet-icon.sheet-ability::after { font-family: "Pictos"; content: 'U'; }
+.sheet-rolltemplate-Ninpo .sheet-icon.sheet-feat::after,.sheet-rolltemplate-npc .sheet-icon.sheet-feat::after { font-family: "Pictos"; content: 'E'; }
+.sheet-rolltemplate-Ninpo .sheet-icon.sheet-spell::after,.sheet-rolltemplate-npc .sheet-icon.sheet-spell::after { font-family: "Pictos Three"; content: 'j'; font-size: 2em; }
+
+
+.sheet-rolltemplate-Ninpo .sheet-bordered { background-color: white; border-color: #182C4A; }
+.sheet-rolltemplate-npc .sheet-bordered { background-color: white; border-color: #3C2517; }
+
+.sheet-rolltemplate-Ninpo .sheet-symbol,.sheet-rolltemplate-npc .sheet-symbol { font-family: "Pictos Custom"; font-size: 1.3em; font-weight: bold; line-height: 1em; }
+.sheet-rolltemplate-Ninpo .sheet-smallname,.sheet-rolltemplate-npc .sheet-smallname { font-family: sans-serif; font-size: 0.9em; }
+.sheet-rolltemplate-Ninpo .sheet-smallname { color: #182C4A; }
+.sheet-rolltemplate-npc .sheet-smallname { color: #3C2517; }
+
+
+.sheet-rolltemplate-Ninpo img.sheet-brdright,.sheet-rolltemplate-Ninpo img.sheet-brdleft { display: inline-block; position: absolute; vertical-align: top; top: 0px; }
+.sheet-rolltemplate-Ninpo img.sheet-brdleft { left: 0px; }
+.sheet-rolltemplate-Ninpo img.sheet-brdright { right: 0px; }
+
+.sheet-rolltemplate-Ninpo .sheet-blacklabel,.sheet-rolltemplate-npc .sheet-blacklabel { display: inline-block; vertical-align: top; border: none; position: relative; font-size: 0.9em; }
+.sheet-rolltemplate-Ninpo .sheet-blacklabel { background-color: #182C4A; color: white; }
+.sheet-rolltemplate-npc .sheet-blacklabel { background-color: transparent; color: #3C2517; font-weight: bold; }
+
+.sheet-rolltemplate-Ninpo .sheet-blacklabel.sheet-top { height: 36px; width: 85%; max-width: 85%; vertical-align: top; padding-right: 27px; }
+.sheet-rolltemplate-npc .sheet-blacklabel.sheet-top { height: 36px; width: 78%; max-width: 78%; vertical-align: top; padding-right: 27px; }
+
+.sheet-rolltemplate-Ninpo .sheet-blacklabel.sheet-top img.sheet-brdright,.sheet-rolltemplate-npc .sheet-blacklabel.sheet-top img.sheet-brdright { width: 26px; height: 36px; }
+
+.sheet-rolltemplate-Ninpo span.sheet-med { font-weight: normal; font-size: 0.9em; }
+.sheet-rolltemplate-npc span.sheet-med { font-style: italic; color: #3C2517; font-size: 0.9em; font-weight: bold; }
+
+.sheet-rolltemplate-Ninpo .sheet-blacklabel.sheet-med,.sheet-rolltemplate-npc .sheet-blacklabel.sheet-med { height: 20px; vertical-align: top; white-space: nowrap; line-height: 1.5em; font-weight: bold; }
+.sheet-rolltemplate-Ninpo .sheet-blacklabel.sheet-med { min-width: 75px; padding: 0px 20px 0px 2px; }
+.sheet-rolltemplate-npc .sheet-blacklabel.sheet-med { min-width: 70px; padding: 0px 2px 0px 2px; background: linear-gradient(to right,#c3996b7a,white); }
+.sheet-rolltemplate-Ninpo .sheet-blacklabel.sheet-med.sheet-right { padding: 0px 2px 0px 20px; text-align: right; }
+.sheet-rolltemplate-npc .sheet-blacklabel.sheet-med.sheet-right { text-align: right; background: linear-gradient(to left,#c3996b7a,white); }
+.sheet-rolltemplate-Ninpo .sheet-blacklabel.sheet-med.sheet-yellow { color: #E6DD94; font-weight: normal; }
+.sheet-rolltemplate-npc .sheet-blacklabel.sheet-med.sheet-yellow { color: #501414; font-weight: normal; }
+
+.sheet-rolltemplate-Ninpo .sheet-blacklabel.sheet-med img.sheet-brdleft,.sheet-rolltemplate-npc .sheet-blacklabel.sheet-med img.sheet-brdleft,.sheet-rolltemplate-Ninpo .sheet-blacklabel.sheet-med img.sheet-brdright,.sheet-rolltemplate-npc .sheet-blacklabel.sheet-med img.sheet-brdright { height: 20px; }
+
+.sheet-rolltemplate-Ninpo .sheet-blacklabel .sheet-big,.sheet-rolltemplate-npc .sheet-big { display: inline; font-family: sans-serif; font-size: 1.0em; line-height: 1.0em; padding-left: 1px; font-weight: bold; text-transform: uppercase; }
+.sheet-rolltemplate-npc .sheet-big { color: #3C2517; }
+
+.sheet-rolltemplate-Ninpo .sheet-resright,.sheet-rolltemplate-npc .sheet-resright { display: inline; float: right; margin-right: 3px; clear: both;font-size: 1.3em;text-transform: uppercase;line-height: 1.0em;}

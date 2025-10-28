@@ -1,0 +1,29 @@
+/* Roll20 - AGON by Evil Hat Productions stylesheet */
+/* Authors: Jakob Oesinghaus, Miguel Peres, Tim Denee */
+
+@import url('https://imgsrv.roll20.net/?src=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DDella%2BRespira%26display%3Dswap%26family%3DLato');
+
+.sheet-rolltemplate-agon-hero .sheet-holder,.sheet-rolltemplate-agon-strife .sheet-holder { color: white; position: relative; font-size: 14px; line-height: 1.2; display: grid; user-select: none; cursor: default; overflow: hidden; font-variant-numeric: lining-nums; margin: 0 -5px -4px -45px; width: 299px; font-family: "Times New Roman", serif; align-content: start; align-items: end; box-sizing: border-box; padding: 51px 20px 29px 33px; background-repeat: no-repeat; background-color: white; background-size: 299px auto; }
+.sheet-rolltemplate-agon-hero div,.sheet-rolltemplate-agon-strife div { box-sizing: border-box; }
+
+.withoutavatars .sheet-rolltemplate-agon-hero,.charsheet .withoutavatars .sheet-rolltemplate-agon-strife { margin-left: -15px; }
+
+.sheet-rolltemplate-agon-hero .sheet-type,.sheet-rolltemplate-agon-strife .sheet-type { background-image: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FAgon%2520Official%2FAssets%2Frolltemplate%2Ftype_any.png'); width: 93px; height: 33px; background-size: 100% 100%; z-index: 1; }
+.sheet-rolltemplate-agon-hero .sheet-type.sheet-type-arts_oration,.sheet-rolltemplate-agon-strife .sheet-type.sheet-type-arts_oration { background-image: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FAgon%2520Official%2FAssets%2Frolltemplate%2Ftype_arts_oration.png'); }
+.sheet-rolltemplate-agon-hero .sheet-type.sheet-type-blood_valor,.sheet-rolltemplate-agon-strife .sheet-type.sheet-type-blood_valor { background-image: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FAgon%2520Official%2FAssets%2Frolltemplate%2Ftype_blood_valor.png'); }
+.sheet-rolltemplate-agon-hero .sheet-type.sheet-type-craft_reason,.sheet-rolltemplate-agon-strife .sheet-type.sheet-type-craft_reason { background-image: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FAgon%2520Official%2FAssets%2Frolltemplate%2Ftype_craft_reason.png'); }
+.sheet-rolltemplate-agon-hero .sheet-type.sheet-type-resolve_spirit,.sheet-rolltemplate-agon-strife .sheet-type.sheet-type-resolve_spirit { background-image: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FAgon%2520Official%2FAssets%2Frolltemplate%2Ftype_resolve_spirit.png'); }
+.sheet-rolltemplate-agon-hero .inlinerollresult,.sheet-rolltemplate-agon-strife .inlinerollresult { border: none !important; background-color: transparent; font-weight: bold; padding: 0 3px 0 0; font-size: 20px; }
+.sheet-rolltemplate-agon-hero .sheet-holder { padding: 51px 20px 29px 33px; }
+.sheet-rolltemplate-agon-hero .sheet-suffers ~ .sheet-holder { background-image: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FAgon%2520Official%2FAssets%2Frolltemplate%2Fbg_suffers.png'); grid-template: 33px 42px 42px 69px/ 120px 1fr; height: 260px; }
+.sheet-rolltemplate-agon-hero .sheet-prevails ~ .sheet-holder { background-image: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FAgon%2520Official%2FAssets%2Frolltemplate%2Fbg_prevails.png'); grid-template: 33px 42px 42px 200px/ 120px 1fr; height: 407px; }
+.sheet-rolltemplate-agon-hero .sheet-type { grid-column: span 2; }
+.sheet-rolltemplate-agon-hero .sheet-target,.sheet-rolltemplate-agon-hero .sheet-result,.sheet-rolltemplate-agon-hero .sheet-name,.sheet-rolltemplate-agon-hero .sheet-description { z-index: 1; }
+.sheet-rolltemplate-agon-hero .sheet-target { padding-left: 61px; }
+.sheet-rolltemplate-agon-hero .sheet-result { color: black; padding-left: 53px; }
+.sheet-rolltemplate-agon-hero .sheet-name { grid-column: span 2; text-transform: uppercase; line-height: 1.1; letter-spacing: 1px; padding-left: 4px; }
+.sheet-rolltemplate-agon-hero .sheet-description { grid-column: span 2; padding-right: 20px; }
+.sheet-rolltemplate-agon-strife .sheet-holder { background-image: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FAgon%2520Official%2FAssets%2Frolltemplate%2Fbg_strife.png'); padding: 84px 20px 29px 21px; grid-template: 39px 32px 47px / auto; height: 252px; }
+.sheet-rolltemplate-agon-strife .sheet-type { width: 124px; height: 44px; }
+.sheet-rolltemplate-agon-strife .sheet-roll { color: black; padding-left: 127px; }
+.sheet-rolltemplate-agon-strife .sheet-harm { text-transform: uppercase; font-size: 12px; font-family: "Della Respira", serif; }

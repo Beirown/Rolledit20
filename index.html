@@ -8,62 +8,308 @@
   <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.min.js"></script>
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="./style.css">
-  <link rel="stylesheet" href="./Roll20_style.css">
-  <link rel="stylesheet" href="./Roll20_agon.css">
-  <link rel="stylesheet" href="./Roll20_callofcthulhu.css">
-  <link rel="stylesheet" href="./Roll20_coc.css">
-  <link rel="stylesheet" href="./Roll20_Dx3Dice.css">
-  <link rel="stylesheet" href="./Roll20_dw.css">
-  <link rel="stylesheet" href="./Roll20_Ins.css">
-  <link rel="stylesheet" href="./Roll20_Magic.css">
-  <link rel="stylesheet" href="./Roll20_daegong.css">
-  <link rel="stylesheet" href="./Roll20_Ninpo.css">
-  <link rel="stylesheet" href="./Roll20_Strato.css">
+  <link rel="stylesheet" id="css-chat" href="./Roll20_style.css">
 </head>
 
 <body>
-  <h2>안 꾸몃고, 허접임</h2>
-  <p><a href="https://rollstory20.tistory.com/5" target="blank" rel="noopener">https://rollstory20.tistory.com/5</a> 이거 로그 수정 힘들다고 자빠지는 친구들 많아서 지피티 동원해다 퀵으로 비볐음 귀찮아서 아직 안 막은 구멍 많음</p>
-  <p>CSS는 일단 coc랑 인세인 기본으로 넣어놨음 딴거 하려면 CSS 올리셔야 됨</p>
-  <p>로그 길면 편집하기 누르고 좀 기다려야 될거임... 로딩도귗낳아서 안넣엇는데 할일하기싫으면 쪼금씩보강할듯</p>
-  <nav>
-    <div id="toolbar" style="display:none;">
-      <button id="undo-btn">⟲ 실행취소</button>
-      <button id="redo-btn">⟳ 다시실행</button>
+  <header>
+    <div role="toolbar">
+      <button id="undo-btn" class="tool-btn">⟲ 실행 취소</button>
+      <button id="redo-btn" class="tool-btn">⟳ 다시 실행</button>
     </div>
-    <div id="final-toolbar" style="display:none;">
-      <button id="copy-html">📋 내용 복사</button>
-      <button id="download-html">💾 HTML 파일로 저장</button>
+  </header>
+  <div id="grid">
+    <link rel="stylesheet" id="css-sheet">
+    <div id="control">
+      <div id="section-upload">
+        <h2>HTML 붙여넣기</h2>
+        <div id="what">❓ 무엇을 넣어야 하나요?</div>
+        <textarea id="log-text" rows="10" cols="60" placeholder="복사한 HTML을 붙여넣어 주세요.">
+  &lt;div class=&quot;textchatcontainer&quot; id=&quot;textchat&quot;&gt;
+  &lt;div class=&quot;content&quot;&gt;
+    &lt;div class=&quot;message general other&quot;&gt;
+      &lt;div class=&quot;spacer&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;avatar&quot; aria-hidden=&quot;true&quot;&gt;&lt;img
+          src=&quot;https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&amp;fname=https://blog.kakaocdn.net/dn/bP8Hb1/btsOdDI06AZ/dsejAW2UKPHjyBLAu4VzVK/img.png&quot;&gt;
+      &lt;/div&gt;
+      &lt;span class=&quot;tstamp&quot; aria-hidden=&quot;true&quot;&gt;9:00PM&lt;/span&gt;&lt;span class=&quot;by&quot;&gt;GM:&lt;/span&gt;폰트 라이선스 문제로 실제 롤20 화면과는
+      ~특수문자~ 숫자12345! English? 등이 약간 다르게 표시됩니다.
+    &lt;/div&gt;
+    &lt;div class=&quot;message general you&quot;&gt;
+      &lt;div class=&quot;spacer&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;avatar&quot; aria-hidden=&quot;true&quot;&gt;&lt;/div&gt;&lt;span class=&quot;tstamp&quot; aria-hidden=&quot;true&quot;&gt;9:00PM&lt;/span&gt;&lt;span
+        class=&quot;by&quot;&gt;나:&lt;/span&gt;본인 대사 메시지입니다. desc &amp; em 기울임을 제거해도 &lt;em&gt;자체적으로 넣은 기울임&lt;/em&gt;은 사라지지 않습니다.
+    &lt;/div&gt;
+    &lt;div class=&quot;message hidden-message other&quot; style=&quot;font-style: italic; position: relative;&quot;&gt;
+      &lt;div class=&quot;spacer&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;avatar&quot; aria-hidden=&quot;true&quot;&gt;&lt;img
+          src=&quot;https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&amp;fname=https://blog.kakaocdn.net/dn/VlMlV/btsOcFALRMz/kkrirRysDBdRn5MyzeKjRK/img.png&quot;&gt;
+      &lt;/div&gt;&lt;span class=&quot;tstamp&quot; aria-hidden=&quot;true&quot;&gt;9:00PM&lt;/span&gt;&lt;span class=&quot;by&quot;&gt;하비:&lt;/span&gt;This message has been
+      hidden.
+    &lt;/div&gt;
+    &lt;div class=&quot;message general other&quot;&gt;
+      &lt;div class=&quot;spacer&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;avatar&quot; aria-hidden=&quot;true&quot;&gt;&lt;img
+          src=&quot;https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&amp;fname=https://blog.kakaocdn.net/dn/xDTMa/btsOee23A3U/UnN5uh8x1jXA8FrmkahPOK/img.png&quot;&gt;
+      &lt;/div&gt;&lt;span class=&quot;tstamp&quot; aria-hidden=&quot;true&quot;&gt;9:00PM&lt;/span&gt;&lt;span class=&quot;by&quot;&gt;연갈:&lt;/span&gt;&lt;a href=&quot;#&quot;
+        onclick=&quot;event.preventDefault();&quot; style=&quot;color: #23527c; text-decoration: underline;&quot;&gt;링크 마우스오버&lt;/a&gt;
+      미리보기입니다. 실제 로그에서는 마우스오버 시에만 색상이 표현됩니다.
+    &lt;/div&gt;
+    &lt;div class=&quot;message desc&quot;&gt;
+      &lt;div class=&quot;spacer&quot;&gt;&lt;/div&gt; desc 메시지입니다.
+    &lt;/div&gt;
+    &lt;div class=&quot;message emote&quot;&gt;
+      &lt;div class=&quot;avatar&quot; aria-hidden=&quot;true&quot;&gt;&lt;img
+          src=&quot;https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&amp;fname=https://blog.kakaocdn.net/dn/euuUPi/btsOdg1AyZt/NwTmHlRA2t99VmMoCYggO1/img.png&quot;&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;spacer&quot;&gt;&lt;/div&gt;미노리 의 em 메시지입니다.
+    &lt;/div&gt;
+    &lt;div class=&quot;message private whisper&quot;&gt;
+      &lt;div class=&quot;spacer&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;avatar&quot; aria-hidden=&quot;true&quot;&gt;&lt;img
+          src=&quot;https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&amp;fname=https://blog.kakaocdn.net/dn/qn5sB/btsOeTxmzpY/9jfVxsIJxns9HeyQErDC8K/img.png&quot;&gt;
+      &lt;/div&gt;&lt;span class=&quot;tstamp&quot; aria-hidden=&quot;true&quot;&gt;9:00PM&lt;/span&gt;&lt;span class=&quot;by&quot;&gt;(From 하지메):&lt;/span&gt; 귓속말
+      메시지입니다.
+    &lt;/div&gt;
+    &lt;div class=&quot;message general other&quot;&gt;
+      &lt;div class=&quot;spacer&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;avatar&quot; aria-hidden=&quot;true&quot;&gt;&lt;img
+          src=&quot;https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&amp;fname=https://blog.kakaocdn.net/dn/xDTMa/btsOee23A3U/UnN5uh8x1jXA8FrmkahPOK/img.png&quot;&gt;
+      &lt;/div&gt;&lt;span class=&quot;tstamp&quot; aria-hidden=&quot;true&quot;&gt;9:00PM&lt;/span&gt;&lt;span class=&quot;by&quot;&gt;연갈:&lt;/span&gt;
+      &lt;span class=&quot;inlinerollresult showtip tipsy-n-right fullcrit&quot;
+        title=&quot;Rolling 1d3 = (&lt;span class=&quot;basicdiceroll critsuccess &quot;&gt;3&lt;/span&gt;)&quot;&gt;3&lt;/span&gt;
+      &lt;span class=&quot;inlinerollresult showtip tipsy-n-right normal&quot;
+        title=&quot;Rolling 1d3 = (&lt;span class=&quot;basicdiceroll&quot;&gt;2&lt;/span&gt;)&quot;&gt;2&lt;/span&gt;
+      &lt;span class=&quot;inlinerollresult showtip tipsy-n-right fullfail&quot;
+        title=&quot;Rolling 1d3 = (&lt;span class=&quot;basicdiceroll critfail &quot;&gt;1&lt;/span&gt;)&quot;&gt;1&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;message rollresult other player--O3UyDDyUplt2uUoatsw  discord-production&quot;&gt;
+      &lt;div class=&quot;formula&quot; style=&quot;margin-bottom: 3px;&quot;&gt;rolling 3d8&lt;/div&gt;
+      &lt;div class=&quot;clear&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;formula formattedformula&quot;&gt;
+        &lt;div class=&quot;dicegrouping&quot; data-groupindex=&quot;0&quot;&gt;(&lt;div data-origindex=&quot;0&quot; class=&quot;diceroll d8 critsuccess &quot;&gt;
+            &lt;div class=&quot;dicon&quot;&gt;
+              &lt;div class=&quot;didroll&quot;&gt;8&lt;/div&gt;
+              &lt;div class=&quot;backing&quot;&gt;&lt;/div&gt;
+            &lt;/div&gt;+
+          &lt;/div&gt;
+          &lt;div data-origindex=&quot;1&quot; class=&quot;diceroll d8 nocrit&quot;&gt;
+            &lt;div class=&quot;dicon&quot;&gt;
+              &lt;div class=&quot;didroll&quot;&gt;5&lt;/div&gt;
+              &lt;div class=&quot;backing&quot;&gt;&lt;/div&gt;
+            &lt;/div&gt;+
+          &lt;/div&gt;
+          &lt;div data-origindex=&quot;2&quot; class=&quot;diceroll d8 critfail &quot;&gt;
+            &lt;div class=&quot;dicon&quot;&gt;
+              &lt;div class=&quot;didroll&quot;&gt;1&lt;/div&gt;
+              &lt;div class=&quot;backing&quot;&gt;&lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;)
+        &lt;/div&gt;
+        &lt;div class=&quot;clear&quot;&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;clear&quot;&gt;&lt;/div&gt;&lt;strong&gt;=&lt;/strong&gt;
+      &lt;div class=&quot;rolled&quot;&gt;14&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;message general other&quot;&gt;
+      &lt;div class=&quot;sheet-rolltemplate-default&quot;&gt;
+        &lt;table&gt;
+          &lt;caption&gt;
+            Roll20 기본 템플릿
+          &lt;/caption&gt;
+
+          &lt;tbody&gt;
+            &lt;tr&gt;
+              &lt;td&gt;1번 제목&lt;/td&gt;
+              &lt;td&gt;1번 내용&lt;/td&gt;
+
+            &lt;/tr&gt;
+            &lt;tr&gt;
+              &lt;td&gt;2번 제목&lt;/td&gt;
+              &lt;td&gt;2번 내용&lt;/td&gt;
+
+            &lt;/tr&gt;
+            &lt;tr&gt;
+              &lt;td&gt;3번 제목&lt;/td&gt;
+              &lt;td&gt;3번 내용&lt;/td&gt;
+
+            &lt;/tr&gt;
+          &lt;/tbody&gt;
+        &lt;/table&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+        </textarea>
+        <br><p id="sample">샘플 데이터입니다. <span id="eraser">지우고 편집할 로그를 입력하세요!</span></p>
+        <br><label>저장된 HTML 파일 올리기
+          <input type="file" accept="text/html" id="log-html">
+        </label>
+        <br><br>
+
+        <label>시트 템플릿 선택
+          <select id="css-select">
+            <option value=" "></option>
+            <option value="Roll20_agon.css">AGON by Evil Hat Productions</option>
+            <option value="Roll20_callofcthulhu.css">Call of Cthulhu 7th Edition by Roll20</option>
+            <option value="Roll20_coc.css">Call of Cthulhu 7th Edition</option>
+            <option value="Roll20_Dx3Dice.css">Double Cross 3rd Edition by F.E.A.R</option>
+            <option value="Roll20_dw.css">Dungeon World by Roll20</option>
+            <option value="Roll20_Ins.css">inSANe (25/02/21~)</option>
+            <option value="Roll20_Magic.css">Magica Logia</option>
+            <option value="Roll20_daegong.css">Please Rule the North with me, Grand Duke! by Choi Mika</option>
+            <option value="Roll20_Ninpo.css">Shinobi Gami, inSANe (~25/02/21)</option>
+            <option value="Roll20_Strato.css">Strato Shout</option>
+          </select>
+        </label><br>
+
+        <label>커스텀 시트 CSS 올리기
+          <input type="file" accept="text/css" id="log-css">
+        </label><br><br>
+
+        <button id="show-html" class="change">편집 시작</button>
+      </div>
+      <div id="section-edit">
+        <button id="show-file" class="change">파일 바꾸기</button>
+        <h2>적용 중인 CSS</h2>
+        <p>Roll20_style.css (기본)</p>
+        <p><span id="css-view">적용 중인 템플릿 없음</span> <button id="css-download">추출된 CSS 다운로드</button></p>
+
+        <h2>일괄 바꾸기</h2>
+        <label>찾을 내용 <input type="text" id="findText"></label><br>
+        <label>바꿀 내용 <input type="text" id="replaceText"></label><br>
+        <button id="replaceBtn">바꿔!</button><br><br>
+
+        <button id="copy-html">현재 코드 복사</button>
+        <button id="download-html">HTML 파일로 저장</button><br>
+        <p>파일로 저장해 두면 나중에 이어서 편집할 수 있습니다.</p>
+        <p>해당 페이지에 <a href="https://rollstory20.tistory.com/8" target="_blank" rel="noopener">CSS가 삽입</a>되어 있는 경우에만
+          정상적으로 보이니 주의해 주세요!</p>
+      </div>
     </div>
-  </nav>
 
-  <div id="upload-section">
-    <label>HTML 파일:
-      <input type="file" accept="text/html" id="log-html">
-    </label>
-    <br><br>
+    <div id="log-view">
+      <div class="textchatcontainer" id="textchat">
+        <div class="content">
+          <div class="message general other">
+            <div class="spacer"></div>
+            <div class="avatar" aria-hidden="true"><img
+                src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbP8Hb1%2FbtsOdDI06AZ%2FdsejAW2UKPHjyBLAu4VzVK%2Fimg.png">
+            </div>
+            <span class="tstamp" aria-hidden="true">9:00PM</span><span class="by">GM:</span>폰트 라이선스 문제로 실제 롤20 화면과는
+            ~특수문자~ 숫자12345! English? 등이 약간 다르게 표시됩니다.
+          </div>
+          <div class="message general you">
+            <div class="spacer"></div>
+            <div class="avatar" aria-hidden="true"></div><span class="tstamp" aria-hidden="true">9:00PM</span><span
+              class="by">나:</span>본인 대사 메시지입니다. desc & em 기울임을 제거해도 <em>자체적으로 넣은 기울임</em>은 사라지지 않습니다.
+          </div>
+          <div class="message hidden-message other" style="font-style: italic; position: relative;">
+            <div class="spacer"></div>
+            <div class="avatar" aria-hidden="true"><img
+                src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FVlMlV%2FbtsOcFALRMz%2FkkrirRysDBdRn5MyzeKjRK%2Fimg.png">
+            </div><span class="tstamp" aria-hidden="true">9:00PM</span><span class="by">하비:</span>This message has been
+            hidden.
+          </div>
+          <div class="message general other">
+            <div class="spacer"></div>
+            <div class="avatar" aria-hidden="true"><img
+                src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FxDTMa%2FbtsOee23A3U%2FUnN5uh8x1jXA8FrmkahPOK%2Fimg.png">
+            </div><span class="tstamp" aria-hidden="true">9:00PM</span><span class="by">연갈:</span><a href="#"
+              onclick="event.preventDefault();" style="color: #23527c; text-decoration: underline;">링크 마우스오버</a>
+            미리보기입니다. 실제 로그에서는 마우스오버 시에만 색상이 표현됩니다.
+          </div>
+          <div class="message desc">
+            <div class="spacer"></div> desc 메시지입니다.
+          </div>
+          <div class="message emote">
+            <div class="avatar" aria-hidden="true"><img
+                src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FeuuUPi%2FbtsOdg1AyZt%2FNwTmHlRA2t99VmMoCYggO1%2Fimg.png">
+            </div>
+            <div class="spacer"></div>미노리 의 em 메시지입니다.
+          </div>
+          <div class="message private whisper">
+            <div class="spacer"></div>
+            <div class="avatar" aria-hidden="true"><img
+                src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fqn5sB%2FbtsOeTxmzpY%2F9jfVxsIJxns9HeyQErDC8K%2Fimg.png">
+            </div><span class="tstamp" aria-hidden="true">9:00PM</span><span class="by">(From 하지메):</span> 귓속말
+            메시지입니다.
+          </div>
+          <div class="message general other">
+            <div class="spacer"></div>
+            <div class="avatar" aria-hidden="true"><img
+                src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FxDTMa%2FbtsOee23A3U%2FUnN5uh8x1jXA8FrmkahPOK%2Fimg.png">
+            </div><span class="tstamp" aria-hidden="true">9:00PM</span><span class="by">연갈:</span>
+            <span class="inlinerollresult showtip tipsy-n-right fullcrit"
+              title="Rolling 1d3 = (&lt;span class=&quot;basicdiceroll critsuccess &quot;&gt;3&lt;/span&gt;)">3</span>
+            <span class="inlinerollresult showtip tipsy-n-right normal"
+              title="Rolling 1d3 = (&lt;span class=&quot;basicdiceroll&quot;&gt;2&lt;/span&gt;)">2</span>
+            <span class="inlinerollresult showtip tipsy-n-right fullfail"
+              title="Rolling 1d3 = (&lt;span class=&quot;basicdiceroll critfail &quot;&gt;1&lt;/span&gt;)">1</span>
+          </div>
+          <div class="message rollresult other player--O3UyDDyUplt2uUoatsw  discord-production">
+            <div class="formula" style="margin-bottom: 3px;">rolling 3d8</div>
+            <div class="clear"></div>
+            <div class="formula formattedformula">
+              <div class="dicegrouping" data-groupindex="0">(<div data-origindex="0" class="diceroll d8 critsuccess ">
+                  <div class="dicon">
+                    <div class="didroll">8</div>
+                    <div class="backing"></div>
+                  </div>+
+                </div>
+                <div data-origindex="1" class="diceroll d8 nocrit">
+                  <div class="dicon">
+                    <div class="didroll">5</div>
+                    <div class="backing"></div>
+                  </div>+
+                </div>
+                <div data-origindex="2" class="diceroll d8 critfail ">
+                  <div class="dicon">
+                    <div class="didroll">1</div>
+                    <div class="backing"></div>
+                  </div>
+                </div>)
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="clear"></div><strong>=</strong>
+            <div class="rolled">14</div>
+          </div>
+          <div class="message general other">
+            <div class="sheet-rolltemplate-default">
+              <table>
+                <caption>
+                  Roll20 기본 템플릿
+                </caption>
 
-    <label>CSS 파일:
-      <input type="file" accept="text/css" id="log-css" multiple>
-    </label>
+                <tbody>
+                  <tr>
+                    <td>1번 제목</td>
+                    <td>1번 내용</td>
 
-    <div id="css-tools" style="display:none;">
-      <button id="reset-css">CSS 초기화</button>
-      <ul id="css-list"></ul>
-    </div>
+                  </tr>
+                  <tr>
+                    <td>2번 제목</td>
+                    <td>2번 내용</td>
 
-    <div id="edit-section">
-      <h3>HTML 내용</h3>
-      <textarea id="log-text" rows="10" cols="60" placeholder="HTML 복사한 거 여기 붙여넣고 "></textarea>
-      <br>
-      <button id="show-html">로그 편집하기</button>
+                  </tr>
+                  <tr>
+                    <td>3번 제목</td>
+                    <td>3번 내용</td>
+
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
-  <div id="log-view"></div>
+  <div class="pop-up">
+    <img src="./chat.png">
+  </div>
   <script src="./script.js"></script>
 </body>
 
-
 </html>
-

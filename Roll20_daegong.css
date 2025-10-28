@@ -1,0 +1,219 @@
+/* Roll20 - Please Rule the North with me, Grand Duke! by Choi Mika stylesheet */
+/* Authors: HD (@HDTRPG) */
+
+@import url('https://imgsrv.roll20.net/?src=https%3A%2F%2Ffonts.googleapis.com%2Fcss2%3Ffamily%3DNoto%2BSerif%2BKR%3Awght%40200..900%26display%3Dswap');
+
+.sheet-rolltemplate-daegong-operate .inlinerollresult { line-height: 1; }
+.sheet-rolltemplate-daegong-operate .sheet-rt { position: relative; width: 280px; left: -20px; background: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fbgpattern.png') repeat -10px -10px/40px; background-color: #fff; padding: 6px 4px 0 4px; margin-bottom: 12px; top: 12px; border: 3px double #1E3C3B; border-radius: 2px; box-shadow: -2px -2px rgba(30, 60, 59, 0.2); }
+.sheet-rolltemplate-daegong-operate .sheet-rt-border { width: 100%; height: 13px; background: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fbg_rt.png') no-repeat top center; }
+.sheet-rolltemplate-daegong-operate .sheet-rt-title { display: flex; justify-content: space-between; align-items: center; font-family: "Noto Serif KR"; }
+.sheet-rolltemplate-daegong-operate .sheet-rt-title h3 { font-family: "Noto Serif KR"; color: #1E3C3B; font-weight: 800; }
+.sheet-rolltemplate-daegong-operate .sheet-rt-title h3.sheet-pre::after { content: " 선언"; }
+.sheet-rolltemplate-daegong-operate .sheet-rt-title h3.sheet-roll::after { content: " 굴림"; }
+.sheet-rolltemplate-daegong-operate .sheet-rt-title span { color: #57312B; background: #E8EAD2; padding: 2px 4px; border-radius: 2px; font-weight: 600; }
+.sheet-rolltemplate-daegong-operate .sheet-center { text-align: center; }
+.sheet-rolltemplate-daegong-operate .sheet-rt-box { padding: 10px 6px; }
+.sheet-rolltemplate-daegong-operate .sheet-rt-box:empty { display: none; }
+.sheet-rolltemplate-daegong-operate .sheet-rt-card { padding: 4px 6px; background: #1E3C3B; color: #fff; border-radius: 4px; margin: 4px 2px; font-size: 12px; }
+.sheet-rolltemplate-daegong-operate .sheet-rt-attr-area { margin-bottom: 10px; }
+.sheet-rolltemplate-daegong-operate .sheet-rt-attr-name { color: #E8EAD2; background: #1E3C3B; border-radius: 2px; padding: 2px 4px; font-family: "Noto Serif KR"; display: inline-block; }
+.sheet-rolltemplate-daegong-operate .sheet-label a { display: inline-block; font-weight: 600; border: 1px solid rgba(30, 60, 59, 0.2); color: #1E3C3B; background: rgba(232, 234, 210, 0.2); transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s; border-radius: 2px; }
+.sheet-rolltemplate-daegong-operate .sheet-label a:hover { color: #E8EAD2; background: #1E3C3B; border-color: #1E3C3B; }
+.sheet-rolltemplate-daegong-operate .sheet-rollresult .inlinerollresult { display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; width: 40px; height: 40px; background-color: #fff; background-image: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fdice-n.png'); background-size: cover; background-repeat: no-repeat; border: none; margin: 0 5px 5px 0; font-size: 20px; font-family: "Noto Serif KR"; font-weight: 800; transition: transform 0.3s ease-in-out; color: rgba(0, 0, 0, 0.6); }
+.sheet-rolltemplate-daegong-operate .sheet-rollresult .inlinerollresult.fullcrit,.sheet-rolltemplate-daegong-operate .sheet-rollresult .inlinerollresult[original-title*="5"],.sheet-rolltemplate-daegong-operate .sheet-rollresult .inlinerollresult[title*="5"] { color: #005a57; box-shadow: 0 0 4px #005a57; }
+.sheet-rolltemplate-daegong-operate .sheet-rollresult .inlinerollresult.fullfail { color: #940c0c; }
+.sheet-rolltemplate-daegong-operate .sheet-rollresult.sheet-pre .inlinerollresult { color: transparent; }
+.sheet-rolltemplate-daegong-operate .sheet-rollresult.sheet-pre .inlinerollresult::after { content: "?"; color: #1E3C3B; position: absolute; }
+.sheet-rolltemplate-daegong-operate .sheet-rollresult:hover .inlinerollresult.fullcrit,.sheet-rolltemplate-daegong-operate .sheet-rollresult:hover .inlinerollresult[original-title*="5"],.sheet-rolltemplate-daegong-operate .sheet-rollresult:hover .inlinerollresult[title*="5"] { transform: scale(1.1); }
+.sheet-rolltemplate-daegong-operate .sheet-rt-table { grid-template-columns: 100px 1fr; grid-auto-rows: 1fr; display: grid; gap: 4px; align-items: center; }
+.sheet-rolltemplate-daegong-operate .sheet-rt-table .inlinerollresult { background: transparent; border: none; }
+.sheet-rolltemplate-daegong-operate .sheet-rt-table > div { background: #1E3C3B; color: #E8EAD2; padding: 4px; text-align: center; border-top-left-radius: 10px; border-bottom-right-radius: 10px; grid-column-start: 1; }
+.sheet-rolltemplate-daegong-operate .sheet-rt-table > span { padding-left: 10px; font-weight: bolder; }
+.sheet-rolltemplate-daegong-operate .sheet-rt-table-full { grid-column-end: 3; transition: background 0.3s ease-in-out; border-top-left-radius: 0px !important; border-bottom-right-radius: 0px !important; border-top-right-radius: 10px; border-bottom-left-radius: 10px; position: relative; }
+.sheet-rolltemplate-daegong-operate .sheet-rt-table-full a { top: 0; left: 0; padding: 0; width: 100%; background: transparent; color: #E8EAD2; border: none; text-align: center; font-weight: 900; }
+.sheet-rolltemplate-daegong-operate .sheet-rt-table-full:hover { background: #57312B; }
+.sheet-rolltemplate-daegong-operate .sheet-isdaegong + span.inlinerollresult { background-image: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fdice-d.png') !important; position: relative; box-shadow: 0 0 4px #57312B; }
+.sheet-rolltemplate-daegong-operate .sheet-isdaegong + span.inlinerollresult::after { content: "대공님!"; position: absolute; left: 50%; bottom: calc(100% + 2px); width: 48px; z-index: 1; font-size: 12px; font-family: auto; background: #57312B; border-radius: 6px; padding: 2px 6px; color: #fff; transform: translateX(-50%); text-align: center; transition: all 0.3s ease-in-out; opacity: 0; }
+.sheet-rolltemplate-daegong-operate .sheet-isdaegong + span.inlinerollresult:hover::after { opacity: 1; }
+.sheet-rolltemplate-daegong-operate [class^=sheet-dicebox] { display: grid; grid-template-columns: 56px 1fr; align-items: start; justify-items: start; gap: 10px; }
+.sheet-rolltemplate-daegong-operate .sheet-dicebox-0 { display: none; }
+
+.sheet-rolltemplate-daegong-event .inlinerollresult { line-height: 1; }
+.sheet-rolltemplate-daegong-event .sheet-rt { position: relative; width: 280px; left: -20px; background: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fbgpattern.png') repeat -10px -10px/40px; background-color: #fff; padding: 6px 4px 0 4px; margin-bottom: 12px; top: 12px; border: 3px double #1E3C3B; border-radius: 2px; box-shadow: -2px -2px rgba(30, 60, 59, 0.2); }
+.sheet-rolltemplate-daegong-event .sheet-rt-border { width: 100%; height: 13px; background: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fbg_rt.png') no-repeat top center; }
+.sheet-rolltemplate-daegong-event .sheet-rt-title { display: flex; justify-content: space-between; align-items: center; font-family: "Noto Serif KR"; }
+.sheet-rolltemplate-daegong-event .sheet-rt-title h3 { font-family: "Noto Serif KR"; color: #1E3C3B; font-weight: 800; }
+.sheet-rolltemplate-daegong-event .sheet-rt-title h3.sheet-pre::after { content: " 선언"; }
+.sheet-rolltemplate-daegong-event .sheet-rt-title h3.sheet-roll::after { content: " 굴림"; }
+.sheet-rolltemplate-daegong-event .sheet-rt-title span { color: #57312B; background: #E8EAD2; padding: 2px 4px; border-radius: 2px; font-weight: 600; }
+.sheet-rolltemplate-daegong-event .sheet-center { text-align: center; }
+.sheet-rolltemplate-daegong-event .sheet-rt-box { padding: 10px 6px; }
+.sheet-rolltemplate-daegong-event .sheet-rt-box:empty { display: none; }
+.sheet-rolltemplate-daegong-event .sheet-rt-card { padding: 4px 6px; background: #1E3C3B; color: #fff; border-radius: 4px; margin: 4px 2px; font-size: 12px; }
+.sheet-rolltemplate-daegong-event .sheet-rt-attr-area { margin-bottom: 10px; }
+.sheet-rolltemplate-daegong-event .sheet-rt-attr-name { color: #E8EAD2; background: #1E3C3B; border-radius: 2px; padding: 2px 4px; font-family: "Noto Serif KR"; display: inline-block; }
+.sheet-rolltemplate-daegong-event .sheet-label a { display: inline-block; font-weight: 600; border: 1px solid rgba(30, 60, 59, 0.2); color: #1E3C3B; background: rgba(232, 234, 210, 0.2); transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s; border-radius: 2px; }
+.sheet-rolltemplate-daegong-event .sheet-label a:hover { color: #E8EAD2; background: #1E3C3B; border-color: #1E3C3B; }
+.sheet-rolltemplate-daegong-event .sheet-rollresult .inlinerollresult { display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; width: 40px; height: 40px; background-color: #fff; background-image: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fdice-n.png'); background-size: cover; background-repeat: no-repeat; border: none; margin: 0 5px 5px 0; font-size: 20px; font-family: "Noto Serif KR"; font-weight: 800; transition: transform 0.3s ease-in-out; color: rgba(0, 0, 0, 0.6); }
+.sheet-rolltemplate-daegong-event .sheet-rollresult .inlinerollresult.fullcrit,.sheet-rolltemplate-daegong-event .sheet-rollresult .inlinerollresult[original-title*="5"],.sheet-rolltemplate-daegong-event .sheet-rollresult .inlinerollresult[title*="5"] { color: #005a57; box-shadow: 0 0 4px #005a57; }
+.sheet-rolltemplate-daegong-event .sheet-rollresult .inlinerollresult.fullfail { color: #940c0c; }
+.sheet-rolltemplate-daegong-event .sheet-rollresult.sheet-pre .inlinerollresult { color: transparent; }
+.sheet-rolltemplate-daegong-event .sheet-rollresult.sheet-pre .inlinerollresult::after { content: "?"; color: #1E3C3B; position: absolute; }
+.sheet-rolltemplate-daegong-event .sheet-rollresult:hover .inlinerollresult.fullcrit,.sheet-rolltemplate-daegong-event .sheet-rollresult:hover .inlinerollresult[original-title*="5"],.sheet-rolltemplate-daegong-event .sheet-rollresult:hover .inlinerollresult[title*="5"] { transform: scale(1.1); }
+.sheet-rolltemplate-daegong-event .sheet-rt-table { grid-template-columns: 100px 1fr; grid-auto-rows: 1fr; display: grid; gap: 4px; align-items: center; }
+.sheet-rolltemplate-daegong-event .sheet-rt-table .inlinerollresult { background: transparent; border: none; }
+.sheet-rolltemplate-daegong-event .sheet-rt-table > div { background: #1E3C3B; color: #E8EAD2; padding: 4px; text-align: center; border-top-left-radius: 10px; border-bottom-right-radius: 10px; grid-column-start: 1; }
+.sheet-rolltemplate-daegong-event .sheet-rt-table > span { padding-left: 10px; font-weight: bolder; }
+.sheet-rolltemplate-daegong-event .sheet-rt-table-full { grid-column-end: 3; transition: background 0.3s ease-in-out; border-top-left-radius: 0px !important; border-bottom-right-radius: 0px !important; border-top-right-radius: 10px; border-bottom-left-radius: 10px; position: relative; }
+.sheet-rolltemplate-daegong-event .sheet-rt-table-full a { top: 0; left: 0; padding: 0; width: 100%; background: transparent; color: #E8EAD2; border: none; text-align: center; font-weight: 900; }
+.sheet-rolltemplate-daegong-event .sheet-rt-table-full:hover { background: #57312B; }
+.sheet-rolltemplate-daegong-event .sheet-countdaegong-1 :last-child { background-image: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fdice-d.png') !important; position: relative; box-shadow: 0 0 4px #57312B; }
+.sheet-rolltemplate-daegong-event .sheet-countdaegong-1 :last-child::after { content: "대공님!"; position: absolute; left: 50%; bottom: calc(100% + 2px); width: 48px; z-index: 1; font-size: 12px; font-family: auto; background: #57312B; border-radius: 6px; padding: 2px 6px; color: #fff; transform: translateX(-50%); text-align: center; transition: all 0.3s ease-in-out; opacity: 0; }
+.sheet-rolltemplate-daegong-event .sheet-countdaegong-1 :last-child:hover::after { opacity: 1; }
+.sheet-rolltemplate-daegong-event .sheet-countdaegong-2 :nth-last-child(2),.sheet-rolltemplate-daegong-event .sheet-countdaegong-2 :nth-last-child(2) ~ * { background-image: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fdice-d.png') !important; position: relative; box-shadow: 0 0 4px #57312B; }
+.sheet-rolltemplate-daegong-event .sheet-countdaegong-2 :nth-last-child(2)::after,.sheet-rolltemplate-daegong-event .sheet-countdaegong-2 :nth-last-child(2) ~ *::after { content: "대공님!"; position: absolute; left: 50%; bottom: calc(100% + 2px); width: 48px; z-index: 1; font-size: 12px; font-family: auto; background: #57312B; border-radius: 6px; padding: 2px 6px; color: #fff; transform: translateX(-50%); text-align: center; transition: all 0.3s ease-in-out; opacity: 0; }
+.sheet-rolltemplate-daegong-event .sheet-countdaegong-2 :nth-last-child(2):hover::after,.sheet-rolltemplate-daegong-event .sheet-countdaegong-2 :nth-last-child(2) ~ *:hover::after { opacity: 1; }
+.sheet-rolltemplate-daegong-event .sheet-countdaegong-3 :nth-last-child(3),.sheet-rolltemplate-daegong-event .sheet-countdaegong-3 :nth-last-child(3) ~ * { background-image: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fdice-d.png') !important; position: relative; box-shadow: 0 0 4px #57312B; }
+.sheet-rolltemplate-daegong-event .sheet-countdaegong-3 :nth-last-child(3)::after,.sheet-rolltemplate-daegong-event .sheet-countdaegong-3 :nth-last-child(3) ~ *::after { content: "대공님!"; position: absolute; left: 50%; bottom: calc(100% + 2px); width: 48px; z-index: 1; font-size: 12px; font-family: auto; background: #57312B; border-radius: 6px; padding: 2px 6px; color: #fff; transform: translateX(-50%); text-align: center; transition: all 0.3s ease-in-out; opacity: 0; }
+.sheet-rolltemplate-daegong-event .sheet-countdaegong-3 :nth-last-child(3):hover::after,.sheet-rolltemplate-daegong-event .sheet-countdaegong-3 :nth-last-child(3) ~ *:hover::after { opacity: 1; }
+.sheet-rolltemplate-daegong-event .sheet-countdaegong-4 :nth-last-child(4),.sheet-rolltemplate-daegong-event .sheet-countdaegong-4 :nth-last-child(4) ~ * { background-image: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fdice-d.png') !important; position: relative; box-shadow: 0 0 4px #57312B; }
+.sheet-rolltemplate-daegong-event .sheet-countdaegong-4 :nth-last-child(4)::after,.sheet-rolltemplate-daegong-event .sheet-countdaegong-4 :nth-last-child(4) ~ *::after { content: "대공님!"; position: absolute; left: 50%; bottom: calc(100% + 2px); width: 48px; z-index: 1; font-size: 12px; font-family: auto; background: #57312B; border-radius: 6px; padding: 2px 6px; color: #fff; transform: translateX(-50%); text-align: center; transition: all 0.3s ease-in-out; opacity: 0; }
+.sheet-rolltemplate-daegong-event .sheet-countdaegong-4 :nth-last-child(4):hover::after,.sheet-rolltemplate-daegong-event .sheet-countdaegong-4 :nth-last-child(4) ~ *:hover::after { opacity: 1; }
+.sheet-rolltemplate-daegong-event .sheet-countdaegong-5 :nth-last-child(5),.sheet-rolltemplate-daegong-event .sheet-countdaegong-5 :nth-last-child(5) ~ * { background-image: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fdice-d.png') !important; position: relative; box-shadow: 0 0 4px #57312B; }
+.sheet-rolltemplate-daegong-event .sheet-countdaegong-5 :nth-last-child(5)::after,.sheet-rolltemplate-daegong-event .sheet-countdaegong-5 :nth-last-child(5) ~ *::after { content: "대공님!"; position: absolute; left: 50%; bottom: calc(100% + 2px); width: 48px; z-index: 1; font-size: 12px; font-family: auto; background: #57312B; border-radius: 6px; padding: 2px 6px; color: #fff; transform: translateX(-50%); text-align: center; transition: all 0.3s ease-in-out; opacity: 0; }
+.sheet-rolltemplate-daegong-event .sheet-countdaegong-5 :nth-last-child(5):hover::after,.sheet-rolltemplate-daegong-event .sheet-countdaegong-5 :nth-last-child(5) ~ *:hover::after { opacity: 1; }
+.sheet-rolltemplate-daegong-event .sheet-countdaegong-6 :nth-last-child(6),.sheet-rolltemplate-daegong-event .sheet-countdaegong-6 :nth-last-child(6) ~ * { background-image: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fdice-d.png') !important; position: relative; box-shadow: 0 0 4px #57312B; }
+.sheet-rolltemplate-daegong-event .sheet-countdaegong-6 :nth-last-child(6)::after,.sheet-rolltemplate-daegong-event .sheet-countdaegong-6 :nth-last-child(6) ~ *::after { content: "대공님!"; position: absolute; left: 50%; bottom: calc(100% + 2px); width: 48px; z-index: 1; font-size: 12px; font-family: auto; background: #57312B; border-radius: 6px; padding: 2px 6px; color: #fff; transform: translateX(-50%); text-align: center; transition: all 0.3s ease-in-out; opacity: 0; }
+.sheet-rolltemplate-daegong-event .sheet-countdaegong-6 :nth-last-child(6):hover::after,.sheet-rolltemplate-daegong-event .sheet-countdaegong-6 :nth-last-child(6) ~ *:hover::after { opacity: 1; }
+.sheet-rolltemplate-daegong-event .sheet-countdaegong-7 :nth-last-child(7),.sheet-rolltemplate-daegong-event .sheet-countdaegong-7 :nth-last-child(7) ~ * { background-image: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fdice-d.png') !important; position: relative; box-shadow: 0 0 4px #57312B; }
+.sheet-rolltemplate-daegong-event .sheet-countdaegong-7 :nth-last-child(7)::after,.sheet-rolltemplate-daegong-event .sheet-countdaegong-7 :nth-last-child(7) ~ *::after { content: "대공님!"; position: absolute; left: 50%; bottom: calc(100% + 2px); width: 48px; z-index: 1; font-size: 12px; font-family: auto; background: #57312B; border-radius: 6px; padding: 2px 6px; color: #fff; transform: translateX(-50%); text-align: center; transition: all 0.3s ease-in-out; opacity: 0; }
+.sheet-rolltemplate-daegong-event .sheet-countdaegong-7 :nth-last-child(7):hover::after,.sheet-rolltemplate-daegong-event .sheet-countdaegong-7 :nth-last-child(7) ~ *:hover::after { opacity: 1; }
+.sheet-rolltemplate-daegong-event .sheet-countdaegong-8 :nth-last-child(8),.sheet-rolltemplate-daegong-event .sheet-countdaegong-8 :nth-last-child(8) ~ * { background-image: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fdice-d.png') !important; position: relative; box-shadow: 0 0 4px #57312B; }
+.sheet-rolltemplate-daegong-event .sheet-countdaegong-8 :nth-last-child(8)::after,.sheet-rolltemplate-daegong-event .sheet-countdaegong-8 :nth-last-child(8) ~ *::after { content: "대공님!"; position: absolute; left: 50%; bottom: calc(100% + 2px); width: 48px; z-index: 1; font-size: 12px; font-family: auto; background: #57312B; border-radius: 6px; padding: 2px 6px; color: #fff; transform: translateX(-50%); text-align: center; transition: all 0.3s ease-in-out; opacity: 0; }
+.sheet-rolltemplate-daegong-event .sheet-countdaegong-8 :nth-last-child(8):hover::after,.sheet-rolltemplate-daegong-event .sheet-countdaegong-8 :nth-last-child(8) ~ *:hover::after { opacity: 1; }
+
+.sheet-rolltemplate-daegong-relation { font-size: 12px; }
+.sheet-rolltemplate-daegong-relation .inlinerollresult { line-height: 1; }
+.sheet-rolltemplate-daegong-relation .sheet-rt { position: relative; width: 280px; left: -20px; background: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fbgpattern.png') repeat -10px -10px/40px; background-color: #fff; padding: 6px 4px 0 4px; margin-bottom: 12px; top: 12px; border: 3px double #1E3C3B; border-radius: 2px; box-shadow: -2px -2px rgba(30, 60, 59, 0.2); }
+.sheet-rolltemplate-daegong-relation .sheet-rt-border { width: 100%; height: 13px; background: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fbg_rt.png') no-repeat top center; }
+.sheet-rolltemplate-daegong-relation .sheet-rt-title { display: flex; justify-content: space-between; align-items: center; font-family: "Noto Serif KR"; }
+.sheet-rolltemplate-daegong-relation .sheet-rt-title h3 { font-family: "Noto Serif KR"; color: #1E3C3B; font-weight: 800; }
+.sheet-rolltemplate-daegong-relation .sheet-rt-title h3.sheet-pre::after { content: " 선언"; }
+.sheet-rolltemplate-daegong-relation .sheet-rt-title h3.sheet-roll::after { content: " 굴림"; }
+.sheet-rolltemplate-daegong-relation .sheet-rt-title span { color: #57312B; background: #E8EAD2; padding: 2px 4px; border-radius: 2px; font-weight: 600; }
+.sheet-rolltemplate-daegong-relation .sheet-center { text-align: center; }
+.sheet-rolltemplate-daegong-relation .sheet-rt-box { padding: 10px 6px; }
+.sheet-rolltemplate-daegong-relation .sheet-rt-box:empty { display: none; }
+.sheet-rolltemplate-daegong-relation .sheet-rt-card { padding: 4px 6px; background: #1E3C3B; color: #fff; border-radius: 4px; margin: 4px 2px; font-size: 12px; }
+.sheet-rolltemplate-daegong-relation .sheet-rt-attr-area { margin-bottom: 10px; }
+.sheet-rolltemplate-daegong-relation .sheet-rt-attr-name { color: #E8EAD2; background: #1E3C3B; border-radius: 2px; padding: 2px 4px; font-family: "Noto Serif KR"; display: inline-block; }
+.sheet-rolltemplate-daegong-relation .sheet-label a { display: inline-block; font-weight: 600; border: 1px solid rgba(30, 60, 59, 0.2); color: #1E3C3B; background: rgba(232, 234, 210, 0.2); transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s; border-radius: 2px; }
+.sheet-rolltemplate-daegong-relation .sheet-label a:hover { color: #E8EAD2; background: #1E3C3B; border-color: #1E3C3B; }
+.sheet-rolltemplate-daegong-relation h4 { text-align: center; font-size: 18px; line-height: 1.2; margin: 12px 0 8px 0; font-family: "Noto Serif KR"; font-weight: 700; }
+.sheet-rolltemplate-daegong-relation .sheet-rel-q::before,.sheet-rolltemplate-daegong-relation .sheet-rel-a::before { text-align: center; font-weight: 900; color: #1E3C3B; background: #E8EAD2; border-radius: 2px; padding: 0 4px 2px 4px; width: 12px; font-family: "Noto Serif KR"; display: inline-flex; align-items: center; justify-content: center; margin-right: 10px; }
+.sheet-rolltemplate-daegong-relation .sheet-rel-q::before { content: "Q"; }
+.sheet-rolltemplate-daegong-relation .sheet-rel-a::before { content: "A"; }
+.sheet-rolltemplate-daegong-relation .sheet-rel-a { margin-top: 6px; }
+
+.sheet-rolltemplate-daegong-crisis { font-size: 12px; }
+.sheet-rolltemplate-daegong-crisis .inlinerollresult { line-height: 1; }
+.sheet-rolltemplate-daegong-crisis .sheet-rt { position: relative; width: 280px; left: -20px; background: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fbgpattern.png') repeat -10px -10px/40px; background-color: #fff; padding: 6px 4px 0 4px; margin-bottom: 12px; top: 12px; border: 3px double #1E3C3B; border-radius: 2px; box-shadow: -2px -2px rgba(30, 60, 59, 0.2); }
+.sheet-rolltemplate-daegong-crisis .sheet-rt-border { width: 100%; height: 13px; background: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fbg_rt.png') no-repeat top center; }
+.sheet-rolltemplate-daegong-crisis .sheet-rt-title { display: flex; justify-content: space-between; align-items: center; font-family: "Noto Serif KR"; }
+.sheet-rolltemplate-daegong-crisis .sheet-rt-title h3 { font-family: "Noto Serif KR"; color: #1E3C3B; font-weight: 800; }
+.sheet-rolltemplate-daegong-crisis .sheet-rt-title h3.sheet-pre::after { content: " 선언"; }
+.sheet-rolltemplate-daegong-crisis .sheet-rt-title h3.sheet-roll::after { content: " 굴림"; }
+.sheet-rolltemplate-daegong-crisis .sheet-rt-title span { color: #57312B; background: #E8EAD2; padding: 2px 4px; border-radius: 2px; font-weight: 600; }
+.sheet-rolltemplate-daegong-crisis .sheet-rt-title span.sheet-rt-dif-easy::before { content:"쉬움"; }
+.sheet-rolltemplate-daegong-crisis .sheet-rt-title span.sheet-rt-dif-normal::before { content:"보통"; }
+.sheet-rolltemplate-daegong-crisis .sheet-rt-title span.sheet-rt-dif-hard::before { content:"어려움"; }
+.sheet-rolltemplate-daegong-crisis .sheet-center { text-align: center; }
+.sheet-rolltemplate-daegong-crisis .sheet-rt-box { padding: 10px 6px; }
+.sheet-rolltemplate-daegong-crisis .sheet-rt-box:empty { display: none; }
+.sheet-rolltemplate-daegong-crisis .sheet-rt-card { padding: 4px 6px; background: #1E3C3B; color: #fff; border-radius: 4px; margin: 4px 2px; font-size: 12px; }
+.sheet-rolltemplate-daegong-crisis .sheet-rt-attr-area { margin-bottom: 10px; }
+.sheet-rolltemplate-daegong-crisis .sheet-rt-attr-name { color: #E8EAD2; background: #1E3C3B; border-radius: 2px; padding: 2px 4px; font-family: "Noto Serif KR"; display: inline-block; }
+.sheet-rolltemplate-daegong-crisis .sheet-label a { display: inline-block; font-weight: 600; border: 1px solid rgba(30, 60, 59, 0.2); color: #1E3C3B; background: rgba(232, 234, 210, 0.2); transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s; border-radius: 2px; }
+.sheet-rolltemplate-daegong-crisis .sheet-label a:hover { color: #E8EAD2; background: #1E3C3B; border-color: #1E3C3B; }
+.sheet-rolltemplate-daegong-crisis h3 { flex-wrap: wrap; }
+.sheet-rolltemplate-daegong-crisis .sheet-rt-box { line-height: 1.4; }
+.sheet-rolltemplate-daegong-crisis h4 { text-align: center; margin: 12px 0 8px 0; font-family: "Noto Serif KR"; font-weight: 700; flex-basis: 100%; }
+
+.sheet-rolltemplate-daegong-dif .inlinerollresult { line-height: 1; }
+.sheet-rolltemplate-daegong-dif .sheet-rt { position: relative; width: 280px; left: -20px; background: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fbgpattern.png') repeat -10px -10px/40px; background-color: #fff; padding: 6px 4px 0 4px; margin-bottom: 12px; top: 12px; border: 3px double #1E3C3B; border-radius: 2px; box-shadow: -2px -2px rgba(30, 60, 59, 0.2); }
+.sheet-rolltemplate-daegong-dif .sheet-rt-border { width: 100%; height: 13px; background: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fbg_rt.png') no-repeat top center; }
+.sheet-rolltemplate-daegong-dif .sheet-rt-title { display: flex; justify-content: space-between; align-items: center; font-family: "Noto Serif KR"; }
+.sheet-rolltemplate-daegong-dif .sheet-rt-title h3 { font-family: "Noto Serif KR"; color: #1E3C3B; font-weight: 800; }
+.sheet-rolltemplate-daegong-dif .sheet-rt-title h3.sheet-pre::after { content: " 선언"; }
+.sheet-rolltemplate-daegong-dif .sheet-rt-title h3.sheet-roll::after { content: " 굴림"; }
+.sheet-rolltemplate-daegong-dif .sheet-rt-title span { color: #57312B; background: #E8EAD2; padding: 2px 4px; border-radius: 2px; font-weight: 600; }
+.sheet-rolltemplate-daegong-dif .sheet-center { text-align: center; }
+.sheet-rolltemplate-daegong-dif .sheet-rt-box { padding: 10px 6px; }
+.sheet-rolltemplate-daegong-dif .sheet-rt-box:empty { display: none; }
+.sheet-rolltemplate-daegong-dif .sheet-rt-card { padding: 4px 6px; background: #1E3C3B; color: #fff; border-radius: 4px; margin: 4px 2px; font-size: 12px; }
+.sheet-rolltemplate-daegong-dif .sheet-rt-attr-area { margin-bottom: 10px; }
+.sheet-rolltemplate-daegong-dif .sheet-rt-attr-name { color: #E8EAD2; background: #1E3C3B; border-radius: 2px; padding: 2px 4px; font-family: "Noto Serif KR"; display: inline-block; }
+.sheet-rolltemplate-daegong-dif .sheet-label a { display: inline-block; font-weight: 600; border: 1px solid rgba(30, 60, 59, 0.2); color: #1E3C3B; background: rgba(232, 234, 210, 0.2); transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s; border-radius: 2px; }
+.sheet-rolltemplate-daegong-dif .sheet-label a:hover { color: #E8EAD2; background: #1E3C3B; border-color: #1E3C3B; }
+.sheet-rolltemplate-daegong-dif .sheet-rt-table { grid-template-columns: 100px 1fr; grid-auto-rows: 1fr; display: grid; gap: 4px; align-items: center; }
+.sheet-rolltemplate-daegong-dif .sheet-rt-table .inlinerollresult { background: transparent; border: none; }
+.sheet-rolltemplate-daegong-dif .sheet-rt-table > div { background: #1E3C3B; color: #E8EAD2; padding: 4px; text-align: center; border-top-left-radius: 10px; border-bottom-right-radius: 10px; grid-column-start: 1; }
+.sheet-rolltemplate-daegong-dif .sheet-rt-table > span { padding-left: 10px; font-weight: bolder; }
+.sheet-rolltemplate-daegong-dif .sheet-rt-table-full { grid-column-end: 3; transition: background 0.3s ease-in-out; border-top-left-radius: 0px !important; border-bottom-right-radius: 0px !important; border-top-right-radius: 10px; border-bottom-left-radius: 10px; position: relative; }
+.sheet-rolltemplate-daegong-dif .sheet-rt-table-full a { top: 0; left: 0; padding: 0; width: 100%; background: transparent; color: #E8EAD2; border: none; text-align: center; font-weight: 900; }
+.sheet-rolltemplate-daegong-dif .sheet-rt-table-full:hover { background: #57312B; }
+.sheet-rolltemplate-daegong-dif .sheet-rt-table { margin: 0 20px; }
+.sheet-rolltemplate-daegong-dif .sheet-rt-title { justify-content: center; }
+.sheet-rolltemplate-daegong-dif .sheet-rt-border { margin: 5px 0 15px 0; }
+.sheet-rolltemplate-daegong-dif .sheet-one-dicebox { text-align: center; }
+.sheet-rolltemplate-daegong-dif .sheet-one-dicebox .inlinerollresult { display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; width: 80px; height: 80px; background-color: #fff; background-image: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fdice-n-big.png'); background-size: cover; background-repeat: no-repeat; border: none; margin: 0 5px 5px 0; font-size: 32px; font-family: "Noto Serif KR"; font-weight: 800; transition: transform 0.3s ease-in-out; color: rgba(0, 0, 0, 0.6); }
+.sheet-rolltemplate-daegong-dif .sheet-rt-table { grid-template: 1fr 1fr/100px 1fr !important; }
+
+.sheet-rolltemplate-daegong-nim .inlinerollresult { line-height: 1; }
+.sheet-rolltemplate-daegong-nim .sheet-rt { position: relative; width: 280px; left: -20px; background: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fbgpattern.png') repeat -10px -10px/40px; background-color: #fff; padding: 6px 4px 0 4px; margin-bottom: 12px; top: 12px; border: 3px double #1E3C3B; border-radius: 2px; box-shadow: -2px -2px rgba(30, 60, 59, 0.2); }
+.sheet-rolltemplate-daegong-nim .sheet-rt-border { width: 100%; height: 13px; background: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fbg_rt.png') no-repeat top center; }
+.sheet-rolltemplate-daegong-nim .sheet-rt-title { display: flex; justify-content: space-between; align-items: center; font-family: "Noto Serif KR"; }
+.sheet-rolltemplate-daegong-nim .sheet-rt-title h3 { font-family: "Noto Serif KR"; color: #1E3C3B; font-weight: 800; }
+.sheet-rolltemplate-daegong-nim .sheet-rt-title h3.sheet-pre::after { content: " 선언"; }
+.sheet-rolltemplate-daegong-nim .sheet-rt-title h3.sheet-roll::after { content: " 굴림"; }
+.sheet-rolltemplate-daegong-nim .sheet-rt-title span { color: #57312B; background: #E8EAD2; padding: 2px 4px; border-radius: 2px; font-weight: 600; }
+.sheet-rolltemplate-daegong-nim .sheet-center { text-align: center; }
+.sheet-rolltemplate-daegong-nim .sheet-rt-box { padding: 10px 6px; }
+.sheet-rolltemplate-daegong-nim .sheet-rt-box:empty { display: none; }
+.sheet-rolltemplate-daegong-nim .sheet-rt-card { padding: 4px 6px; background: #1E3C3B; color: #fff; border-radius: 4px; margin: 4px 2px; font-size: 12px; }
+.sheet-rolltemplate-daegong-nim .sheet-rt-attr-area { margin-bottom: 10px; }
+.sheet-rolltemplate-daegong-nim .sheet-rt-attr-name { color: #E8EAD2; background: #1E3C3B; border-radius: 2px; padding: 2px 4px; font-family: "Noto Serif KR"; display: inline-block; }
+.sheet-rolltemplate-daegong-nim .sheet-label a { display: inline-block; font-weight: 600; border: 1px solid rgba(30, 60, 59, 0.2); color: #1E3C3B; background: rgba(232, 234, 210, 0.2); transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s; border-radius: 2px; }
+.sheet-rolltemplate-daegong-nim .sheet-label a:hover { color: #E8EAD2; background: #1E3C3B; border-color: #1E3C3B; }
+.sheet-rolltemplate-daegong-nim .sheet-rt-table { grid-template-columns: 100px 1fr; grid-auto-rows: 1fr; display: grid; gap: 4px; align-items: center; }
+.sheet-rolltemplate-daegong-nim .sheet-rt-table .inlinerollresult { background: transparent; border: none; }
+.sheet-rolltemplate-daegong-nim .sheet-rt-table > div { background: #1E3C3B; color: #E8EAD2; padding: 4px; text-align: center; border-top-left-radius: 10px; border-bottom-right-radius: 10px; grid-column-start: 1; }
+.sheet-rolltemplate-daegong-nim .sheet-rt-table > span { padding-left: 10px; font-weight: bolder; }
+.sheet-rolltemplate-daegong-nim .sheet-rt-table-full { grid-column-end: 3; transition: background 0.3s ease-in-out; border-top-left-radius: 0px !important; border-bottom-right-radius: 0px !important; border-top-right-radius: 10px; border-bottom-left-radius: 10px; position: relative; }
+.sheet-rolltemplate-daegong-nim .sheet-rt-table-full a { top: 0; left: 0; padding: 0; width: 100%; background: transparent; color: #E8EAD2; border: none; text-align: center; font-weight: 900; }
+.sheet-rolltemplate-daegong-nim .sheet-rt-table-full:hover { background: #57312B; }
+.sheet-rolltemplate-daegong-nim .sheet-rt-table { margin: 0 20px; }
+.sheet-rolltemplate-daegong-nim .sheet-rt-title { justify-content: center; }
+.sheet-rolltemplate-daegong-nim .sheet-rt-border { margin: 5px 0 15px 0; }
+.sheet-rolltemplate-daegong-nim .sheet-one-dicebox { text-align: center; }
+.sheet-rolltemplate-daegong-nim .sheet-one-dicebox .inlinerollresult { display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; width: 80px; height: 80px; background-color: #fff; background-image: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fdice-d-big.png'); background-size: cover; background-repeat: no-repeat; border: none; margin: 0 5px 5px 0; font-size: 32px; font-family: "Noto Serif KR"; font-weight: 800; transition: transform 0.3s ease-in-out; color: rgba(0, 0, 0, 0.6); }
+.sheet-rolltemplate-daegong-nim .inlinerollresult.fullcrit,.sheet-rolltemplate-daegong-nim .inlinerollresult[original-title*="5"],.sheet-rolltemplate-daegong-nim .inlinerollresult[title*="5"] { color: #005a57; box-shadow: 0 0 4px #005a57; }
+.sheet-rolltemplate-daegong-nim .inlinerollresult.fullfail { color: #940c0c; }
+.sheet-rolltemplate-daegong-nim:hover .inlinerollresult.fullcrit,.sheet-rolltemplate-daegong-nim:hover .inlinerollresult[original-title*="5"],.sheet-rolltemplate-daegong-nim:hover .inlinerollresult[title*="5"] { transform: scale(1.1); }
+
+.sheet-rolltemplate-daegong-say .inlinerollresult { line-height: 1; }
+.sheet-rolltemplate-daegong-say .sheet-rt { position: relative; width: 280px; left: -20px; background: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fbgpattern.png') repeat -10px -10px/40px; background-color: #fff; padding: 6px 4px 0 4px; margin-bottom: 12px; top: 12px; border: 3px double #1E3C3B; border-radius: 2px; box-shadow: -2px -2px rgba(30, 60, 59, 0.2); }
+.sheet-rolltemplate-daegong-say .sheet-rt-border { width: 100%; height: 13px; background: url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fraw.githubusercontent.com%2FRoll20%2Froll20-character-sheets%2Fmaster%2FPlease%2520Rule%2520the%2520North%2520with%2520me%2C%2520Grand%2520Duke!%2Fimg%2Fbg_rt.png') no-repeat top center; }
+.sheet-rolltemplate-daegong-say .sheet-rt-title { display: flex; justify-content: space-between; align-items: center; font-family: "Noto Serif KR"; }
+.sheet-rolltemplate-daegong-say .sheet-rt-title h3 { font-family: "Noto Serif KR"; color: #1E3C3B; font-weight: 800; }
+.sheet-rolltemplate-daegong-say .sheet-rt-title h3.sheet-pre::after { content: " 선언"; }
+.sheet-rolltemplate-daegong-say .sheet-rt-title h3.sheet-roll::after { content: " 굴림"; }
+.sheet-rolltemplate-daegong-say .sheet-rt-title span { color: #57312B; background: #E8EAD2; padding: 2px 4px; border-radius: 2px; font-weight: 600; }
+.sheet-rolltemplate-daegong-say .sheet-center { text-align: center; }
+.sheet-rolltemplate-daegong-say .sheet-rt-box { padding: 10px 6px; }
+.sheet-rolltemplate-daegong-say .sheet-rt-box:empty { display: none; }
+.sheet-rolltemplate-daegong-say .sheet-rt-card { padding: 4px 6px; background: #1E3C3B; color: #fff; border-radius: 4px; margin: 4px 2px; font-size: 12px; }
+.sheet-rolltemplate-daegong-say .sheet-rt-attr-area { margin-bottom: 10px; }
+.sheet-rolltemplate-daegong-say .sheet-rt-attr-name { color: #E8EAD2; background: #1E3C3B; border-radius: 2px; padding: 2px 4px; font-family: "Noto Serif KR"; display: inline-block; }
+.sheet-rolltemplate-daegong-say .sheet-label a { display: inline-block; font-weight: 600; border: 1px solid rgba(30, 60, 59, 0.2); color: #1E3C3B; background: rgba(232, 234, 210, 0.2); transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s; border-radius: 2px; }
+.sheet-rolltemplate-daegong-say .sheet-label a:hover { color: #E8EAD2; background: #1E3C3B; border-color: #1E3C3B; }

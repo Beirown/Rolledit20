@@ -1,0 +1,33 @@
+/* Roll20 - Double Cross 3rd Edition by F.E.A.R stylesheet */
+/* Authors: Tateck */
+
+.sheet-rolltemplate-Dx3Dice {color:#000; font-size:12px; font-weight:400; padding:10px; border:1px solid #000; border-top-width:3px; border-bottom-width:3px; border-radius:10px; line-height:1.4; text-align:center; background:url('https://imgsrv.roll20.net/?src=https%3A%2F%2Fi.imgur.com%2Fg0oXx2I.png') repeat-y 50% 0; background-size:100% auto;}
+.sheet-rolltemplate-Dx3Dice .inlinerollresult {display:inline !important; color:inherit; font-size:inherit !important; opacity:1 !important; padding:0 !important; background:transparent !important; border:none !important; vertical-align:baseline !important;}
+
+.sheet-rolltemplate-Dx3Dice .sheet-title,.sheet-rolltemplate-Dx3Dice .sheet-sub-title {margin:10px 0 20px; padding-bottom:10px;}
+.sheet-rolltemplate-Dx3Dice .sheet-title {font-size:18px; color:#bb1b21; font-weight:800; border-bottom:1px solid #999;}
+.sheet-rolltemplate-Dx3Dice .sheet-title span {font-size:11px; opacity:.6; display:block; color:#fff; padding-bottom:5px; font-weight:400;}
+.sheet-rolltemplate-Dx3Dice .sheet-sub-title {font-size:14px; font-weight:800; border-bottom:1px solid #999;}
+.sheet-rolltemplate-Dx3Dice .sheet-title + .sheet-sub-title {margin-top:-10px;}
+
+.sheet-rolltemplate-Dx3Dice .sheet-dicegroup {display:table; width:100%; table-layout:fixed; margin-bottom:10px; margin-top:-10px;}
+.sheet-rolltemplate-Dx3Dice .sheet-dicegroup > * {display:table-cell; vertical-align:middle; text-align:center; height:50px;}
+.sheet-rolltemplate-Dx3Dice .sheet-dicedetail {width:50%; text-align:left; word-break:keep-all; text-align:center;}
+.sheet-rolltemplate-Dx3Dice .sheet-dicedetail * {font-weight:400 !important; font-size:11px; color:#9e9e9e;}
+.sheet-rolltemplate-Dx3Dice .sheet-dicearea {font-size:30px; z-index:0;}
+
+.sheet-rolltemplate-Dx3Dice .sheet-mid-title {padding:10px; margin:15px -10px; background:rgba(0,0,0,.1);}
+.sheet-rolltemplate-Dx3Dice .sheet-mid-title strong:after {content:" | "; font-weight:400; margin:0 1em; opacity:.5;}
+
+.sheet-rolltemplate-Dx3Dice .sheet-info {display:grid; grid-template-columns:1fr 1fr; text-align:left; padding:0 10px; font-size:11px;}
+.sheet-rolltemplate-Dx3Dice .sheet-info p {margin:.3em 0;}
+.sheet-rolltemplate-Dx3Dice .sheet-info strong {display:inline-block; vertical-align:middle; background:rgba(0,0,0,.1); border-radius:3px; padding:0 .5em; margin-right:5px; min-width:3em; text-align:center; font-size:11px; font-weight:400;}
+.sheet-rolltemplate-Dx3Dice .sheet-info span {display:inline-block; vertical-align:middle; font-size:11px;}
+
+.sheet-rolltemplate-Dx3Dice .sheet-descript {display:block; position:relative; word-break:keep-all; margin:10px 0; padding:0 5px; color:#777;}
+
+.sheet-rolltemplate-Dx3Dice .sheet-tatus {display:block; position:relative; margin:15px -10px; padding:5px 20px; background:rgb(177 7 7 / 40%); text-align:center;}
+.sheet-rolltemplate-Dx3Dice .sheet-tatus span {display:block; font-size:11px; opacity:.5; padding-bottom:5px; word-break:keep-all;}
+.sheet-rolltemplate-Dx3Dice .sheet-tatus strong {display:block; font-size:14px;}
+.sheet-rolltemplate-Dx3Dice .sheet-tatus strong em {font-style:normal;}
+.sheet-rolltemplate-Dx3Dice .sheet-tatus .sheet-notice {padding-top:5px; color:#fff; opacity:1; font-size:12px; padding-bottom:0;}
