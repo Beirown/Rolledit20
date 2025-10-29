@@ -74,6 +74,11 @@ header {
     text-align: center;
     opacity: 0;
     transition: transform 0.3s ease, opacity 0.3s ease;
+    max-width: 100vw;
+}
+
+.pop-up img {
+    max-width: 90vw;
 }
 
 .pop-up.active {
