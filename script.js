@@ -67,19 +67,22 @@ $('#log-html').on('change', function (event) {
 });
 
 // 시트 템플릿 선택
-$('#css-select').on('change', function () {
-    const cssFile = $(this).val();
+document.getElementById('css-select').addEventListener('change', function () {
+    const cssFile = this.value;
     if (!cssFile) return;
-    if ($('#log-css').val()) {
+
+    const logCss = document.getElementById('log-css');
+    if (logCss.value) {
         if (confirm('업로드한 커스텀 시트 CSS가 사라집니다. 계속하시겠습니까?')) {
-            $('.css-download').hide();
-        } else return;
+            logCss.value = '';
+            document.querySelectorAll('.css-download').forEach(el => el.style.display = 'none');
+        } else { return; }
     }
 
-    $('#css-view').text(cssFile);
-    $('#css-sheet').attr('href', cssFile);
-    
-    styleTag = null;
+    document.getElementById('css-view').textContent = cssFile;
+    document.getElementById('css-sheet').setAttribute('href', cssFile);
+
+    let styleTag = null;
 
     fetch(`./${cssFile}`)
         .then(response => {
@@ -88,8 +91,9 @@ $('#css-select').on('change', function () {
         })
         .then(cssContent => {
             styleTag = `<style id="loaded-style">\n${cssContent}\n</style>`;
-        })
+        });
 });
+
 
 // 커스텀 시트 CSS 올리기
 $('#log-css').on('change', function (event) {
@@ -328,6 +332,16 @@ $(document).on('click', '.delete-btn', function () {
 // 🔹 Undo/Redo 버튼
 $('#undo-btn').on('click', undo);
 $('#redo-btn').on('click', redo);
+
+// 템플릿 CSS 포함
+$('#include-css').on('change', function() {
+    if ($(this).is(':checked')){
+        if ($('#css-select').val() == '적용 중인 템플릿 없음' && !$('#log-css').val()) {
+            alert('적용 중인 템플릿이 없습니다.');
+            $('#include-css').prop('checked', false);
+        }
+    }
+});
 
 // 백업용 CSS 다운로드
 $('.css-download').on('click', function () {
