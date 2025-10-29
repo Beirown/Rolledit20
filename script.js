@@ -70,10 +70,14 @@ $('#log-html').on('change', function (event) {
 $('#css-select').on('change', function () {
     const cssFile = $(this).val();
     if (!cssFile) return;
+    if ($('#log-css').val()) {
+        if (confirm('업로드한 커스텀 시트 CSS가 사라집니다. 계속하시겠습니까?')) {
+        } else return;
+    }
 
     $('#css-view').text(cssFile);
     $('#css-sheet').attr('href', cssFile);
-
+    
     styleTag = null;
 
     fetch(`./${cssFile}`)
