@@ -163,7 +163,7 @@ textarea.inline-editor {
 
 .mobile { display: none; }
 
-@media (hover: none) and (pointer: coarse) {
+@media (pointer: coarse) {
     .mobile { display: block;}
 }
 
