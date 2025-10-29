@@ -1,5 +1,7 @@
 let undoStack = [];
 let redoStack = [];
+let styleTag;
+let htmlContent;
 
 // HTML 엔티티 변환
 function encodeHTML(str) { return str.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
@@ -44,7 +46,7 @@ $(document).on('keydown', function (e) {
     else if (e.ctrlKey && (e.key === 'y' || (e.shiftKey && e.key === 'Z'))) { e.preventDefault(); redo(); }
 });
 
-// HTML 파일 업로드
+// 저장된 HTML 파일 올리기
 $('#log-html').on('change', function (event) {
     const file = event.target.files[0];
     if (!file) return;
@@ -64,13 +66,27 @@ $('#log-html').on('change', function (event) {
     reader.readAsText(file, 'utf-8');
 });
 
-let $linkTag = null;
+// 시트 템플릿 선택
 $('#css-select').on('change', function () {
-    $('#css-view').text($(this).val());
-    $('#css-sheet').attr('href', $(this).val());
-})
+    const cssFile = $(this).val();
+    if (!cssFile) return;
 
-// CSS 파일 업로드
+    $('#css-view').text(cssFile);
+    $('#css-sheet').attr('href', cssFile);
+
+    styleTag = null;
+
+    fetch(`./${cssFile}`)
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return response.text();
+        })
+        .then(cssContent => {
+            styleTag = `<style id="loaded-style">\n${cssContent}\n</style>`;
+        })
+});
+
+// 커스텀 시트 CSS 올리기
 $('#log-css').on('change', function (event) {
     const file = event.target.files[0];
     if (!file) return;
@@ -100,7 +116,8 @@ $('#log-css').on('change', function (event) {
         }
 
         extractedCss = matches.join('\n\n');
-        const styleTag = $('<style data-uploaded="true"></style>').text(extractedCss);
+        styleTag = null;
+        styleTag = `<style>${extractedCss}</style>`;
         $('head').append(styleTag);
     };
 
@@ -161,7 +178,7 @@ async function initSortableAsync(selector) {
     });
 }
 
-// 🔹 HTML 적용하기
+// 편집 시작
 $('#show-html').on('click', async function () {
     if (!$('#log-text').val().includes('div class="message')) {
         alert('롤20 형식의 HTML이 아닙니다.');
@@ -201,8 +218,8 @@ $('#show-html').on('click', async function () {
     updateLoadingProgress(100, "편집 준비 완료!");
     await sleep(300);
 
-    $('.message a').each(function() { $(this).attr('target', '_blank'); });
-    $('.message a[href^="!"], .message a[href^="~"]').click(function(event) { event.preventDefault(); });
+    $('.message a').each(function () { $(this).attr('target', '_blank'); });
+    $('.message a[href^="!"], .message a[href^="~"]').click(function (event) { event.preventDefault(); });
 
     hideLoadingOverlay();
 });
@@ -307,7 +324,7 @@ $(document).on('click', '.delete-btn', function () {
 $('#undo-btn').on('click', undo);
 $('#redo-btn').on('click', redo);
 
-// CSS 다운로드 버튼
+// 백업용 CSS 다운로드
 $('.css-download').on('click', function () {
     const blob = new Blob([extractedCss], { type: "text/css" });
     const url = URL.createObjectURL(blob);
@@ -318,18 +335,19 @@ $('.css-download').on('click', function () {
     URL.revokeObjectURL(url);
 });
 
-// 🔹 복사하기 버튼
+// 현재 코드 복사
 $('#copy-html').on('click', function () {
-    // .msg-controls 제거 후 HTML 추출
-    const htmlContent = $('#log-view').clone().find('.msg-controls').remove().end().html();
+    if ($('#include-css').is(':checked')) { htmlContent = styleTag + $('#log-view').clone().find('.msg-controls').remove().end().html(); }
+    else { htmlContent = $('#log-view').clone().find('.msg-controls').remove().end().html(); }
     navigator.clipboard.writeText(htmlContent)
         .then(() => alert('HTML 내용이 복사되었습니다.'))
         .catch(() => alert('복사 실패'));
 });
 
-// 🔹 HTML 다운로드 버튼
+// HTML 파일로 저장
 $('#download-html').on('click', function () {
-    const htmlContent = $('#log-view').clone().find('.msg-controls').remove().end().html();
+    if ($('#include-css').is(':checked')) { htmlContent = styleTag + $('#log-view').clone().find('.msg-controls').remove().end().html(); }
+    else { htmlContent = $('#log-view').clone().find('.msg-controls').remove().end().html(); }
     const blob = new Blob([htmlContent], { type: "text/html" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -380,6 +398,6 @@ $(document).ready(function () {
         $('#sample').hide();
     })
 
-    $('.message a').each(function() { $(this).attr('target', '_blank'); });
-    $('.message a[href^="!"], .message a[href^="~"]').click(function(event) { event.preventDefault(); });
+    $('.message a').each(function () { $(this).attr('target', '_blank'); });
+    $('.message a[href^="!"], .message a[href^="~"]').click(function (event) { event.preventDefault(); });
 });
