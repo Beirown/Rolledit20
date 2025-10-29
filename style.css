@@ -161,6 +161,12 @@ textarea.inline-editor {
     cursor: move;
 }
 
+.mobile { display: none; }
+
+@media (hover: none) and (pointer: coarse) {
+    .mobile { display: block;}
+}
+
 @media all and (max-width: 1152px) {
     #control, #log-view { width: 50%; }
 }
