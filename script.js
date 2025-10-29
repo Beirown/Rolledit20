@@ -106,7 +106,7 @@ $('#log-css').on('change', function (event) {
 
     reader.readAsText(file, 'utf-8');
     $('#css-view').text(file.name);
-    $('#css-download').show();
+    $('.css-download').show();
 });
 
 // 압축
@@ -308,7 +308,7 @@ $('#undo-btn').on('click', undo);
 $('#redo-btn').on('click', redo);
 
 // CSS 다운로드 버튼
-$('#css-download').on('click', function () {
+$('.css-download').on('click', function () {
     const blob = new Blob([extractedCss], { type: "text/css" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
