@@ -161,10 +161,8 @@ textarea.inline-editor {
     cursor: move;
 }
 
-.mobile { display: none; }
-
-@media (pointer: coarse) {
-    .mobile { display: block;}
+@media (hover: hover) and (pointer: fine) {
+    .mobile { display: none;}
 }
 
 @media all and (max-width: 1152px) {
