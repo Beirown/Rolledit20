@@ -72,6 +72,7 @@ $('#css-select').on('change', function () {
     if (!cssFile) return;
     if ($('#log-css').val()) {
         if (confirm('업로드한 커스텀 시트 CSS가 사라집니다. 계속하시겠습니까?')) {
+            $('.css-download').hide();
         } else return;
     }
 
