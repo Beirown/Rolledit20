@@ -128,6 +128,7 @@ $('#log-css').on('change', function (event) {
         styleTag = null;
         styleTag = `<style>${extractedCss}</style>`;
         $('head').append(styleTag);
+        $('#css-select option:eq(0)').prop('selected', true);
     };
 
     reader.readAsText(file, 'utf-8');
