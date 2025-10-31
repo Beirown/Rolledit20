@@ -306,21 +306,97 @@ function attachControls() {
 $(document).on('click', '.edit-btn', function () {
     const $msg = $(this).closest('.message');
     const $controls = $msg.find('.msg-controls');
-    const currentHTML = $msg.clone().children('.msg-controls').remove().end().html().trim();
 
     if ($msg.find('textarea.inline-editor').length > 0) return;
-    saveState();
 
-    const textarea = $(`<textarea class="inline-editor">${currentHTML}</textarea>`);
-    $msg.html(textarea).append($controls);
+    // 원본 HTML
+    const originalHTML = $msg.clone().children('.msg-controls').remove().end().html().trim();
 
-    textarea.focus();
-    textarea.on('blur', function () {
-        const newContent = textarea.val();
-        $msg.html(newContent).append($controls);
-        attachControls();
+    // 원본 요소들 저장
+    const avatarHTMLs = [];
+    const tstampTexts = [];
+    const tstampHTMLs = [];
+    const byTexts = [];
+    const byHTMLs = [];
+    const spacerHTMLs = [];
+
+    // 아바타 원본 저장
+    originalHTML.replace(/<div[^>]*class="avatar"[^>]*>[\s\S]*?<\/div>/g, function (match) {
+        avatarHTMLs.push(match);
+        return match;
     });
+
+    // 시각 원본 저장
+    originalHTML.replace(/<span[^>]*class="tstamp"[^>]*>([\s\S]*?)<\/span>/g, function (match, txt) {
+        tstampTexts.push(txt.trim());
+        tstampHTMLs.push(match);
+        return match;
+    });
+
+    // by 원본 저장
+    originalHTML.replace(/<span[^>]*class="by"[^>]*>([\s\S]*?)<\/span>/g, function (match, txt) {
+        byTexts.push(txt.trim());
+        byHTMLs.push(match);
+        return match;
+    });
+
+    // HTML → 토큰 텍스트 변환
+    let tokenHTML = originalHTML
+        .replace(/<div[^>]*class="avatar"[^>]*>[\s\S]*?<\/div>/g, "{{아바타}}")
+        .replace(/<span[^>]*class="tstamp"[^>]*>([\s\S]*?)<\/span>/g, function (match, timeText) {
+            return `{{시각: ${timeText.trim()}}}`;
+        })
+        .replace(/<span[^>]*class="by"[^>]*>([\s\S]*?)<\/span>/g, function (match, byText) {
+            return `{{As: ${byText.trim()}}}`;
+        })
+        .replace(/<div[^>]*class="spacer"[^>]*><\/div>/g, "{{구분선}}");
+
+    // textarea 표시
+    const textarea = $(`<textarea class="inline-editor">${tokenHTML}</textarea>`);
+    $msg.html(textarea).append($controls);
+    textarea.focus();
+
+    textarea.on('blur', function () {
+    let edited = textarea.val();  // 사용자가 수정한 텍스트
+
+    // ✅ 사용자 텍스트 그대로 기반
+    let rebuiltHTML = edited;
+
+    // --- 구분선 복원 ---
+    rebuiltHTML = rebuiltHTML.replace("{{구분선}}", `<div class="spacer"></div>`);
+
+    // --- 시각 토큰 복원 ---
+    const editedTimes = [];
+    edited.replace(/{{시각:\s*([^}]+)}}/g, (match, newTime) => {
+        editedTimes.push(newTime.trim());
+    });
+
+    editedTimes.forEach((newTime, idx) => {
+        rebuiltHTML = rebuiltHTML.replace(/{{시각:[^}]+}}/, `<span class="tstamp">${newTime}</span>`);
+    });
+
+    // --- As 토큰 복원 ---
+    const editedBy = [];
+    edited.replace(/{{As:\s*([^}]+)}}/g, (match, newBy) => {
+        editedBy.push(newBy.trim());
+    });
+
+    editedBy.forEach((newBy, idx) => {
+        rebuiltHTML = rebuiltHTML.replace(/{{As:[^}]+}}/, `<span class="by">${newBy}</span>`);
+    });
+
+    // --- 아바타 복원 ---
+    avatarHTMLs.forEach(avHTML => {
+        rebuiltHTML = rebuiltHTML.replace("{{아바타}}", avHTML);
+    });
+
+    $msg.html(rebuiltHTML).append($controls);
+    attachControls();
+    saveState();
 });
+});
+
+
 
 // 🔹 삭제
 $(document).on('click', '.delete-btn', function () {
