@@ -312,6 +312,11 @@ $(document).on('click', '.edit-btn', function () {
     // 원본 HTML
     const originalHTML = $msg.clone().children('.msg-controls').remove().end().html().trim();
 
+    if (originalHTML.includes('basicdiceroll')) {
+        alert('편집을 지원하지 않는 주사위가 포함되어 있습니다.');
+        return;
+    }
+
     // 원본 요소들 저장
     const avatarHTMLs = [];
     const tstampTexts = [];
@@ -357,46 +362,44 @@ $(document).on('click', '.edit-btn', function () {
     textarea.focus();
 
     textarea.on('blur', function () {
-    let edited = textarea.val();  // 사용자가 수정한 텍스트
+        let edited = textarea.val();  // 사용자가 수정한 텍스트
 
-    // ✅ 사용자 텍스트 그대로 기반
-    let rebuiltHTML = edited;
+        // ✅ 사용자 텍스트 그대로 기반
+        let rebuiltHTML = edited;
 
-    // --- 구분선 복원 ---
-    rebuiltHTML = rebuiltHTML.replace("{{구분선}}", `<div class="spacer"></div>`);
+        // --- 구분선 복원 ---
+        rebuiltHTML = rebuiltHTML.replace("{{구분선}}", `<div class="spacer"></div>`);
 
-    // --- 시각 토큰 복원 ---
-    const editedTimes = [];
-    edited.replace(/{{시각:\s*([^}]+)}}/g, (match, newTime) => {
-        editedTimes.push(newTime.trim());
+        // --- 아바타 복원 ---
+        avatarHTMLs.forEach(avHTML => {
+            rebuiltHTML = rebuiltHTML.replace("{{아바타}}", avHTML);
+        });
+
+        // --- 시각 토큰 복원 ---
+        const editedTimes = [];
+        edited.replace(/{{시각:\s*([^}]+)}}/g, (match, newTime) => {
+            editedTimes.push(newTime.trim());
+        });
+
+        editedTimes.forEach((newTime, idx) => {
+            rebuiltHTML = rebuiltHTML.replace(/{{시각:[^}]+}}/, `<span class="tstamp">${newTime}</span>`);
+        });
+
+        // --- As 토큰 복원 ---
+        const editedBy = [];
+        edited.replace(/{{As:\s*([^}]+)}}/g, (match, newBy) => {
+            editedBy.push(newBy.trim());
+        });
+
+        editedBy.forEach((newBy, idx) => {
+            rebuiltHTML = rebuiltHTML.replace(/{{As:[^}]+}}/, `<span class="by">${newBy}</span>`);
+        });
+
+        $msg.html(rebuiltHTML).append($controls);
+        attachControls();
+        saveState();
     });
-
-    editedTimes.forEach((newTime, idx) => {
-        rebuiltHTML = rebuiltHTML.replace(/{{시각:[^}]+}}/, `<span class="tstamp">${newTime}</span>`);
-    });
-
-    // --- As 토큰 복원 ---
-    const editedBy = [];
-    edited.replace(/{{As:\s*([^}]+)}}/g, (match, newBy) => {
-        editedBy.push(newBy.trim());
-    });
-
-    editedBy.forEach((newBy, idx) => {
-        rebuiltHTML = rebuiltHTML.replace(/{{As:[^}]+}}/, `<span class="by">${newBy}</span>`);
-    });
-
-    // --- 아바타 복원 ---
-    avatarHTMLs.forEach(avHTML => {
-        rebuiltHTML = rebuiltHTML.replace("{{아바타}}", avHTML);
-    });
-
-    $msg.html(rebuiltHTML).append($controls);
-    attachControls();
-    saveState();
 });
-});
-
-
 
 // 🔹 삭제
 $(document).on('click', '.delete-btn', function () {
@@ -411,8 +414,8 @@ $('#undo-btn').on('click', undo);
 $('#redo-btn').on('click', redo);
 
 // 템플릿 CSS 포함
-$('#include-css').on('change', function() {
-    if ($(this).is(':checked')){
+$('#include-css').on('change', function () {
+    if ($(this).is(':checked')) {
         if ($('#css-select').val() == '적용 중인 템플릿 없음' && !$('#log-css').val()) {
             alert('적용 중인 템플릿이 없습니다.');
             $('#include-css').prop('checked', false);
