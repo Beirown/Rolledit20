@@ -1,5 +1,6 @@
 /* ------------------------------------------------ */
 /* Roll20 textchat stylesheet (Optimized by Beirown) */
+/* Last Updated: 2025/11/23 */
 /* ------------------------------------------------ */
 
 @import url('https://fonts.googleapis.com/css2?family=Candal&family=Contrail+One&family=Patrick+Hand&family=Shadows+Into+Light&display=swap');
@@ -41,6 +42,12 @@
 .message, .message *, .message *::before, .message *::after { box-sizing: content-box; }
 .message p { margin: 0 0 9px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 13px; line-height: 18px; }
 .message select { box-sizing: border-box; }
+
+.tipsy small { display: block; margin-top: 15px; text-align: right; font-size: 0.9em; }
+.tipsy small a { color: white; text-decoration: underline; }
+.tipsy { word-wrap: break-word; padding: 5px; font-size: 12px; position: absolute; z-index: 100000; }
+.tipsy-inner { word-wrap: break-word; font-size: 1.1em; }
+.tipsy-n.tipsy, .tipsy-n-right.tipsy { opacity: 1 !important; }
 
 /* app.css */
 .message .clear { clear: both; }
@@ -99,28 +106,6 @@
 .diceroll.critfail .didroll { color: #730505; font-weight: bold; }
 .diceroll .matchbar { border-top: 3px solid; max-width: 30px; }
 
-/* Repeat classes for API scripts */
-.message .formula .userscript-parsegroup, .message .formula .userscript-parsegroup .userscript-parsegroupitem, .message .userscript-dicegrouping { display: inline; }
-.userscript-diceroll { display: inline-block; font-size: 1.2em; }
-.userscript-diceroll .userscript-dicon { display: inline-block; min-width: 30px; text-align: center; position: relative; }
-.userscript-diceroll .userscript-didroll { text-shadow: -1px -1px 1px #ffffff, 1px -1px 1px #ffffff, -1px 1px 1px #ffffff, 1px 1px 1px #ffffff; z-index: 2; position: relative; color: black; height: auto; min-height: 29px; margin-top: -3px; top: 0px; text-align: center; }
-.userscript-diceroll .userscript-didroll img { max-width: 30px; max-height: 30px; vertical-align: middle; }
-.userscript-diceroll .userscript-backing { position: absolute; top: -2px; left: 0px; width: 100%; text-align: center; font-size: 30px; color: #8fb1d9; text-shadow: 0px 0px 3px #8fb1d9; opacity: 0.75; pointer-events: none; z-index: 1; }
-.userscript-diceroll.d20 .userscript-backing { font-family: "dicefontd20"; }
-.userscript-diceroll.d4 .userscript-backing { font-family: "dicefontd4"; }
-.userscript-diceroll.d6 .userscript-backing { font-family: "dicefontd6"; }
-.userscript-diceroll.d8 .userscript-backing { font-family: "dicefontd8"; }
-.userscript-diceroll.d10 .userscript-backing { font-family: "dicefontd10"; }
-.userscript-diceroll.d12 .userscript-backing { font-family: "dicefontd12"; }
-.userscript-diceroll.d20 .userscript-backing:after, .userscript-diceroll.d12 .userscript-backing:after, .userscript-diceroll.d10 .userscript-backing:after, .userscript-diceroll.d8 .userscript-backing:after, .userscript-diceroll.d6 .userscript-backing:after, .userscript-diceroll.d4 .userscript-backing:after { content: "0"; }
-.message .userscript-parsegroup .userscript-parsegroupitem.userscript-dropped .userscript-diceroll, .userscript-diceroll.userscript-dropped { opacity: 0.4; }
-.userscript-diceroll.userscript-critsuccess .userscript-didroll { color: #247305; font-weight: bold; }
-.userscript-diceroll.userscript-critfail .userscript-didroll { color: #730505; font-weight: bold; }
-.userscript-basicdiceroll { font-size: 1.15em; }
-.userscript-basicdiceroll.userscript-critsuccess { color: #00ff00; }
-.userscript-basicdiceroll.userscript-critfail { color: #ff4d4d; font-weight: bold; }
-/* End API repeat */
-
 .basicdiceroll { font-size: 1.15em; }
 .basicdiceroll.critsuccess { color: #00ff00; }
 .basicdiceroll.critfail { color: #ff4d4d; font-weight: bold; }
@@ -129,6 +114,18 @@
 .message.emote .spacer { background-color: #f0c392; }
 .message.private { background-color: #f2f5d3; }
 .message.private .spacer { background-color: #f0f092; }
+
+.tipsy { padding: 5px; font-size: 12px; position: absolute; z-index: 100000; }
+.tipsy-inner { padding: 5px 8px 4px 8px; background-color: black; color: white; max-width: 200px; text-align: center; }
+.tipsy-arrow { position: absolute; background: url(./tipsy.gif) no-repeat top left; width: 9px; height: 5px; }
+.tipsy-n .tipsy-arrow { top: 0; left: 50%; margin-left: -4px; }
+.tipsy-nw .tipsy-arrow { top: 0; left: 10px; }
+.tipsy-ne .tipsy-arrow { top: 0; right: 10px; }
+.tipsy-s .tipsy-arrow { bottom: 0; left: 50%; margin-left: -4px; background-position: bottom left; }
+.tipsy-sw .tipsy-arrow { bottom: 0; left: 10px; background-position: bottom left; }
+.tipsy-se .tipsy-arrow { bottom: 0; right: 10px; background-position: bottom left; }
+.tipsy-e .tipsy-arrow { top: 50%; margin-top: -4px; right: 0; width: 5px; height: 9px; background-position: top right; }
+.tipsy-w .tipsy-arrow { top: 50%; margin-top: -4px; left: 0; width: 5px; height: 9px; }
 
 /* index.scss */
 .message { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
