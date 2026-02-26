@@ -225,6 +225,12 @@ $('#show-html').on('click', async function () {
 
     $('#section-edit').show();
     $('.tool-btn').show();
+
+    if ($('#log-view .tstamp').length > 0) {
+        $('#check-ts').hide();
+        $('#remove-ts').show();
+    }
+
     updateLoadingProgress(100, "편집 준비 완료!");
     await sleep(300);
 
@@ -317,6 +323,9 @@ $(document).on('click', '.edit-btn', function () {
         return;
     }
 
+    // 핸들 비활성화
+    $msg.find('.msg-controls .move-handle').hide();
+
     // 원본 요소들 저장
     const avatarHTMLs = [];
     const tstampTexts = [];
@@ -397,6 +406,9 @@ $(document).on('click', '.edit-btn', function () {
 
         $msg.html(rebuiltHTML).append($controls);
         attachControls();
+
+        // 핸들 활성화
+        $msg.find('.msg-controls .move-handle').show();
         saveState();
     });
 });
@@ -495,7 +507,16 @@ $(document).ready(function () {
     $('#eraser').click(function () {
         $('#log-text').empty();
         $('#sample').hide();
-    })
+    });
+
+    $('#remove-ts').click(function () {
+        if (confirm('타임스탬프를 삭제하시겠습니까?')) {
+            saveState();
+            $('#log-view .message .tstamp').remove();
+            $('#remove-ts').hide();
+            $('#check-ts').show();
+        }
+    });
 
     $('.message a').each(function () { $(this).attr('target', '_blank'); });
     $('.message a[href^="!"], .message a[href^="~"]').click(function (event) { event.preventDefault(); });

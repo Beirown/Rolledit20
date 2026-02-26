@@ -125,9 +125,9 @@ header {
     font-size: 12px;
 }
 
-.css-download {
-    display: none;
-}
+#remove-ts { display: none; }
+
+.css-download { display: none; }
 
 #toolbar button,
 #final-toolbar button,
