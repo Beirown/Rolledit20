@@ -138,8 +138,10 @@ $('#log-css').on('change', function (event) {
     $('.css-download').show();
 });
 
-// 커스텀 시트 없는 경우 styleTag 작업
+// 커스텀 시트 없는 경우 CSS 후속 작업
 function internalcss() {
+    $('#css-sheet').attr('href', cssFile);
+    $('#css-view').text(cssFile);
     styleTag = null;
 
     fetch(`./${cssFile}`)
