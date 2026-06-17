@@ -1,5 +1,6 @@
 let undoStack = [];
 let redoStack = [];
+let cssFile;
 let styleTag;
 let htmlContent;
 
@@ -67,36 +68,37 @@ $('#log-html').on('change', function (event) {
 });
 
 // 시트 템플릿 선택
-document.getElementById('css-select').addEventListener('change', function () {
-    const cssFile = this.value;
-    if (!cssFile) return;
+const rule = {
+    'Roll20_coc.css': /sheet-rolltemplate-coc-/,
+    'Roll20_Ins.css': /sheet-rolltemplate-Ins/,
+    'Roll20_Ninpo.css': /sheet-rolltemplate-Ninpo/,
+    'Roll20_agon.css': /sheet-rolltemplate-agon-/,
+    'Roll20_callofcthulhu.css': /sheet-rolltemplate-callofcthulhu|sheet-rolltemplate-coccm|sheet-rolltemplate-skillimprovement/,
+    'Roll20_daegong.css': /sheet-rolltemplate-daegong-/,
+    'Roll20_dw.css': /sheet-rolltemplate-move|sheet-rolltemplate-dwgeneral|sheet-rolltemplate-spell/,
+    'Roll20_Dx3Dice.css': /sheet-rolltemplate-Dx3Dice/,
+    'Roll20_Magic.css': /sheet-rolltemplate-Magic|sheet-rolltemplate-modulation-table|sheet-rolltemplate-fate-mutation-table|sheet-rolltemplate-ordinary-scene-table|sheet-rolltemplate-fumble-table|sheet-rolltemplate-event-table/,
+    'Roll20_Nc.css': /sheet-rolltemplate-Nc/,
+    'Roll20_Strato.css': /sheet-rolltemplate-Strato/
+};
 
-    const logCss = document.getElementById('log-css');
-    if (logCss.value) {
-        if (confirm('업로드한 커스텀 시트 CSS가 사라집니다. 계속하시겠습니까?')) {
-            logCss.value = '';
-            document.querySelectorAll('.css-download').forEach(el => el.style.display = 'none');
-        } else { return; }
+$('#log-text').on('input', function () {
+    cssFile = null;
+    const str = $(this).val();
+
+    for (const [file, regex] of Object.entries(rule)) {
+        if (regex.test(str)) {
+            cssFile = file;
+            break;
+        }
     }
 
-    document.getElementById('css-view').textContent = cssFile;
-    document.getElementById('css-sheet').setAttribute('href', cssFile);
-
-    let styleTag = null;
-
-    fetch(`./${cssFile}`)
-        .then(response => {
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            return response.text();
-        })
-        .then(cssContent => {
-            styleTag = `<style id="loaded-style">\n${cssContent}\n</style>`;
-        });
+    $('#css-select').val(cssFile);
 });
-
 
 // 커스텀 시트 CSS 올리기
 $('#log-css').on('change', function (event) {
+    cssFile = null;
     const file = event.target.files[0];
     if (!file) return;
     if (!file.name.toLowerCase().endsWith('.css')) {
@@ -136,10 +138,46 @@ $('#log-css').on('change', function (event) {
     $('.css-download').show();
 });
 
+// 커스텀 시트 없는 경우 styleTag 작업
+function internalcss() {
+    styleTag = null;
+
+    fetch(`./${cssFile}`)
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return response.text();
+        })
+        .then(cssContent => {
+            styleTag = `<style id="loaded-style">\n${cssContent}\n</style>`;
+        });
+}
+
 // 압축
 function compress() {
     $('#log-view .message .flyout').remove();
     $('#log-view .message').removeAttr('data-messageid');
+}
+
+const srcSet = new Set();
+
+// src 수집 (중복 제거)
+function avatarimg() {
+    $('#log-view .message .avatar img').each(function () {
+    const src = $(this).attr('src');
+
+    if (src) {
+        srcSet.add(src);
+    }
+    });
+
+    $('#avatar-list').empty();
+
+    // img 추가
+    srcSet.forEach(function (src) {
+    $('<img>', {
+        src: src
+    }).appendTo('#avatar-list');
+    });
 }
 
 // 🔹 sleep 유틸
@@ -211,17 +249,18 @@ $('#show-html').on('click', async function () {
     updateLoadingProgress(33, "코드 압축 중...");
     await sleep(30);
     compress();
-    saveState();
+    avatarimg();
 
     updateLoadingProgress(66, "편집 기능 로딩 중...");
     await attachControlsAsync();
+    if (cssFile) { internalcss(); }
 
     updateLoadingProgress(90, "정렬 기능 로딩 중...");
     await initSortableAsync("#log-view");
 
     window.onbeforeunload = function () {
         return "변경 내용이 사라질 수 있습니다. 페이지를 나가시겠습니까?";
-    };
+    }
 
     $('#section-edit').show();
     $('.tool-btn').show();
@@ -238,6 +277,7 @@ $('#show-html').on('click', async function () {
     $('.message a[href^="!"], .message a[href^="~"]').click(function (event) { event.preventDefault(); });
 
     hideLoadingOverlay();
+    saveState();
 });
 
 // 🔹 로딩 오버레이 생성
@@ -424,6 +464,43 @@ $(document).on('click', '.delete-btn', function () {
 // 🔹 Undo/Redo 버튼
 $('#undo-btn').on('click', undo);
 $('#redo-btn').on('click', redo);
+
+// 아바타 선택
+$('#avatar-list').on('click', 'img', function() {
+    const avatarLink = this.src;
+    $('#img-org').attr('src', avatarLink);
+    $('#link-org').val(avatarLink);
+    $('#link-chg').val('');
+});
+
+$('#link-chg').on('change', function() {
+    const avatarLink = $(this).val();
+    $('#img-chg').attr('src', avatarLink);
+});
+
+// 구글 드라이브 링크 변환
+$('#avatar-ggl').on('click', function () {
+    const avatarLink = $('#link-chg').val().replace('drive.google.com/file', 'lh3.googleusercontent.com').replace('/view?usp=drive_link', '');
+    $('#link-chg').val(avatarLink);
+    $('#img-chg').attr('src', avatarLink);
+});
+
+// 아바타 변경
+$('#avatar-btn').on('click', function () {
+    let find = $('#link-org').val();
+    let replace = $('#link-chg').val();
+
+    if (find === "") {
+        alert('찾을 내용이 없습니다.');
+        return;
+    }
+
+    $('#log-view').each(function () {
+        let html = $(this).html();
+        let regex = new RegExp(find, 'g');
+        $(this).html(html.replace(regex, replace));
+    });
+});
 
 // 템플릿 CSS 포함
 $('#include-css').on('change', function () {

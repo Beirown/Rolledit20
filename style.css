@@ -101,6 +101,11 @@ header {
     text-decoration: underline;
 }
 
+#avatar-list img { max-width: 28px; max-height: 28px; }
+
+#avatar-box { min-height: 300px; background-color: #ddd; border: 1px solid #aaa; border-radius: 6px; }
+#avatar-box #avatar-img img { width: 30%; }
+
 .change {
     width: 100%;
     height: 30px;

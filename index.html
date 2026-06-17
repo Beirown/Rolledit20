@@ -158,12 +158,12 @@
             <option value="Roll20_dw.css">Dungeon World by Roll20</option>
             <option value="Roll20_Ins.css">inSANe (25/02/21~)</option>
             <option value="Roll20_Magic.css">Magica Logia</option>
+            <option value="Roll20_Nc.css">Nechronica -The Long Long Sequel-</option>
             <option value="Roll20_daegong.css">Please Rule the North with me, Grand Duke! by Choi Mika</option>
             <option value="Roll20_Ninpo.css">Shinobi Gami, inSANe (~25/02/21)</option>
             <option value="Roll20_Strato.css">Strato Shout</option>
           </select>
         </label><br>
-
         <label>커스텀 시트 CSS 올리기
           <input type="file" accept="text/css" id="log-css">
         </label>
@@ -180,6 +180,16 @@
         <h2>적용 중인 CSS</h2>
         <p>Roll20_style.css (기본)</p>
         <p><span id="css-view">적용 중인 템플릿 없음</span> <button class="css-download">백업용 CSS 다운로드</button></p>
+
+        <h2>아바타 이미지 일괄 변경</h2>
+        <div id="avatar-list"></div>
+        <div id="avatar-box">
+          <span id="avatar-null">이미지를 선택하면 여기에 표시됩니다.</span>
+          <div id="avatar-img"><img id="img-org"> → <img id="img-chg"></div>
+          <label>원본 이미지 링크 <input type="text" id="link-org" readonly></text></label><br>
+          <label>교체 이미지 링크 <input type="text" id="link-chg"></text></label><br>
+          <button id="avatar-ggl">구글 드라이브 링크 변환</button><button id="avatar-btn">바꿔!</button>
+        </div>
 
         <h2>일괄 바꾸기</h2>
         <label>찾을 내용 <input type="text" id="findText"></label><br>
