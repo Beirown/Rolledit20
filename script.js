@@ -67,7 +67,7 @@ $('#log-html').on('change', function (event) {
     reader.readAsText(file, 'utf-8');
 });
 
-// 시트 템플릿 선택
+// 시트 템플릿 자동 선택
 const rule = {
     'Roll20_coc.css': /sheet-rolltemplate-coc-/,
     'Roll20_Ins.css': /sheet-rolltemplate-Ins/,
@@ -97,6 +97,19 @@ $('#log-text').on('input', function () {
         $('#css-select').val(cssFile);
     }
 });
+
+// 시트 템플릿 수동 선택
+$('#css-select').on('change', function () {
+    cssFile = this.value;
+    if (!cssFile) return;
+    const logCss = $('#log-css').value;
+    if (logCss) {
+        if (confirm('업로드한 커스텀 시트 CSS가 사라집니다. 계속하시겠습니까?')) {
+            logCss.value = null;
+            $('.css-download').hide();
+        } else return;
+    }
+})
 
 // 커스텀 시트 CSS 올리기
 $('#log-css').on('change', function (event) {
