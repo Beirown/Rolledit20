@@ -83,17 +83,19 @@ const rule = {
 };
 
 $('#log-text').on('input', function () {
-    cssFile = null;
-    const str = $(this).val();
+    if (!$('#log-css').value) {
+        cssFile = null;
+        const str = $(this).val();
 
-    for (const [file, regex] of Object.entries(rule)) {
-        if (regex.test(str)) {
-            cssFile = file;
-            break;
+        for (const [file, regex] of Object.entries(rule)) {
+            if (regex.test(str)) {
+                cssFile = file;
+                break;
+            }
         }
-    }
 
-    $('#css-select').val(cssFile);
+        $('#css-select').val(cssFile);
+    }
 });
 
 // 커스텀 시트 CSS 올리기
