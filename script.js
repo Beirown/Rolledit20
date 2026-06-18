@@ -520,6 +520,10 @@ $('#avatar-btn').on('click', function () {
     $('#avatar-list').html(
         $('#avatar-list').html().replaceAll(find, replace)
     );
+    $('#img-org').attr('src', replace);
+    $('#img-chg').removeAttr('src');
+    $('#link-org').val(replace);
+    $('#link-chg').val('');
 });
 
 // 템플릿 CSS 포함
