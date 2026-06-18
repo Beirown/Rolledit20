@@ -47,26 +47,6 @@ $(document).on('keydown', function (e) {
     else if (e.ctrlKey && (e.key === 'y' || (e.shiftKey && e.key === 'Z'))) { e.preventDefault(); redo(); }
 });
 
-// 저장된 HTML 파일 올리기
-$('#log-html').on('change', function (event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    if (!file.name.toLowerCase().endsWith('.html')) {
-        alert('HTML 파일만 업로드할 수 있습니다.');
-        return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        if (!e.target.result.includes('div class="message')) {
-            alert('롤20 형식의 HTML이 아닙니다.');
-            return;
-        }
-        $('#log-text').val(e.target.result);
-    };
-    reader.readAsText(file, 'utf-8');
-});
-
 // 시트 템플릿 자동 선택
 const rule = {
     'Roll20_coc.css': /sheet-rolltemplate-coc-/,
@@ -82,8 +62,8 @@ const rule = {
     'Roll20_Strato.css': /sheet-rolltemplate-Strato/
 };
 
-$('#log-text').on('input', function () {
-    if (!$('#log-css').value) {
+function autocss() {
+    if (!$('#log-css').val()) {
         cssFile = null;
         const str = $(this).val();
 
@@ -96,6 +76,28 @@ $('#log-text').on('input', function () {
 
         $('#css-select').val(cssFile);
     }
+}
+
+$('#log-text').on('input', autocss);
+
+// 저장된 HTML 파일 올리기
+$('#log-html').on('change', function (event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    if (!file.name.toLowerCase().endsWith('.html')) {
+        alert('HTML 파일만 업로드할 수 있습니다.');
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        if (!e.target.result.includes('div class="message')) {
+            alert('롤20 형식의 HTML이 아닙니다.');
+            return;
+        }
+        $('#log-text').val(e.target.result).trigger('input');
+    };
+    reader.readAsText(file, 'utf-8');
 });
 
 // 시트 템플릿 수동 선택
