@@ -514,11 +514,9 @@ $('#avatar-btn').on('click', function () {
         return;
     }
 
-    $('#log-view').each(function () {
-        let html = $(this).html();
-        let regex = new RegExp(find, 'g');
-        $(this).html(html.replace(regex, replace));
-    });
+    $('#log-view').html(
+        $('#log-view').html().replaceAll(find, replace)
+    );
 });
 
 // 템플릿 CSS 포함
@@ -593,11 +591,9 @@ $(document).ready(function () {
             return;
         }
 
-        $('#log-view').each(function () {
-            let html = $(this).html();
-            let regex = new RegExp(find, 'g');
-            $(this).html(html.replace(regex, replace));
-        });
+        $('#log-view').html(
+            $('#log-view').html().replaceAll(find, replace)
+        );
     });
 
     $('#eraser').click(function () {
