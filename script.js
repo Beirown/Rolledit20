@@ -517,6 +517,9 @@ $('#avatar-btn').on('click', function () {
     $('#log-view').html(
         $('#log-view').html().replaceAll(find, replace)
     );
+    $('#avatar-list').html(
+        $('#avatar-list').html().replaceAll(find, replace)
+    );
 });
 
 // 템플릿 CSS 포함
