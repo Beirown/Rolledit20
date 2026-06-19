@@ -1,12 +1,9 @@
 let undoStack = [];
 let redoStack = [];
+let undoCount = 0;
 let cssFile;
 let styleTag;
 let htmlContent;
-
-// HTML 엔티티 변환
-function encodeHTML(str) { return str.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
-function decodeHTML(str) { const t = document.createElement('textarea'); t.innerHTML = str; return t.value; }
 
 // 메뉴 전환
 $('#show-file').on('click', function () {
@@ -19,23 +16,27 @@ function saveState() {
     undoStack.push($('#log-view').html());
     if (undoStack.length > 20) undoStack.shift();
     redoStack = [];
+    $('#undo-btn').css('opacity', '1');
+    $('#redo-btn').css('opacity', '0');
 }
 
 // 🔹 상태 복원
 function restoreState(html) {
     $('#log-view').html(html);
-    attachControls();
 }
 
 // 🔹 Undo / Redo
 function undo() {
     if (undoStack.length === 0) return;
+    if (undoStack.length <= 1) { $('#undo-btn').css('opacity', '0'); }
     redoStack.push($('#log-view').html());
     const prev = undoStack.pop();
     restoreState(prev);
+    $('#redo-btn').css('opacity', '1');
 }
 function redo() {
     if (redoStack.length === 0) return;
+    if (redoStack.length <= 1) { $('#redo-btn').css('opacity', '0'); }
     undoStack.push($('#log-view').html());
     const next = redoStack.pop();
     restoreState(next);
@@ -98,6 +99,67 @@ $('#log-html').on('change', function (event) {
         $('#log-text').val(e.target.result).trigger('input');
     };
     reader.readAsText(file, 'utf-8');
+    $('#html-view').text(file.name);
+});
+
+
+$('#log-upload')
+.on('dragenter', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    $('#log-upload').addClass('active');
+})
+.on('dragleave', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    $('#log-upload').removeClass('active');
+})
+.on('dragover', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    $('#log-upload').addClass('active');
+})
+.on('drop', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    $('#log-upload').removeClass('active');
+
+    const files = e.originalEvent.dataTransfer.files;
+
+    if (!files || files.length === 0) {
+        return;
+    }
+
+    const dt = new DataTransfer();
+
+    for (let i = 0; i < files.length; i++) {
+        dt.items.add(files[i]);
+    }
+
+    $('#log-html')[0].files = dt.files;
+
+    $('#log-html').trigger('change');
+});
+
+$('#log-html').on('change', function (event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    if (!file.name.toLowerCase().endsWith('.html')) {
+        alert('HTML 파일만 업로드할 수 있습니다.');
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        if (!e.target.result.includes('div class="message')) {
+            alert('롤20 형식의 HTML이 아닙니다.');
+            return;
+        }
+        $('#log-text').val(e.target.result).trigger('input');
+    };
+    reader.readAsText(file, 'utf-8');
+    $('#html-view').text('현재 파일: ' + file.name);
+    $('.upload-icon').hide();
 });
 
 // 시트 템플릿 수동 선택
@@ -179,10 +241,10 @@ function compress() {
 
 let srcSet = new Set();
 
-// src 수집 (중복 제거)
+// 아바타 src 수집
 function avatarimg() {
     srcSet.clear();
-    
+
     $('#log-view .message .avatar img').each(function () {
     const src = $(this).attr('src');
     if (src) {
@@ -206,19 +268,22 @@ function sleep(ms) {
 }
 
 // 🔹 attachControls 비동기 버전 (배치 처리)
-async function attachControlsAsync() {
+async function attachHdl() {
     const messages = $('#log-view .message');
     const batchSize = 100;
     for (let i = 0; i < messages.length; i += batchSize) {
         const batch = messages.slice(i, i + batchSize);
         batch.each(function () {
             const $msg = $(this);
-            if ($msg.find('.msg-controls').length === 0) {
+            if ($msg.find('.hdl-body').length === 0) {
                 const controls = $(`
-                    <div class="msg-controls">
-                        <div class="move-handle"></div>
-                        <button class="edit-btn">편집</button>
-                        <button class="delete-btn">삭제</button>
+                    <div class="hdl-body">
+                        <div class="hdl-move"></div>
+                        <div class="hdl-box">
+                        <button class="hdl-edit" />
+                        <button class="hdl-copy" />
+                        <button class="hdl-delete" />
+                        </div>
                     </div>
                 `);
                 $msg.append(controls);
@@ -238,11 +303,10 @@ async function initSortableAsync(selector) {
     const container = $(selector);
     container.sortable({
         items: ".message",
-        handle: ".move-handle",
+        handle: ".hdl-move",
         cursor: "move",
         placeholder: "message-placeholder",
         axis: "y",
-        stop: saveState
     });
 }
 
@@ -252,11 +316,8 @@ $('#show-html').on('click', async function () {
         alert('롤20 형식의 HTML이 아닙니다.');
         return;
     }
-    if ($('#log-text').val().includes('class="no-edit"')) {
-        alert('편집할 로그를 입력해 주세요.');
-        return;
-    }
 
+    savestate();
     showLoadingOverlay();
     updateLoadingProgress(0, "HTML 불러오는 중...");
     await sleep(50); // UI 렌더링 여유
@@ -272,7 +333,7 @@ $('#show-html').on('click', async function () {
     avatarimg();
 
     updateLoadingProgress(66, "편집 기능 로딩 중...");
-    await attachControlsAsync();
+    await attachHdl();
     if (cssFile) { internalcss(); }
 
     updateLoadingProgress(90, "정렬 기능 로딩 중...");
@@ -283,7 +344,6 @@ $('#show-html').on('click', async function () {
     }
 
     $('#section-edit').show();
-    $('.tool-btn').show();
 
     if ($('#log-view .tstamp').length > 0) {
         $('#check-ts').hide();
@@ -297,37 +357,19 @@ $('#show-html').on('click', async function () {
     $('.message a[href^="!"], .message a[href^="~"]').click(function (event) { event.preventDefault(); });
 
     hideLoadingOverlay();
-    saveState();
 });
 
 // 🔹 로딩 오버레이 생성
 function showLoadingOverlay() {
     if ($('#loading-overlay').length === 0) {
         const overlay = $(`
-            <div id="loading-overlay" style="
-                position: fixed;
-                top: 0; left: 0; width: 100%; height: 100%;
-                background: rgba(0, 0, 0, 0.5);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 9999;
-                backdrop-filter: blur(3px);
-                color: white;
-                font-family: sans-serif;
-            ">
+            <div id="loading-overlay">
                 <div style="text-align:center; width: 250px;">
-                    <div id="loading-text" style="margin-bottom: 12px; font-size: 1.2em;">
+                    <div id="loading-text">
                         로딩 중...
                     </div>
                     <div style="background: rgba(255,255,255,0.2); border-radius: 10px; height: 12px;">
-                        <div id="loading-bar" style="
-                            width: 0%;
-                            height: 12px;
-                            background: #4ade80;
-                            border-radius: 10px;
-                            transition: width 0.3s ease;
-                        "></div>
+                        <div id="loading-bar"></div>
                     </div>
                 </div>
             </div>
@@ -351,40 +393,29 @@ function hideLoadingOverlay() {
     });
 }
 
-// 🔹 .message 컨트롤 추가
-function attachControls() {
-    $('#log-view .message').each(function () {
-        const $msg = $(this);
-        if ($msg.find('.msg-controls').length === 0) {
-            const controls = $(`
-            <div class="msg-controls">
-            <div class="move-handle"></div>
-            <button class="edit-btn">편집</button>
-            <button class="delete-btn">삭제</button>
-            </div>
-            `);
-            $msg.append(controls);
-        }
-    });
-}
+// 핸들 - 이동
+$(document).on('mousedown', '.hdl-move', function() {
+    saveState();
+});
 
-// 🔹 편집 (div 내부 textarea)
-$(document).on('click', '.edit-btn', function () {
+// 핸들 - 수정
+$(document).on('click', '.hdl-edit', function () {
+    saveState();
     const $msg = $(this).closest('.message');
-    const $controls = $msg.find('.msg-controls');
+    const $controls = $msg.find('.hdl-body');
 
     if ($msg.find('textarea.inline-editor').length > 0) return;
 
     // 원본 HTML
-    const originalHTML = $msg.clone().children('.msg-controls').remove().end().html().trim();
+    const originalHTML = $msg.clone().children('.hdl-body').remove().end().html().trim();
 
     if (originalHTML.includes('basicdiceroll')) {
         alert('편집을 지원하지 않는 주사위가 포함되어 있습니다.');
         return;
     }
 
-    // 핸들 비활성화
-    $msg.find('.msg-controls .move-handle').hide();
+    // 핸들 고정 & 이동 비활성화
+    $msg.find('.hdl-body').addClass('active');
 
     // 원본 요소들 저장
     const avatarHTMLs = [];
@@ -465,16 +496,20 @@ $(document).on('click', '.edit-btn', function () {
         });
 
         $msg.html(rebuiltHTML).append($controls);
-        attachControls();
 
-        // 핸들 활성화
-        $msg.find('.msg-controls .move-handle').show();
-        saveState();
+        // 핸들 고정 해제 & 이동 활성화
+        $msg.find('.hdl-body').removeClass('active');
     });
 });
 
-// 🔹 삭제
-$(document).on('click', '.delete-btn', function () {
+// 핸들 - 복제
+$(document).on('click', '.hdl-copy', function () {
+    saveState();
+    $(this).closest('.message').after($(this).closest('.message').clone());
+});
+
+// 핸들 - 삭제
+$(document).on('click', '.hdl-delete', function () {
     if (confirm('이 메시지를 삭제하시겠습니까?')) {
         saveState();
         $(this).closest('.message').remove();
@@ -550,8 +585,8 @@ $('.css-download').on('click', function () {
 
 // 현재 코드 복사
 $('#copy-html').on('click', function () {
-    if ($('#include-css').is(':checked')) { htmlContent = styleTag + $('#log-view').clone().find('.msg-controls').remove().end().html(); }
-    else { htmlContent = $('#log-view').clone().find('.msg-controls').remove().end().html(); }
+    if ($('#include-css').is(':checked')) { htmlContent = styleTag + $('#log-view').clone().find('.hdl-body').remove().end().html(); }
+    else { htmlContent = $('#log-view').clone().find('.hdl-body').remove().end().html(); }
     navigator.clipboard.writeText(htmlContent)
         .then(() => alert('HTML 내용이 복사되었습니다.'))
         .catch(() => alert('복사 실패'));
@@ -559,8 +594,8 @@ $('#copy-html').on('click', function () {
 
 // HTML 파일로 저장
 $('#download-html').on('click', function () {
-    if ($('#include-css').is(':checked')) { htmlContent = styleTag + $('#log-view').clone().find('.msg-controls').remove().end().html(); }
-    else { htmlContent = $('#log-view').clone().find('.msg-controls').remove().end().html(); }
+    if ($('#include-css').is(':checked')) { htmlContent = styleTag + $('#log-view').clone().find('.hdl-body').remove().end().html(); }
+    else { htmlContent = $('#log-view').clone().find('.hdl-body').remove().end().html(); }
     const blob = new Blob([htmlContent], { type: "text/html" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -571,14 +606,14 @@ $('#download-html').on('click', function () {
 });
 
 $(document).ready(function () {
-    attachControlsAsync();
+    attachHdl();
+
     $("#log-view").sortable({
         items: ".message",
-        handle: ".move-handle",
+        handle: ".hdl-move",
         cursor: "move",
         placeholder: "message-placeholder",
-        axis: "y",
-        stop: saveState
+        axis: "y"
     });
 
     $('#what').click(function (event) {
@@ -620,4 +655,6 @@ $(document).ready(function () {
 
     $('.message a').each(function () { $(this).attr('target', '_blank'); });
     $('.message a[href^="!"], .message a[href^="~"]').click(function (event) { event.preventDefault(); });
+    saveState();
+    $('#undo-btn').css('opacity', '0');
 });

@@ -1,6 +1,36 @@
+@charset "utf-8";
+
 html {
     -webkit-text-size-adjust: none; /*Chrome, Safari, newer versions of Opera*/
     -moz-text-size-adjust: none; /*Firefox*/
+}
+
+@font-face {
+    font-family: "Pretendard Variable";
+    src: url('PretendardVariable.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Pretendard Variable";
+    src: url('PretendardVariable.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Pretendard Variable";
+    src: url('PretendardVariable.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Pretendard Variable";
+    src: url('PretendardVariable.woff2') format('woff2');
+    font-weight: 900;
+    font-style: normal;
 }
 
 body {
@@ -10,34 +40,69 @@ body {
     background-color: var(--back);
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
     font-size: 16px;
-    color: var(--main);
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: bottom;
     word-break: keep-all;
     overflow-wrap: anywhere;
 }
 
 header {
+    display: flex;
     box-sizing: border-box;
     top: 0;
     width: 100%;
-    height: 40px;
+    height: 80px;
     background-color: white;
-    border-bottom: 1px solid grey;
-    text-align: center;
+    border-bottom: 1px solid #ddd;
+    align-items: flex-end;
 }
 
-.tool-btn {
+.title { box-sizing: border-box; margin-left: auto; width: 576px; padding: 0 35px 10px; font-size: 30px; font-weight: 900; color: #212121; }
+.toolbar { box-sizing: border-box; margin-right: auto; width: 576px; padding: 0 35px 10px; text-align: right; }
+.toolbar button { border: none; background: transparent; font-size: 24px; cursor: pointer; }
+#redo-btn { opacity: 0; }
+
+input { font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif; }
+
+#control textarea {
+    border: none;
+    border-radius: 6px;
+    background: #333;
+    color: white;
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    resize: none;
+}
+
+#control textarea::-webkit-scrollbar {
     display: none;
-    margin-top: auto;
+}
+
+#control button {
+    padding: 4px 8px;
+    color: white;
+    background: #999;
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#control button:hover {
+    background: #212121
 }
 
 #grid {
     display: flex;
-    height: calc(100% - 40px);
+    height: calc(100% - 80px);
 }
 
 #control {
     margin-left: auto;
-    padding: 20px;
+    padding: 35px;
+    background-color: white;
 }
 
 #control::-webkit-scrollbar {
@@ -75,6 +140,7 @@ header {
     opacity: 0;
     transition: transform 0.3s ease, opacity 0.3s ease;
     max-width: 100vw;
+    z-index: 10;
 }
 
 .pop-up img {
@@ -86,10 +152,33 @@ header {
     opacity: 1;
 }
 
-#log-text {
-    width: 100%;
-    max-width: 420px;
+.log-box { display: flex; }
+
+#log-upload {
+    width: 30%;
+    height: 160px;
+    overflow: hidden;
+    background: #f1f1f1;
+    border-radius: 6px;
+    border: 2px dashed #999;
+    cursor: pointer;
+    text-align: center;
 }
+
+#log-upload.active {
+    background: #ddd;
+    border: 2px dashed #333;
+}
+
+#html-view { font-size: 11px; line-height: 1.2; }
+
+.upload-icon { font-size: 30px; }
+
+#log-text {
+    width: 70%;
+}
+
+#log-html {opacity: 0;}
 
 #css-select {
     max-width: 100%;
@@ -101,9 +190,9 @@ header {
     text-decoration: underline;
 }
 
-#avatar-list img { max-width: 28px; max-height: 28px; }
+#avatar-list img { max-width: 28px; max-height: 28px; cursor: pointer; }
 
-#avatar-box { min-height: 300px; background-color: #ddd; border: 1px solid #aaa; border-radius: 6px; }
+#avatar-box { min-height: 300px; background-color: #ddd; border-radius: 6px; }
 #avatar-box #avatar-img img { width: 30%; }
 
 .change {
@@ -113,21 +202,84 @@ header {
 
 #log-view {
     margin-right: auto;
-    padding: 0 80px 0 0;
-    background: #fafafa;
+    padding: 0 75px 0 0;
+    background: white;
 }
 
-.msg-controls {
+.message:hover > .hdl-body {
+    opacity: 1;
+}
+
+.hdl-body {
     display: flex;
     position: absolute;
     top: 0;
-    right: -80px;
+    right: -68px;
     height: 100%;
+    opacity: 0;
 }
 
-.msg-controls button {
-    margin-left: 5px;
-    font-size: 12px;
+.hdl-move {
+    width: 90px;
+    height: 100%;
+    border-right: 4px solid #999;
+    cursor: move;
+}
+
+.hdl-box {
+    height: 16px;
+    padding: 4px 2px 4px 0;
+    background: #999;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    font-size: 0;
+}
+
+.hdl-box:hover { background: #212121; }
+.hdl-body:has(.hdl-box:hover) .hdl-move { border-right: 4px solid #212121; }
+
+.hdl-body button {
+    margin: 0 3px;
+    padding: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    width: 16px;
+    height: 16px;
+    border: none;
+    line-height: 0;
+    cursor: pointer;
+}
+
+.hdl-body .hdl-edit { background-image: url(edit.svg); }
+.hdl-body .hdl-copy { background-image: url(copy.svg); }
+.hdl-body .hdl-delete { background-image: url(delete.svg); }
+
+.hdl-body.active { opacity: 1; }
+.hdl-body.active .hdl-move { width: 0; cursor: default; }
+.hdl-body.active .hdl-box { background: #212121; }
+.hdl-body.active .hdl-move { border-right: 4px solid #212121; }
+
+#loading-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    backdrop-filter: blur(3px);
+    color: white;
+}
+
+#loading-text { margin-bottom: 12px; font-size: 1.2em; }
+
+#loading-bar {
+    width: 0%;
+    height: 12px;
+    background: #212121;
+    border-radius: 6px;
+    transition: width 0.3s ease;
 }
 
 #remove-ts { display: none; }
@@ -141,7 +293,8 @@ header {
 }
 
 textarea.inline-editor {
-    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
     height: 80px;
     box-sizing: border-box;
     font-family: inherit;
@@ -153,17 +306,29 @@ textarea.inline-editor {
 }
 
 .message-placeholder {
-    height: 40px;
-    /* 메시지 높이에 맞춰 조정 */
-    background-color: #f0f0f0;
-    border: 2px dashed #ccc;
+    height: 30px;
+    background-color: #f1f1f1;
+    border: 2px dashed #999;
     margin-bottom: 5px;
 }
 
-.move-handle {
-    width: 90px;
-    height: 100%;
-    cursor: move;
+/* ***** scroll bar ***** */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+    border: 2px solid white;
+    border-radius: 6px;
+    background-color: #ddd;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #212121;
+}
+
+::-webkit-scrollbar-track {
+    background-color: white;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -177,4 +342,5 @@ textarea.inline-editor {
 @media all and (max-width: 649px) {
     #grid { display: block; }
     #control, #log-view { width: 100%; height: auto; }
+    #log-view { padding-left: 20px; }
 }
