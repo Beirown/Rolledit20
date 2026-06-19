@@ -177,7 +177,7 @@ function compress() {
     $('#log-view .message').removeAttr('data-messageid');
 }
 
-const srcSet = new Set();
+let srcSet = new Set();
 
 // src 수집 (중복 제거)
 function avatarimg() {
@@ -192,6 +192,7 @@ function avatarimg() {
     $('#avatar-list').empty();
 
     // img 추가
+    srcSet.clear();
     srcSet.forEach(function (src) {
     $('<img>', {
         src: src
@@ -509,7 +510,7 @@ $('#avatar-btn').on('click', function () {
     let find = $('#link-org').val();
     let replace = $('#link-chg').val();
 
-    if (find === "") {
+    if (find === '') {
         alert('찾을 내용이 없습니다.');
         return;
     }
