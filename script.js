@@ -181,9 +181,10 @@ let srcSet = new Set();
 
 // src 수집 (중복 제거)
 function avatarimg() {
+    srcSet.clear();
+    
     $('#log-view .message .avatar img').each(function () {
     const src = $(this).attr('src');
-    srcSet.clear();
     if (src) {
         srcSet.add(src);
     }
