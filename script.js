@@ -183,7 +183,7 @@ let srcSet = new Set();
 function avatarimg() {
     $('#log-view .message .avatar img').each(function () {
     const src = $(this).attr('src');
-
+    srcSet.clear();
     if (src) {
         srcSet.add(src);
     }
@@ -192,7 +192,6 @@ function avatarimg() {
     $('#avatar-list').empty();
 
     // img 추가
-    srcSet.clear();
     srcSet.forEach(function (src) {
     $('<img>', {
         src: src
