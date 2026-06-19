@@ -322,7 +322,7 @@ $('#show-html').on('click', async function () {
         return;
     }
 
-    savestate();
+    saveState();
     showLoadingOverlay();
     updateLoadingProgress(0, "HTML 불러오는 중...");
     await sleep(50); // UI 렌더링 여유
