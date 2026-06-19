@@ -48,6 +48,11 @@ $(document).on('keydown', function (e) {
     else if (e.ctrlKey && (e.key === 'y' || (e.shiftKey && e.key === 'Z'))) { e.preventDefault(); redo(); }
 });
 
+// 샘플 데이터 삭제
+$('#log-text').one('click', function() {
+    $(this).val('')
+})
+
 // 시트 템플릿 자동 선택
 const rule = {
     'Roll20_coc.css': /sheet-rolltemplate-coc-/,
