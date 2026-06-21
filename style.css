@@ -140,7 +140,7 @@ header {
 .help svg .icon { fill: #999; }
 .help:hover > svg .icon { fill: #212121; }
 
-#what { cursor: pointer; margin-bottom: 10px; }
+.help { cursor: pointer; margin-bottom: 8px; }
 
 .pop-up {
     position: fixed;
