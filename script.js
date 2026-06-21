@@ -38,7 +38,7 @@ function redo() {
     $('#undo-btn').show();
 }
 
-$(document).on('keydown', function (e) {
+$(document).on('keydown', function(e) {
     if (e.ctrlKey && e.key === 'z') { e.preventDefault(); undo(); }
     else if (e.ctrlKey && (e.key === 'y' || (e.shiftKey && e.key === 'Z'))) { e.preventDefault(); redo(); }
 });
@@ -46,6 +46,16 @@ $(document).on('keydown', function (e) {
 // Undo/Redo 버튼
 $('#undo-btn').on('click', undo);
 $('#redo-btn').on('click', redo);
+
+// 도움말
+$('#help-what').on('click', function(e) {
+    e.stopPropagation();
+    $('#pop-what').addClass('active');
+});
+
+$(document).click(function() {
+    $('#pop-what').removeClass('active');
+});
 
 // 샘플 데이터 삭제
 $('#html-text').one('click', function() {
@@ -103,6 +113,9 @@ $('#html-text').on('input', function() {
         }
     }
     $('#html-list').text('왼쪽에 코드를 붙여넣거나 여기에 HTML 파일을 업로드해 주세요.');
+    $('#img-org, #img-chg').hide();
+    $('#null-org, #null-chg').show();
+    $('#link-org, #link-chg').val('');
     $('#html-upload .upload-icon').show();
 });
 
@@ -152,7 +165,7 @@ function uploadHtml(file) {
     }
 
     const reader = new FileReader();
-    reader.onload = function (e) {
+    reader.onload = function(e) {
         if (!e.target.result.includes('div class="message')) {
             alert('롤20 형식의 HTML이 아닙니다.');
             return;
@@ -165,7 +178,7 @@ function uploadHtml(file) {
 }
 
 // 시트 템플릿 수동 선택
-$('#css-select').on('change', function () {
+$('#css-select').on('change', function() {
     cssFile = $(this).val();
     if (!cssFile) return;
     if ($('#custom').is('style')) {
@@ -195,7 +208,7 @@ $('#css-upload').on('drop', function(e) {
 });
 
 $('#css-input').on('change', function(e) {
-    const file = event.target.files[0];
+    const file = e.target.files[0];
     uploadCss(file);
 });
 
@@ -244,7 +257,7 @@ function uploadCss(file) {
 }
 
 // 파일 바꾸기
-$('#show-file').on('click', function () {
+$('#show-file').on('click', function() {
     $('#section-edit').hide();
     $('#section-upload').show();
 });
@@ -275,7 +288,7 @@ function compress() {
 function avatarimg() {
     srcSet.clear();
 
-    $('#log-view .message .avatar img').each(function () {
+    $('#log-view .message .avatar img').each(function() {
     const src = $(this).attr('src');
     if (src) {
         srcSet.add(src);
@@ -285,7 +298,7 @@ function avatarimg() {
     $('#avatar-list').empty();
 
     // img 추가
-    srcSet.forEach(function (src) {
+    srcSet.forEach(function(src) {
     $('<img>', {
         src: src
     }).appendTo('#avatar-list');
@@ -303,7 +316,7 @@ async function attachHdl() {
     const batchSize = 100;
     for (let i = 0; i < messages.length; i += batchSize) {
         const batch = messages.slice(i, i + batchSize);
-        batch.each(function () {
+        batch.each(function() {
             const $msg = $(this);
             if ($msg.find('.hdl-body').length === 0) {
                 const controls = $(`
@@ -335,13 +348,13 @@ async function initSortableAsync(selector) {
         items: ".message",
         handle: ".hdl-move",
         cursor: "move",
-        placeholder: "message-placeholder",
+        placeholder: "msg-placeholder",
         axis: "y",
     });
 }
 
 // 편집 시작
-$('#start-edit').on('click', async function () {
+$('#start-edit').on('click', async function() {
     if (!$('#html-text').val()) {
         alert('편집할 로그를 입력한 뒤 시작해 주세요.');
         return;
@@ -384,7 +397,7 @@ $('#start-edit').on('click', async function () {
     updateLoadingProgress(90, '정렬 기능 로딩 중…');
     await initSortableAsync('#log-view');
 
-    window.onbeforeunload = function () {
+    window.onbeforeunload = function() {
         return '변경 내용이 사라질 수 있습니다. 페이지를 나가시겠습니까?';
     }
 
@@ -393,8 +406,7 @@ $('#start-edit').on('click', async function () {
     updateLoadingProgress(100, '편집 준비 완료!');
     await sleep(300);
 
-    $('.message a').each(function () { $(this).attr('target', '_blank'); });
-    $('.message a[href^="!"], .message a[href^="~"]').click(function (event) { event.preventDefault(); });
+    $('.message a').each(function() { $(this).attr('target', '_blank'); });
 
     hideLoadingOverlay();
 });
@@ -428,18 +440,21 @@ function updateLoadingProgress(percent, text) {
 
 // 🔹 오버레이 제거
 function hideLoadingOverlay() {
-    $('#loading-overlay').fadeOut(300, function () {
+    $('#loading-overlay').fadeOut(300, function() {
         $(this).remove();
     });
 }
 
+// 버튼 작동 방지
+$('#log-view').on('click', '.message a[href^="!"], .message a[href^="~"]', function(e) { e.preventDefault(); });
+
 // 핸들 - 이동
-$(document).on('mousedown', '.hdl-move', function() {
+$('#log-view').on('mousedown', '.hdl-move', function() {
     saveState();
 });
 
 // 핸들 - 수정
-$(document).on('click', '.hdl-edit', function () {
+$('#log-view').on('click', '.hdl-edit', function() {
     saveState();
     const $msg = $(this).closest('.message');
     const $controls = $msg.find('.hdl-body');
@@ -466,20 +481,20 @@ $(document).on('click', '.hdl-edit', function () {
     const spacerHTMLs = [];
 
     // 아바타 원본 저장
-    originalHTML.replace(/<div[^>]*class="avatar"[^>]*>[\s\S]*?<\/div>/g, function (match) {
+    originalHTML.replace(/<div[^>]*class="avatar"[^>]*>[\s\S]*?<\/div>/g, function(match) {
         avatarHTMLs.push(match);
         return match;
     });
 
     // 타임스탬프 원본 저장
-    originalHTML.replace(/<span[^>]*class="tstamp"[^>]*>([\s\S]*?)<\/span>/g, function (match, txt) {
+    originalHTML.replace(/<span[^>]*class="tstamp"[^>]*>([\s\S]*?)<\/span>/g, function(match, txt) {
         tstampTexts.push(txt.trim());
         tstampHTMLs.push(match);
         return match;
     });
 
     // by 원본 저장
-    originalHTML.replace(/<span[^>]*class="by"[^>]*>([\s\S]*?)<\/span>/g, function (match, txt) {
+    originalHTML.replace(/<span[^>]*class="by"[^>]*>([\s\S]*?)<\/span>/g, function(match, txt) {
         byTexts.push(txt.trim());
         byHTMLs.push(match);
         return match;
@@ -488,10 +503,10 @@ $(document).on('click', '.hdl-edit', function () {
     // HTML → 토큰 텍스트 변환
     let tokenHTML = originalHTML
         .replace(/<div[^>]*class="avatar"[^>]*>[\s\S]*?<\/div>/g, '{{아바타}}')
-        .replace(/<span[^>]*class="tstamp"[^>]*>([\s\S]*?)<\/span>/g, function (match, timeText) {
+        .replace(/<span[^>]*class="tstamp"[^>]*>([\s\S]*?)<\/span>/g, function(match, timeText) {
             return `{{시각: ${timeText.trim()}}}`;
         })
-        .replace(/<span[^>]*class="by"[^>]*>([\s\S]*?)<\/span>/g, function (match, byText) {
+        .replace(/<span[^>]*class="by"[^>]*>([\s\S]*?)<\/span>/g, function(match, byText) {
             return `{{As: ${byText.trim()}}}`;
         })
         .replace(/<div[^>]*class="spacer"[^>]*><\/div>/g, '{{구분선}}');
@@ -501,7 +516,7 @@ $(document).on('click', '.hdl-edit', function () {
     $msg.html(textarea).append($controls);
     textarea.focus();
 
-    textarea.on('blur', function () {
+    textarea.on('blur', function() {
         let edited = textarea.val();
 
         //구분선 복원
@@ -540,13 +555,13 @@ $(document).on('click', '.hdl-edit', function () {
 });
 
 // 핸들 - 복제
-$(document).on('click', '.hdl-copy', function () {
+$('#log-view').on('click', '.hdl-copy', function() {
     saveState();
     $(this).closest('.message').after($(this).closest('.message').clone());
 });
 
 // 핸들 - 삭제
-$(document).on('click', '.hdl-delete', function () {
+$('#log-view').on('click', '.hdl-delete', function() {
     if (confirm('이 메시지를 삭제하시겠습니까?')) {
         saveState();
         $(this).closest('.message').remove();
@@ -556,25 +571,32 @@ $(document).on('click', '.hdl-delete', function () {
 // 아바타 선택
 $('#avatar-list').on('click', 'img', function() {
     const avatarLink = this.src;
-    $('#img-org').attr('src', avatarLink);
+    $('#null-org').hide();
+    $('#img-org').attr('src', avatarLink).show();
     $('#link-org').val(avatarLink);
     $('#link-chg').val('');
 });
 
-$('#link-chg').on('change', function() {
+$('#link-chg').on('input', function() {
     const avatarLink = $(this).val();
-    $('#img-chg').attr('src', avatarLink);
+    if (avatarLink === '') { 
+        $('#img-chg').hide();
+        $('#null-chg').show();
+    } else {
+        $('#null-chg').hide();
+        $('#img-chg').attr('src', avatarLink).show();
+    }
 });
 
 // 구글 드라이브 링크 변환
-$('#avatar-ggl').on('click', function () {
+$('#avatar-ggl').on('click', function() {
     const avatarLink = $('#link-chg').val().replace('drive.google.com/file', 'lh3.googleusercontent.com').replace('/view?usp=drive_link', '');
     $('#link-chg').val(avatarLink);
     $('#img-chg').attr('src', avatarLink);
 });
 
-// 아바타 변경
-$('#avatar-btn').on('click', function () {
+// 아바타 바꾸기
+$('#avatar-btn').on('click', function() {
     let find = $('#link-org').val();
     let replace = $('#link-chg').val();
 
@@ -593,11 +615,28 @@ $('#avatar-btn').on('click', function () {
     $('#img-org').attr('src', replace);
     $('#img-chg').removeAttr('src');
     $('#link-org').val(replace);
-    $('#link-chg').val('');
+    $('#link-chg').val('').hide();
+    $('#null-chg').show();
+});
+
+// 일괄 바꾸기
+$('#rpl-btn').on('click', function() {
+    let find = $('#rpl-find').val();
+    let rpl = $('#rpl-replace').val();
+
+    if (find === '') {
+        alert('찾을 내용이 없습니다.');
+        return;
+    }
+
+    saveState();
+    $('#log-view').html(
+        $('#log-view').html().replaceAll(find, rpl)
+    );
 });
 
 // 일괄 삭제
-$('#remove-ts').on('click', function () {
+$('#remove-ts').on('click', function() {
     if (confirm('타임스탬프를 모두 삭제하시겠습니까?')) {
         saveState();
         $('#log-view .message .tstamp').remove();
@@ -606,7 +645,7 @@ $('#remove-ts').on('click', function () {
     }
 });
 
-$('#remove-hidden').on('click', function () {
+$('#remove-hidden').on('click', function() {
     if (confirm('hidden message를 모두 삭제하시겠습니까?')) {
         saveState();
         $('#log-view .message.hidden-message').remove();
@@ -616,7 +655,7 @@ $('#remove-hidden').on('click', function () {
 });
 
 // 템플릿 CSS 포함
-$('#include-css').on('change', function () {
+$('#include-css').on('change', function() {
     if ($(this).is(':checked')) {
         if ($('#css-select').val() == '적용 중인 템플릿 없음' && !$('#css-input').val()) {
             alert('적용 중인 템플릿이 없습니다.');
@@ -626,7 +665,7 @@ $('#include-css').on('change', function () {
 });
 
 // 백업용 CSS 다운로드
-$('.css-download').on('click', function () {
+$('.css-download').on('click', function() {
     const blob = new Blob([extractedCss], { type: "text/css" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -637,7 +676,7 @@ $('.css-download').on('click', function () {
 });
 
 // 현재 코드 복사
-$('#copy-html').on('click', function () {
+$('#copy-html').on('click', function() {
     if ($('#include-css').is(':checked')) { htmlContent = styleTag + $('#log-view').clone().find('.hdl-body').remove().end().html(); }
     else { htmlContent = $('#log-view').clone().find('.hdl-body').remove().end().html(); }
     navigator.clipboard.writeText(htmlContent)
@@ -646,7 +685,7 @@ $('#copy-html').on('click', function () {
 });
 
 // HTML 파일로 저장
-$('#download-html').on('click', function () {
+$('#download-html').on('click', function() {
     if ($('#include-css').is(':checked')) { htmlContent = styleTag + $('#log-view').clone().find('.hdl-body').remove().end().html(); }
     else { htmlContent = $('#log-view').clone().find('.hdl-body').remove().end().html(); }
     const blob = new Blob([htmlContent], { type: "text/html" });
@@ -658,42 +697,17 @@ $('#download-html').on('click', function () {
     URL.revokeObjectURL(url);
 });
 
-$(document).ready(function () {
+// 초기 로딩
+$(document).ready(function() {
     attachHdl();
-
     $('#log-view').sortable({
         items: ".message",
         handle: ".hdl-move",
         cursor: "move",
-        placeholder: "message-placeholder",
+        placeholder: "msg-placeholder",
         axis: "y"
     });
 
-    $('#what').click(function (event) {
-        event.stopPropagation();
-        $('.pop-up').addClass('active');
-    });
-
-    $(document).click(function () {
-        $('.pop-up').removeClass('active');
-    });
-
-    $('#rpl-btn').click(function () {
-        let find = $('#rpl-find').val();
-        let rpl = $('#rpl-replace').val();
-
-        if (find === '') {
-            alert('찾을 내용이 없습니다.');
-            return;
-        }
-
-        saveState();
-        $('#log-view').html(
-            $('#log-view').html().replaceAll(find, rpl)
-        );
-    });
-
-    $('.message a').each(function () { $(this).attr('target', '_blank'); });
-    $('.message a[href^="!"], .message a[href^="~"]').click(function (event) { event.preventDefault(); });
+    $('.message a').each(function() { $(this).attr('target', '_blank'); });
     $('#undo-btn').hide();
 });
