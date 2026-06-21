@@ -5,6 +5,34 @@ let styleTag;
 let htmlContent;
 let srcSet = new Set();
 
+const rule = {
+    'Roll20_coc.css': /sheet-rolltemplate-coc-/,
+    'Roll20_Ins.css': /sheet-rolltemplate-Ins/,
+    'Roll20_Ninpo.css': /sheet-rolltemplate-Ninpo/,
+    'Roll20_agon.css': /sheet-rolltemplate-agon-/,
+    'Roll20_callofcthulhu.css': /sheet-rolltemplate-callofcthulhu|sheet-rolltemplate-coccm|sheet-rolltemplate-skillimprovement/,
+    'Roll20_daegong.css': /sheet-rolltemplate-daegong-/,
+    'Roll20_dw.css': /sheet-rolltemplate-move|sheet-rolltemplate-dwgeneral|sheet-rolltemplate-spell/,
+    'Roll20_Dx3Dice.css': /sheet-rolltemplate-Dx3Dice/,
+    'Roll20_Magic.css': /sheet-rolltemplate-Magic|sheet-rolltemplate-modulation-table|sheet-rolltemplate-fate-mutation-table|sheet-rolltemplate-ordinary-scene-table|sheet-rolltemplate-fumble-table|sheet-rolltemplate-event-table/,
+    'Roll20_Nc.css': /sheet-rolltemplate-Nc/,
+    'Roll20_Strato.css': /sheet-rolltemplate-Strato/
+};
+
+const sheet = {
+    'Roll20_coc.css': 'https://storage.googleapis.com/roll20-cdn/sheetsockets/coc7e/v1.0.0/coc_7th_ed.png',
+    'Roll20_Ins.css': 'https://storage.googleapis.com/roll20-cdn/sheetsockets/insane/v1.0.0/inSANe.png',
+    'Roll20_Ninpo.css': 'https://storage.googleapis.com/roll20-cdn/sheetsockets/shinobigami/v1.0.0/ShinobiGami.png',
+    'Roll20_agon.css': 'https://storage.googleapis.com/roll20-cdn/sheetsockets/agonofficial/v1.0.0/agon.png',
+    'Roll20_callofcthulhu.css': 'https://storage.googleapis.com/roll20-cdn/sheetsockets/callofcthulu/v1.0.0/preview.png',
+    'Roll20_daegong.css': 'https://storage.googleapis.com/roll20-cdn/sheetsockets/grdukeofficial/v1.0.0/northgrandduke.png',
+    'Roll20_dw.css': 'https://storage.googleapis.com/roll20-cdn/sheetsockets/dungeonworldofficial/v1.0.0/Dungeon%20World%20preview.png',
+    'Roll20_Dx3Dice.css': 'https://storage.googleapis.com/roll20-cdn/sheetsockets/doublecross3e/v1.0.0/DoubleCross3rd.png',
+    'Roll20_Magic.css': 'https://storage.googleapis.com/char-sheet-app-dff083b4/charsheets/magicalogica/sheet.png?1641489560',
+    'Roll20_Nc.css': 'https://storage.googleapis.com/roll20-cdn/sheetsockets/nechronica/v1.0.0/nechronica.png',
+    'Roll20_Strato.css': 'https://storage.googleapis.com/roll20-cdn/sheetsockets/stratoshout/v1.0.0/stratoshout.png'
+}
+
 // tipsy
 function autoGrav() {
     if ($(this).hasClass('tipsy-w')) return 'w';
@@ -83,62 +111,6 @@ $('#html-text').one('click', function() {
     $('#start-edit').text('편집 시작');
 })
 
-// 시트 템플릿 자동 선택
-const rule = {
-    'Roll20_coc.css': /sheet-rolltemplate-coc-/,
-    'Roll20_Ins.css': /sheet-rolltemplate-Ins/,
-    'Roll20_Ninpo.css': /sheet-rolltemplate-Ninpo/,
-    'Roll20_agon.css': /sheet-rolltemplate-agon-/,
-    'Roll20_callofcthulhu.css': /sheet-rolltemplate-callofcthulhu|sheet-rolltemplate-coccm|sheet-rolltemplate-skillimprovement/,
-    'Roll20_daegong.css': /sheet-rolltemplate-daegong-/,
-    'Roll20_dw.css': /sheet-rolltemplate-move|sheet-rolltemplate-dwgeneral|sheet-rolltemplate-spell/,
-    'Roll20_Dx3Dice.css': /sheet-rolltemplate-Dx3Dice/,
-    'Roll20_Magic.css': /sheet-rolltemplate-Magic|sheet-rolltemplate-modulation-table|sheet-rolltemplate-fate-mutation-table|sheet-rolltemplate-ordinary-scene-table|sheet-rolltemplate-fumble-table|sheet-rolltemplate-event-table/,
-    'Roll20_Nc.css': /sheet-rolltemplate-Nc/,
-    'Roll20_Strato.css': /sheet-rolltemplate-Strato/
-};
-
-const sheet = {
-    'Roll20_coc.css': 'https://storage.googleapis.com/roll20-cdn/sheetsockets/coc7e/v1.0.0/coc_7th_ed.png',
-    'Roll20_Ins.css': 'https://storage.googleapis.com/roll20-cdn/sheetsockets/insane/v1.0.0/inSANe.png',
-    'Roll20_Ninpo.css': 'https://storage.googleapis.com/roll20-cdn/sheetsockets/shinobigami/v1.0.0/ShinobiGami.png',
-    'Roll20_agon.css': 'https://storage.googleapis.com/roll20-cdn/sheetsockets/agonofficial/v1.0.0/agon.png',
-    'Roll20_callofcthulhu.css': 'https://storage.googleapis.com/roll20-cdn/sheetsockets/callofcthulu/v1.0.0/preview.png',
-    'Roll20_daegong.css': 'https://storage.googleapis.com/roll20-cdn/sheetsockets/grdukeofficial/v1.0.0/northgrandduke.png',
-    'Roll20_dw.css': 'https://storage.googleapis.com/roll20-cdn/sheetsockets/dungeonworldofficial/v1.0.0/Dungeon%20World%20preview.png',
-    'Roll20_Dx3Dice.css': 'https://storage.googleapis.com/roll20-cdn/sheetsockets/doublecross3e/v1.0.0/DoubleCross3rd.png',
-    'Roll20_Magic.css': 'https://storage.googleapis.com/char-sheet-app-dff083b4/charsheets/magicalogica/sheet.png?1641489560',
-    'Roll20_Nc.css': 'https://storage.googleapis.com/roll20-cdn/sheetsockets/nechronica/v1.0.0/nechronica.png',
-    'Roll20_Strato.css': 'https://storage.googleapis.com/roll20-cdn/sheetsockets/stratoshout/v1.0.0/stratoshout.png'
-}
-
-$('#html-text').on('input', function() {
-    if (!$('#custom').is('style')) {
-        cssFile = null;
-        const str = $(this).val();
-
-        for (const [file, regex] of Object.entries(rule)) {
-            if (regex.test(str)) {
-                cssFile = file;
-                break;
-            } else {
-                $('#css-img .img-null').text('인식된 캐릭터 시트가 없습니다. 롤20 기본 템플릿이 아닌 경우, 수동으로 시트를 선택하거나 커스텀 시트 CSS를 업로드해 주세요.');
-                $('#css-img img').hide();
-            }
-        }
-
-        $('#css-select').val(cssFile);
-        if (sheet[cssFile]) {
-            $('#css-img img').attr('src', sheet[cssFile]).show();
-        }
-    }
-    $('#html-list').text('왼쪽에 코드를 붙여넣거나 여기에 HTML 파일을 업로드해 주세요.');
-    $('#img-org, #img-chg').hide();
-    $('#null-org, #null-chg').show();
-    $('#link-org, #link-chg').val('');
-    $('#html-upload .upload-icon').show();
-});
-
 // 드래그 & 드랍 이벤트 공통
 $('.upload-box')
 .on('dragenter', function(e) {
@@ -198,6 +170,33 @@ function uploadHtml(file) {
     }
     reader.readAsText(file, 'utf-8');
 }
+
+// 시트 템플릿 자동 선택
+$('#html-text').on('input', function() {
+    if (!$('#custom').is('style')) {
+        cssFile = null;
+        const str = $(this).val();
+
+        for (const [file, regex] of Object.entries(rule)) {
+            if (regex.test(str)) {
+                cssFile = file;
+                break;
+            } else {
+                $('#css-img .img-null').text('인식된 캐릭터 시트가 없습니다. 롤20 기본 템플릿이 아닌 경우, 수동으로 시트를 선택하거나 커스텀 시트 CSS를 업로드해 주세요.');
+                $('#css-img img').hide();
+            }
+        }
+
+        $('#css-select').val(cssFile);
+        if (sheet[cssFile]) {
+            $('#css-img img').attr('src', sheet[cssFile]).show();
+        }
+    }
+    $('#html-list').text('왼쪽에 코드를 붙여넣거나 여기에 HTML/TXT 파일을 업로드해 주세요.');
+    $('#img-org, #img-chg').hide();
+    $('#null-org, #null-chg, #html-upload .upload-icon').show();
+    $('#link-org, #link-chg').val('');
+});
 
 // 시트 템플릿 수동 선택
 $('#css-select').on('change', function() {
@@ -332,12 +331,11 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// 편집 기능 attachHdl
+// 편집 기능 추가
 async function attachHdl() {
     const messages = $('#log-view .message');
-    const batchSize = 100;
-    for (let i = 0; i < messages.length; i += batchSize) {
-        const batch = messages.slice(i, i + batchSize);
+    for (let i = 0; i < messages.length; i += 100) {
+        const batch = messages.slice(i, i + 100);
         batch.each(function() {
             const $msg = $(this);
             if ($msg.find('.hdl-body').length === 0) {
@@ -355,7 +353,7 @@ async function attachHdl() {
             }
         });
         updateLoadingProgress(66 + Math.floor((i / messages.length) * 20), `편집 기능 로딩 중⋯ (${i}/${messages.length})`);
-        await sleep(10); // 브라우저 숨 쉴 시간
+        await sleep(10); // 여유 시간
     }
 }
 

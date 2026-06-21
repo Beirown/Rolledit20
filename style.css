@@ -38,7 +38,7 @@ body {
     padding: 0;
     height: 100vh;
     background-color: #FDEBD3;
-    color: #212121;
+    color: #333;
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
     font-size: 16px;
     background: conic-gradient(from 0deg at 50% 50%, white 0%, #FFF3DC 10%, #FFE1E2 20%, #FFF3DC 40%, white 60%, #FFE1E2 70%, #FFF3DC 80%, #FFE1E2 90%, white 100%);
@@ -48,7 +48,7 @@ body {
 
 input {
     height: 20px;
-    border: 1px solid #212121;
+    border: 1px solid #333;
     border-radius: 6px;
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
@@ -57,7 +57,7 @@ input[type="checkbox"] { height: auto; cursor: pointer; }
 
 select {
     height: 24px;
-    border: 1px solid #212121;
+    border: 1px solid #333;
     border-radius: 6px;
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
     cursor: pointer;
@@ -79,13 +79,13 @@ header {
 }
 
 .title { box-sizing: border-box; margin-left: auto; width: 576px; padding: 0 35px 10px; }
-.title h1 { margin: 0; padding: 0; font-size: 30px; font-weight: 900; color: #212121; }
+.title h1 { margin: 0; padding: 0; font-size: 30px; font-weight: 900; color: #333; }
 
 .toolbar { box-sizing: border-box; display: flex; margin-right: auto; width: 576px; padding: 0 35px 10px; justify-content: flex-end; }
 .toolbar .tool-btn { width: 30px; height: 30px; }
 .toolbar button { margin: 0; padding: 0; border: none; background: transparent; font-size: 24px; cursor: pointer; }
 .toolbar button svg .icon { fill: #999; }
-.toolbar button:hover > svg .icon { fill: #212121; }
+.toolbar button:hover > svg .icon { fill: #333; }
 #redo-btn { display: none; transform: scaleX(-1); }
 
 #grid {
@@ -135,7 +135,7 @@ header {
     cursor: pointer;
 }
 
-#control button:hover { background: #212121; }
+#control button:hover { background: #333; }
 
 #section-edit, #section-custom {
     display: none;
@@ -143,7 +143,7 @@ header {
 
 .help svg, .showtip svg { position: relative; top: 2px; }
 .help svg .icon, .showtip .icon { fill: #999; }
-.help:hover > svg .icon, .showtip:hover > svg .icon { fill: #212121; }
+.help:hover > svg .icon, .showtip:hover > svg .icon { fill: #333; }
 
 .help { cursor: pointer; }
 .showtip { cursor: pointer; }
@@ -189,7 +189,7 @@ header {
 .upload-icon { font-size: 30px; }
 
 #html-text { width: 65%; }
-#sample { height: 45px; margin-top: 4px; font-size: 14px; }
+#sample { height: 40px; margin-top: 4px; font-size: 14px; }
 .file-list { font-size: 11px; line-height: 1.2; }
 
 #css-select { max-width: 100%; }
@@ -220,6 +220,8 @@ header {
     background: white;
 }
 
+#log-view img { max-width: 100%; }
+
 .hdl-body {
     display: flex;
     position: absolute;
@@ -246,8 +248,8 @@ header {
 }
 
 .message:hover > .hdl-body { opacity: 1; }
-.hdl-box:hover { background: #212121; }
-.hdl-body:has(.hdl-box:hover) .hdl-move { border-right: 4px solid #212121; }
+.hdl-box:hover { background: #333; }
+.hdl-body:has(.hdl-box:hover) .hdl-move { border-right: 4px solid #333; }
 
 .hdl-body button {
     margin: 0 3px;
@@ -268,8 +270,8 @@ header {
 
 .hdl-body.active { opacity: 1; }
 .hdl-body.active .hdl-move { width: 0; cursor: default; }
-.hdl-body.active .hdl-box { background: #212121; }
-.hdl-body.active .hdl-move { border-right: 4px solid #212121; }
+.hdl-body.active .hdl-box { background: #333; }
+.hdl-body.active .hdl-move { border-right: 4px solid #333; }
 
 #loading-overlay {
     position: fixed;
@@ -288,7 +290,7 @@ header {
 #loading-bar {
     width: 0%;
     height: 12px;
-    background: #212121;
+    background: #333;
     border-radius: 6px;
     transition: width 0.3s ease;
 }
@@ -307,7 +309,7 @@ textarea.inline-editor {
 .msg-placeholder {
     height: 40px;
     background-color: #f1f1f1;
-    border: 2px dashed #999;
+    border: 2px dashed #e1e1e1;
     margin-bottom: 5px;
 }
 
@@ -323,7 +325,7 @@ textarea.inline-editor {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #212121;
+    background-color: #333;
 }
 
 ::-webkit-scrollbar-track {
