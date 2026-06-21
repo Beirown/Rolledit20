@@ -262,7 +262,7 @@ function uploadCss(file) {
         }
 
         extractedCss = matches.join('\n\n');
-        styleTag = `<style id="custom">${extractedCss}</style>`;
+        styleTag = `<style id="rolleditor custom">${extractedCss}</style>`;
         $('head style#custom').remove();
         $('head').append(styleTag);
     };
@@ -286,10 +286,9 @@ $('#show-file').on('click', function() {
 });
 
 // 커스텀 시트 없는 경우 CSS 후속 작업
-function internalcss() {
+function internalcss(cssFile) {
     $('#css-sheet').attr('href', cssFile);
     $('#css-view').text(cssFile);
-    styleTag = null;
 
     fetch(`./${cssFile}`)
         .then(response => {
@@ -297,7 +296,7 @@ function internalcss() {
             return response.text();
         })
         .then(cssContent => {
-            styleTag = `<style>\n${cssContent}\n</style>`;
+            styleTag = `<style id="rolleditor">\n${cssContent}\n</style>`;
         });
 }
 
@@ -405,7 +404,7 @@ $('#start-edit').on('click', async function() {
 
     updateLoadingProgress(66, '편집 기능 로딩 중⋯');
     await attachHdl();
-    if (cssFile) { internalcss(); }
+    if (cssFile) { internalcss(cssFile); }
 
     if ($('#log-view .tstamp').length > 0) {
         $('#check-ts').hide();
@@ -711,10 +710,23 @@ $('.css-download').on('click', function() {
     URL.revokeObjectURL(url);
 });
 
+// HTML 저장
+function saveHtml(styleTag) {
+    const oriContent = $('#log-view').clone().find('.hdl-body').remove().end().html();
+    if ($('#include-css').is(':checked')) { 
+        if ($(oriContent).find('style').length > 0) {
+            if (confirm('기존 서식을 덮어쓸까요? 취소 시 기존 서식을 유지한 채 서식을 추가로 적용합니다.')) {
+                htmlContent = styleTag + $(oriContent).find('style').remove();
+            } else {
+                htmlContent = styleTag + oriContent;
+            }
+        } else { htmlContent = styleTag + oriContent; }
+    } else { htmlContent = oriContent; }
+}
+
 // 현재 코드 복사
 $('#copy-html').on('click', function() {
-    if ($('#include-css').is(':checked')) { htmlContent = styleTag + $('#log-view').clone().find('.hdl-body').remove().end().html(); }
-    else { htmlContent = $('#log-view').clone().find('.hdl-body').remove().end().html(); }
+    saveHtml(styleTag);
     navigator.clipboard.writeText(htmlContent)
         .then(() => alert('HTML 내용이 복사되었습니다.'))
         .catch(() => alert('복사 실패'));
@@ -722,8 +734,7 @@ $('#copy-html').on('click', function() {
 
 // HTML 파일로 저장
 $('#download-html').on('click', function() {
-    if ($('#include-css').is(':checked')) { htmlContent = styleTag + $('#log-view').clone().find('.hdl-body').remove().end().html(); }
-    else { htmlContent = $('#log-view').clone().find('.hdl-body').remove().end().html(); }
+    saveHtml(styleTag);
     const blob = new Blob([htmlContent], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -737,8 +748,7 @@ $('#download-html').on('click', function() {
 
 // TXT 파일로 저장
 $('#download-txt').on('click', function() {
-    if ($('#include-css').is(':checked')) { htmlContent = styleTag + $('#log-view').clone().find('.hdl-body').remove().end().html(); }
-    else { htmlContent = $('#log-view').clone().find('.hdl-body').remove().end().html(); }
+    saveHtml(styleTag);
     const blob = new Blob([htmlContent], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
