@@ -37,12 +37,11 @@ body {
     margin: 0;
     padding: 0;
     height: 100vh;
-    background-color: #212121;
+    background-color: #FDEBD3;
+    color: #212121;
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
     font-size: 16px;
-    background-image: url('background.jpg');
-    background-size: cover;
-    background-position: bottom;
+    background: conic-gradient(from 0deg at 50% 50%, white 0%, #FFF3DC 10%, #FFE1E2 20%, #FFF3DC 40%, white 60%, #FFE1E2 70%, #FFF3DC 80%, #FFE1E2 90%, white 100%);
     word-break: keep-all;
     overflow-wrap: anywhere;
 }
@@ -54,6 +53,8 @@ input {
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
 
+input[type="checkbox"] { height: auto; cursor: pointer; }
+
 select {
     height: 24px;
     border: 1px solid #212121;
@@ -63,6 +64,7 @@ select {
 }
 
 h2 { margin-top: 45px; }
+p { margin: 5px; line-height: 1.4; }
 
 header {
     display: flex;
@@ -78,11 +80,13 @@ header {
 
 .title { box-sizing: border-box; margin-left: auto; width: 576px; padding: 0 35px 10px; }
 .title h1 { margin: 0; padding: 0; font-size: 30px; font-weight: 900; color: #212121; }
+
 .toolbar { box-sizing: border-box; display: flex; margin-right: auto; width: 576px; padding: 0 35px 10px; justify-content: flex-end; }
 .toolbar .tool-btn { width: 30px; height: 30px; }
-.toolbar button { margin: 0; padding: 0; border: none; background: transparent; font-size: 24px; opacity: .7; cursor: pointer; }
-.toolbar button:hover { opacity: 1; }
-#redo-btn { display: none; }
+.toolbar button { margin: 0; padding: 0; border: none; background: transparent; font-size: 24px; cursor: pointer; }
+.toolbar button svg .icon { fill: #999; }
+.toolbar button:hover > svg .icon { fill: #212121; }
+#redo-btn { display: none; transform: scaleX(-1); }
 
 #grid {
     display: flex;
@@ -136,11 +140,12 @@ header {
     display: none;
 }
 
-.help svg { position: relative; top: 2px; }
-.help svg .icon { fill: #999; }
-.help:hover > svg .icon { fill: #212121; }
+.help svg, .showtip svg { position: relative; top: 2px; }
+.help svg .icon, .showtip .icon { fill: #999; }
+.help:hover > svg .icon, .showtip:hover > svg .icon { fill: #212121; }
 
-.help { cursor: pointer; margin-bottom: 8px; }
+.help { cursor: pointer; }
+.showtip { cursor: pointer; }
 
 .pop-up {
     position: fixed;
@@ -150,9 +155,8 @@ header {
     padding: 20px 40px;
     background-color: white;
     border: 1px solid #333;
-    border-radius: 10px;
+    border-radius: 6px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    font-size: 24px;
     text-align: center;
     opacity: 0;
     transition: transform 0.3s ease, opacity 0.3s ease;
@@ -163,12 +167,13 @@ header {
 .pop-up img { max-width: 90vw; }
 .pop-up.active { transform: translate(-50%, -50%) scale(1); opacity: 1; }
 
+#help-what { margin-bottom: 8px; }
 .file-box { display: flex; height: 160px; }
 
 .upload-box {
     box-sizing: border-box;
     padding: 8px;
-    width: 30%;
+    width: 35%;
     height: 100%;
     overflow: hidden;
     background: #f1f1f1;
@@ -179,21 +184,25 @@ header {
 }
 
 .upload-box.active { background: #ddd; border: 2px dashed #333; }
-.upload-box input { opacity: 0; }
+.upload-box input { display: none; }
 .upload-icon { font-size: 30px; }
 
-#html-text { width: 70%; }
+#html-text { width: 65%; }
 #sample { height: 45px; margin-top: 4px; font-size: 14px; }
 .file-list { font-size: 11px; line-height: 1.2; }
 
 #css-select { max-width: 100%; }
-#css-img { width: 40%; overflow: hidden; }
-.img-null { display: flex; box-sizing: border-box; height: 100%; padding: 8px; border-radius: 6px; text-align: center; align-items: center; background: #f1f1f1; font-size: 14px; line-height: 1.4; }
+#css-img { display: grid; width: 65%; align-items: center; overflow: hidden; }
+.img-null { display: grid; box-sizing: border-box; width: 100%; height: 100%; padding: 8px; border-radius: 6px; text-align: center; align-items: center; background: #f1f1f1; font-size: 14px; line-height: 1.4; }
 #css-img img { display: none; width: 100%; height: 100%; border-radius: 6px; object-fit: cover; object-position: left top; }
-#css-upload, #css-download { width: 30%; }
+#css-upload { width: 35%; }
+#css-img #css-custom { display: none; width: 100%; padding: 8px; text-align: center; }
+#css-custom .css-download { margin: 6px auto auto; }
+.css-download { display: none; align-items: center; }
+.css-download .icon { fill: white; }
 
 #avatar-list img { max-width: 28px; max-height: 28px; cursor: pointer; }
-#avatar-box { box-sizing: border-box; width: 100%; min-height: 300px; padding: 10px; background-color: #ddd; border-radius: 6px; }
+#avatar-box { box-sizing: border-box; width: 100%; padding: 10px; background-color: #ddd; border-radius: 6px; }
 #avatar-box .avatar-img { display: grid; width: 100%; min-height: 150px; margin-bottom: 10px; grid-template-columns: 30% 30px 30% auto; }
 #avatar-box .avatar-img img { display: none; width: 100%; }
 #avatar-box .arrow { display: grid; width: 100%; height: 100%; text-align: center; align-items: center; }
@@ -283,9 +292,8 @@ header {
     transition: width 0.3s ease;
 }
 
+#rpl-num { color: #999; }
 #remove-ts, #remove-hidden { display: none; }
-
-.css-download { display: none; }
 
 textarea.inline-editor {
     min-width: 100%;

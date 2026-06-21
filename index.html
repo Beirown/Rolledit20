@@ -5,8 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi" />
   <title>Rolleditor - 롤20 로그 편집기</title>
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.min.js"></script>
+  <script type='text/javascript' src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script type='text/javascript' src="https://code.jquery.com/ui/1.13.3/jquery-ui.min.js"></script>
+  <script type='text/javascript' src='./jquery.tipsy.js'></script>
   <script src="./script.js" defer></script>
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css"/>
   <link rel="stylesheet" href="./style.css"/>
@@ -17,18 +18,21 @@
   <header>
     <div class="title"><h1>Rolledit20</h1></div>
     <div class="toolbar" role="toolbar">
-      <div class="tool-btn"><button id="undo-btn" class="tool-btn">↶</button></div>
-      <div class="tool-btn"><button id="redo-btn" class="tool-btn">↷</button></div>
+      <div class="tool-btn"><button id="undo-btn" class="tool-btn showtip" alt="실행 취소" title="실행 취소(Ctrl+Z)"><svg width="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path class="icon" d="m8.0865067 2c-.18989146-.01681362-.39099893.02170898-.58201043.13085938l-6.9997496 4c-.32495272.18527247-.51935064.53640686-.50388823.91015625.01468018.34373316.20500507.65578858.50388823.82617188l6.9997496 4c.76500772.43781606 1.6811886-.25635914 1.4667444-1.1113281l-.31660159-1.270692a.3907077.3907077 128.00462 0 1 .37911724-.48516735h6.4665477c2.5088809 0 4.499839 1.9910294 4.499839 4.5s-1.9909581 4.5-4.499839 4.5h-7.4997317c-1.10453 0-1.9999285.8954305-1.9999285 2s.89539847 2 1.9999285 2h7.4997317c4.670564 0 8.499696-3.8292689 8.499696-8.5s-3.8291319-8.5-8.499696-8.5h-6.4685007a.39049669.39049669 52.010399 0 1 -.37886295-.48510392l.31830036-1.2746617c.1590673-.64055607-.31505961-1.1897935-.88473398-1.2402344z"/></svg></button></div>
+      <div class="tool-btn"><button id="redo-btn" class="tool-btn showtip" alt="다시 실행" title="다시 실행(Ctrl+Y)"><svg width="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path class="icon" d="m8.0865067 2c-.18989146-.01681362-.39099893.02170898-.58201043.13085938l-6.9997496 4c-.32495272.18527247-.51935064.53640686-.50388823.91015625.01468018.34373316.20500507.65578858.50388823.82617188l6.9997496 4c.76500772.43781606 1.6811886-.25635914 1.4667444-1.1113281l-.31660159-1.270692a.3907077.3907077 128.00462 0 1 .37911724-.48516735h6.4665477c2.5088809 0 4.499839 1.9910294 4.499839 4.5s-1.9909581 4.5-4.499839 4.5h-7.4997317c-1.10453 0-1.9999285.8954305-1.9999285 2s.89539847 2 1.9999285 2h7.4997317c4.670564 0 8.499696-3.8292689 8.499696-8.5s-3.8291319-8.5-8.499696-8.5h-6.4685007a.39049669.39049669 52.010399 0 1 -.37886295-.48510392l.31830036-1.2746617c.1590673-.64055607-.31505961-1.1897935-.88473398-1.2402344z"/></svg></button></div>
     </div>
   </header>
   <div id="pop-what" class="pop-up">
-    <img src="./chat.png">
+    <img src="https://lh3.googleusercontent.com/d/1tQgoZ5Bryb0jxFeaIYit_iEjI5M5vXZS">
+  </div>
+  <div id="pop-img" class="pop-up">
+    <img src="https://lh3.googleusercontent.com/d/1PGlxdGuHUNhOPIrE4iz3e7of12KWfQ7u">
   </div>
   <div id="grid">
     <link rel="stylesheet" id="css-sheet">
     <div id="control">
       <div id="section-upload">
-        <h2>HTML 올리기</h2>
+        <h2>HTML 입력하기</h2>
         <div id="help-what" class="help"><svg width="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g class="icon"><path d="m12 1a11 11 0 1 0 11 11 11.013 11.013 0 0 0 -11-11zm0 18a1 1 0 1 1 1-1 1 1 0 0 1 -1 1zm2.262-6.1a2.524 2.524 0 0 0 -1.262 2.1 1 1 0 0 1 -2 0 4.509 4.509 0 0 1 2.2-3.8 2.28 2.28 0 0 0 1.01-2.476 2.275 2.275 0 0 0 -4.482.549 1 1 0 0 1 -2 0 4.251 4.251 0 0 1 1.61-3.342 4.294 4.294 0 0 1 3.656-.818 4.274 4.274 0 0 1 1.268 7.787z"/></g></svg> 무엇을 넣어야 하나요?</div>
         <div class="file-box">
           <textarea id="html-text" rows="10" cols="60" placeholder="복사한 HTML을 붙여넣어 주세요.">&lt;div class=&quot;textchatcontainer&quot; id=&quot;textchat&quot;&gt;
@@ -36,14 +40,14 @@
 &lt;/div&gt;</textarea>
         <label id="html-upload" class="upload-box">
           <input type="file" accept="text/html" id="html-input">
-          <span id="html-list" class="file-list">왼쪽에 코드를 붙여넣거나 여기에 HTML 파일을 업로드해 주세요.</span>
+          <span id="html-list" class="file-list">왼쪽에 코드를 붙여넣거나 여기에 HTML/TXT 파일을 업로드해 주세요.</span>
           <div class="upload-icon">+</div>
         </label>
         </div>
-        <div id="sample">샘플 데이터입니다. 클릭 시 칸이 비워집니다.</div>
+        <div id="sample"><span>샘플 데이터입니다. 클릭 시 칸이 비워집니다.</span></div>
         <br>
 
-        <label style="display: block; margin-bottom: 20px;">시트 템플릿 선택
+        <label style="display: block; margin-bottom: 20px;">템플릿 선택
           <select id="css-select">
             <option value="적용 중인 템플릿 없음"> </option>
             <option value="Roll20_agon.css">AGON by Evil Hat Productions</option>
@@ -60,23 +64,22 @@
           </select>
         </label>
         <div class="file-box">
-          <div id="css-img"><img><div class="img-null">선택된 캐릭터 시트가 없습니다. 롤20 기본 템플릿이 아닌 경우, 수동으로 시트를 선택하거나 커스텀 시트 CSS를 업로드해 주세요.</div></div>
-        <label id="css-upload" class="upload-box">
-          <input type="file" accept="text/css" id="css-input">
-          <span id="css-list" class="file-list">여기에 커스텀 시트 CSS 파일을 업로드해 주세요.</span>
-          <div class="upload-icon">+</div>
-        </label>
-        <button class="css-download">백업용 CSS 다운로드</button>
+          <div id="css-img"><img><div class="img-null">HTML 입력 시 자동으로 시트 템플릿이 인식됩니다.</div><div id="css-custom">커스텀 시트는 미리보기가 제공되지 않습니다.<button class="css-download">백업용 CSS 다운로드 <svg width="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g class="icon"><path d="m12 16c-.205 0-.401-.084-.542-.232l-5.25-5.5c-.455-.476-.117-1.268.542-1.268h2.75v-5.75c0-.689.561-1.25 1.25-1.25h2.5c.689 0 1.25.561 1.25 1.25v5.75h2.75c.659 0 .997.792.542 1.268l-5.25 5.5c-.141.148-.337.232-.542.232z"/><path d="m22.25 22h-20.5c-.965 0-1.75-.785-1.75-1.75v-.5c0-.965.785-1.75 1.75-1.75h20.5c.965 0 1.75.785 1.75 1.75v.5c0 .965-.785 1.75-1.75 1.75z"/></g></svg></button></div></div>
+          <label id="css-upload" class="upload-box">
+            <input type="file" accept="text/css" id="css-input">
+            <span id="css-list" class="file-list">여기에 커스텀 시트 CSS 파일을 업로드해 주세요.</span>
+            <div class="upload-icon">+</div>
+          </label>
         </div>
 
-        <button id="start-edit" class="change">샘플 편집 시작</button><br>
+        <button id="start-edit" class="change">샘플 편집 시작</button>
         <p>업로드된 모든 파일 및 텍스트는 일절 수집되지 않습니다.</p>
       </div>
       <div id="section-edit">
         <button id="show-file" class="change">파일 바꾸기</button>
         <h2>적용 중인 CSS</h2>
         <p>Roll20_style.css (기본)</p>
-        <p><span id="css-view">적용 중인 템플릿 없음</span> <button class="css-download">백업용 CSS 다운로드</button></p>
+        <p><span id="css-view">적용 중인 시트 템플릿 없음</span> <button class="css-download">백업용 CSS 다운로드 <svg width="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g class="icon"><path d="m12 16c-.205 0-.401-.084-.542-.232l-5.25-5.5c-.455-.476-.117-1.268.542-1.268h2.75v-5.75c0-.689.561-1.25 1.25-1.25h2.5c.689 0 1.25.561 1.25 1.25v5.75h2.75c.659 0 .997.792.542 1.268l-5.25 5.5c-.141.148-.337.232-.542.232z"/><path d="m22.25 22h-20.5c-.965 0-1.75-.785-1.75-1.75v-.5c0-.965.785-1.75 1.75-1.75h20.5c.965 0 1.75.785 1.75 1.75v.5c0 .965-.785 1.75-1.75 1.75z"/></g></svg></button></p>
 
         <h2>아바타 이미지 일괄 바꾸기</h2>
         <div id="avatar-list"></div>
@@ -86,24 +89,25 @@
             <div class="arrow">→</div>
             <div id="null-chg" class="img-null">교체할 이미지 링크를 삽입하면 여기에 표시됩니다.</div><img id="img-chg">
           </div>
-          <label>원본 이미지 링크 <input type="text" id="link-org" readonly></text></label><br>
-          <label>교체 이미지 링크 <input type="text" id="link-chg"></text></label><br>
-          <button id="avatar-ggl">구글 드라이브 링크 변환</button><button id="avatar-btn">적용</button>
+          <p><label>원본 이미지 링크 <input type="text" id="link-org" readonly></text></label></p>
+          <p><label>교체 이미지 링크 <input type="text" id="link-chg"></text></label></p>
+          <p><button id="avatar-ggl" class="showtip tipsy-side" title="교체 이미지 링크에 Google Drive 링크 넣고 적용 전 클릭">Google Drive 링크 변환</button>
+            <button id="avatar-btn">적용</button></p>
+          <div id="help-img" class="help"><svg width="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g class="icon"><path d="m12 1a11 11 0 1 0 11 11 11.013 11.013 0 0 0 -11-11zm0 18a1 1 0 1 1 1-1 1 1 0 0 1 -1 1zm2.262-6.1a2.524 2.524 0 0 0 -1.262 2.1 1 1 0 0 1 -2 0 4.509 4.509 0 0 1 2.2-3.8 2.28 2.28 0 0 0 1.01-2.476 2.275 2.275 0 0 0 -4.482.549 1 1 0 0 1 -2 0 4.251 4.251 0 0 1 1.61-3.342 4.294 4.294 0 0 1 3.656-.818 4.274 4.274 0 0 1 1.268 7.787z"/></g></svg> 구글 드라이브 링크는 뭘로 따나요?</div>
         </div>
 
         <h2>일괄 바꾸기</h2>
-        <label>찾을 내용 <input type="text" id="rpl-find"></label><br>
-        <label>바꿀 내용 <input type="text" id="rpl-replace"></label><br>
-        <button id="rpl-btn">적용</button>
+        <p><label>찾을 내용 <input type="text" id="rpl-find"></label> <span id="rpl-num"></span></p>
+        <p><label>바꿀 내용 <input type="text" id="rpl-replace"></label> <button id="rpl-btn">적용</button></p>
 
         <h2>일괄 삭제</h2>
         <p><span id="check-ts">현재 로그에 타임스탬프가 포함되어 있지 않습니다.</span><button id="remove-ts">타임스탬프 삭제</button></p>
         <p><span id="check-hidden">현재 로그에 hidden mesaage가 포함되어 있지 않습니다.</span><button id="remove-hidden">hidden message 삭제</button></p>
-
-        <p><span style="opacity: .6;">↓ 체크 시 템플릿 CSS를 따로 삽입하지 않아도 되지만, 코드가 길어집니다.</span><br>
-          <label><input type="checkbox" id="include-css"> 주사위 템플릿 CSS 포함</label><br>
-        <button id="copy-html">현재 코드 복사</button>
-        <button id="download-html">HTML 파일로 저장</button></p>
+<br><br>
+        <p><label class="showtip tipsy-side" title="체크 시 백업용 CSS를 따로 삽입하지 않아도 되지만, 코드가 길어집니다."><input type="checkbox" id="include-css"> 주사위 템플릿 CSS 포함 <svg width="16" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><g class="icon"><path d="m10 1a9 9 0 1 0 9 9 9.01 9.01 0 0 0 -9-9zm1 13a1 1 0 0 1 -2 0v-4a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zm-1-7a1 1 0 1 1 1-1 1 1 0 0 1 -1 1z"/></g></svg></label></p>
+        <p><button id="copy-html">현재 코드 복사</button>
+          <button id="download-html">HTML 파일로 저장</button>
+          <button id="download-txt">TXT 파일로 저장</button></p>
         <p>파일로 저장해 두면 나중에 이어서 편집할 수 있습니다.</p>
         <p>해당 페이지에 <a href="https://posty.pe/5uknq5" target="_blank" rel="noopener">CSS가 삽입</a>되어 있는 경우에만
           정상적으로 보이니 주의해 주세요!</p>

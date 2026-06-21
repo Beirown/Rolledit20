@@ -5,6 +5,20 @@ let styleTag;
 let htmlContent;
 let srcSet = new Set();
 
+// tipsy
+function autoGrav() {
+    if ($(this).hasClass('tipsy-w')) return 'w';
+    if ($(this).hasClass('tipsy-e')) return 'e';
+    if ($(this).hasClass('tipsy-n')) return 'n';
+    if ($(this).hasClass('tipsy-s')) return 's';
+    if ($(this).hasClass('tipsy-n-right')) {
+        const rightOffset = $(window).width() - $(this).offset().left;
+        return rightOffset < $(this).parents('.message').width() / 2 ? 'ne' : 'n';
+    }
+    if ($(this).hasClass('tipsy-side')) return $(this).offset().left > ($(document).scrollLeft() + $(window).width() / 2) ? 'e' : 'w';
+    return $(this).offset().top > ($(document).scrollTop() + $(window).height() / 2) ? 's' : 'n';
+}
+
 // 상태 저장
 function saveState() {
     undoStack.push($('#log-view').html());
@@ -53,14 +67,19 @@ $('#help-what').on('click', function(e) {
     $('#pop-what').addClass('active');
 });
 
+$('#help-img').on('click', function(e) {
+    e.stopPropagation();
+    $('#pop-img').addClass('active');
+});
+
 $(document).click(function() {
-    $('#pop-what').removeClass('active');
+    $('.pop-up').removeClass('active');
 });
 
 // 샘플 데이터 삭제
 $('#html-text').one('click', function() {
     $(this).val('');
-    $('#sample').css('opacity', '0');
+    $('#sample span').hide();
     $('#start-edit').text('편집 시작');
 })
 
@@ -103,6 +122,7 @@ $('#html-text').on('input', function() {
                 cssFile = file;
                 break;
             } else {
+                $('#css-img .img-null').text('인식된 캐릭터 시트가 없습니다. 롤20 기본 템플릿이 아닌 경우, 수동으로 시트를 선택하거나 커스텀 시트 CSS를 업로드해 주세요.');
                 $('#css-img img').hide();
             }
         }
@@ -159,8 +179,10 @@ $('#html-input').on('change', function(e) {
 
 function uploadHtml(file) {
     if (!file) return;
-    if (!file.name.toLowerCase().endsWith('.html')) {
-        alert('HTML 파일만 업로드할 수 있습니다.');
+
+    const name = file.name.toLowerCase()
+    if (!name.endsWith('.html') && !name.endsWith('.txt')) {
+        alert('HTML/TXT 파일만 업로드할 수 있습니다.');
         return;
     }
 
@@ -248,18 +270,19 @@ function uploadCss(file) {
     reader.readAsText(file, 'utf-8');
     cssFile = null;
     $('#css-select option:eq(0)').prop('selected', true);
-    $('#css-img img').hide();
-    $('#css-img div').text('커스텀 시트는 미리보기를 제공하지 않습니다.');
-    $('#css-upload .upload-icon').hide();
+    $('#css-img img, #css-img .img-null, #css-upload .upload-icon').hide();
+    $('#css-img #css-custom').show();
+    $('.css-download').css('display', 'flex');
     $('#css-list').text('현재 파일: ' + file.name);
     $('#css-view').text(file.name);
-    $('.css-download').show();
 }
 
 // 파일 바꾸기
 $('#show-file').on('click', function() {
-    $('#section-edit').hide();
-    $('#section-upload').show();
+    if (confirm('돌아올 때 편집 내역이 초기화됩니다. 계속하시겠습니까?')) {
+        $('#section-edit').hide();
+        $('#section-upload').show();
+    } else return;
 });
 
 // 커스텀 시트 없는 경우 CSS 후속 작업
@@ -310,7 +333,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// 🔹 attachControls 비동기 버전 (배치 처리)
+// 편집 기능 attachHdl
 async function attachHdl() {
     const messages = $('#log-view .message');
     const batchSize = 100;
@@ -323,22 +346,22 @@ async function attachHdl() {
                     <div class="hdl-body">
                         <div class="hdl-move"></div>
                         <div class="hdl-box">
-                        <button class="hdl-edit" />
-                        <button class="hdl-copy" />
-                        <button class="hdl-delete" />
+                        <button class="hdl-edit" alt="수정"/>
+                        <button class="hdl-copy" alt="복제"/>
+                        <button class="hdl-delete" alt="삭제"/>
                         </div>
                     </div>
                 `);
                 $msg.append(controls);
             }
         });
-        updateLoadingProgress(66 + Math.floor((i / messages.length) * 20), `편집 기능 로딩 중... (${i}/${messages.length})`);
+        updateLoadingProgress(66 + Math.floor((i / messages.length) * 20), `편집 기능 로딩 중⋯ (${i}/${messages.length})`);
         await sleep(10); // 브라우저 숨 쉴 시간
     }
 }
 
 // 🔹 정렬 기능 초기화 비동기
-async function initSortableAsync(selector) {
+async function initSortable(selector) {
     // DOM 안정화 잠깐 대기
     await sleep(50);
 
@@ -367,7 +390,7 @@ $('#start-edit').on('click', async function() {
 
     saveState();
     showLoadingOverlay();
-    updateLoadingProgress(0, 'HTML 불러오는 중…');
+    updateLoadingProgress(0, 'HTML 불러오는 중⋯');
     await sleep(50); // UI 렌더링 여유
 
     $('#section-upload').hide();
@@ -375,12 +398,12 @@ $('#start-edit').on('click', async function() {
     const htmlCode = $('#html-text').val();
     $('#log-view').html(htmlCode);
 
-    updateLoadingProgress(33, '코드 압축 중…');
+    updateLoadingProgress(33, '코드 압축 중⋯');
     await sleep(30);
     compress();
     avatarimg();
 
-    updateLoadingProgress(66, '편집 기능 로딩 중…');
+    updateLoadingProgress(66, '편집 기능 로딩 중⋯');
     await attachHdl();
     if (cssFile) { internalcss(); }
 
@@ -394,19 +417,18 @@ $('#start-edit').on('click', async function() {
         $('#remove-hidden').show();
     }
 
-    updateLoadingProgress(90, '정렬 기능 로딩 중…');
-    await initSortableAsync('#log-view');
+    $('.showtip').tipsy({ gravity: autoGrav, opacity: 1.0, html: true });
 
-    window.onbeforeunload = function() {
-        return '변경 내용이 사라질 수 있습니다. 페이지를 나가시겠습니까?';
-    }
+    updateLoadingProgress(90, '정렬 기능 로딩 중⋯');
+    await initSortable('#log-view');
 
+    window.onbeforeunload = function() { return '변경 내용이 사라질 수 있습니다. 페이지를 나가시겠습니까?'; }
+
+    $('.message a').each(function() { $(this).attr('target', '_blank'); });
     $('#section-edit').show();
 
     updateLoadingProgress(100, '편집 준비 완료!');
     await sleep(300);
-
-    $('.message a').each(function() { $(this).attr('target', '_blank'); });
 
     hideLoadingOverlay();
 });
@@ -418,7 +440,7 @@ function showLoadingOverlay() {
             <div id="loading-overlay">
                 <div style="text-align:center; width: 250px;">
                     <div id="loading-text">
-                        로딩 중…
+                        로딩 중⋯
                     </div>
                     <div style="background: rgba(255,255,255,0.2); border-radius: 10px; height: 12px;">
                         <div id="loading-bar"></div>
@@ -558,6 +580,7 @@ $('#log-view').on('click', '.hdl-edit', function() {
 $('#log-view').on('click', '.hdl-copy', function() {
     saveState();
     $(this).closest('.message').after($(this).closest('.message').clone());
+    $('.showtip').tipsy({ gravity: autoGrav, opacity: 1.0, html: true });
 });
 
 // 핸들 - 삭제
@@ -590,7 +613,7 @@ $('#link-chg').on('input', function() {
 
 // 구글 드라이브 링크 변환
 $('#avatar-ggl').on('click', function() {
-    const avatarLink = $('#link-chg').val().replace('drive.google.com/file', 'lh3.googleusercontent.com').replace('/view?usp=drive_link', '');
+    const avatarLink = $('#link-chg').val().replace('drive.google.com/file', 'lh3.googleusercontent.com').replace('/view?usp=drive_link', '').replace('/view?usp=sharing', '');
     $('#link-chg').val(avatarLink);
     $('#img-chg').attr('src', avatarLink);
 });
@@ -620,12 +643,25 @@ $('#avatar-btn').on('click', function() {
 });
 
 // 일괄 바꾸기
+$('#rpl-find').on('change', function() {
+    const find = $(this).val();
+    if (find === '') {
+        $('#rpl-num').text('');
+    } else {
+        const count = find
+        ? $('#log-view').html().split(find).length - 1
+        : 0;
+
+        $('#rpl-num').text(`${count}건 검색됨`);
+    }
+});
+
 $('#rpl-btn').on('click', function() {
-    let find = $('#rpl-find').val();
-    let rpl = $('#rpl-replace').val();
+    const find = $('#rpl-find').val();
+    const rpl = $('#rpl-replace').val();
 
     if (find === '') {
-        alert('찾을 내용이 없습니다.');
+        alert('찾을 내용이 입력되지 않았습니다.');
         return;
     }
 
@@ -657,7 +693,7 @@ $('#remove-hidden').on('click', function() {
 // 템플릿 CSS 포함
 $('#include-css').on('change', function() {
     if ($(this).is(':checked')) {
-        if ($('#css-select').val() == '적용 중인 템플릿 없음' && !$('#css-input').val()) {
+        if ($('#css-select').val() == '적용 중인 시트 템플릿 없음' && !$('#css-input').val()) {
             alert('적용 중인 템플릿이 없습니다.');
             $('#include-css').prop('checked', false);
         }
@@ -670,7 +706,7 @@ $('.css-download').on('click', function() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'extracted-' + $('#css-view').text();
+    a.download = '[Rolleditor] ' + $('#css-view').text();
     a.click();
     URL.revokeObjectURL(url);
 });
@@ -688,11 +724,28 @@ $('#copy-html').on('click', function() {
 $('#download-html').on('click', function() {
     if ($('#include-css').is(':checked')) { htmlContent = styleTag + $('#log-view').clone().find('.hdl-body').remove().end().html(); }
     else { htmlContent = $('#log-view').clone().find('.hdl-body').remove().end().html(); }
-    const blob = new Blob([htmlContent], { type: "text/html" });
+    const blob = new Blob([htmlContent], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'edited.html';
+
+    const textTitle = $('#log-view').text().replace(/\s+/g, ' ').trim().substr(0, 17);
+    a.download = `[Rolleditor] ${textTitle}⋯.html`;
+    a.click();
+    URL.revokeObjectURL(url);
+});
+
+// TXT 파일로 저장
+$('#download-txt').on('click', function() {
+    if ($('#include-css').is(':checked')) { htmlContent = styleTag + $('#log-view').clone().find('.hdl-body').remove().end().html(); }
+    else { htmlContent = $('#log-view').clone().find('.hdl-body').remove().end().html(); }
+    const blob = new Blob([htmlContent], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+
+    const textTitle = $('#log-view').text().replace(/\s+/g, ' ').trim().substr(0, 17);
+    a.download = `[Rolleditor] ${textTitle}⋯.txt`;
     a.click();
     URL.revokeObjectURL(url);
 });
@@ -708,6 +761,7 @@ $(document).ready(function() {
         axis: "y"
     });
 
+    $('.showtip').tipsy({ gravity: autoGrav, opacity: 1.0, html: true });
     $('.message a').each(function() { $(this).attr('target', '_blank'); });
     $('#undo-btn').hide();
 });
