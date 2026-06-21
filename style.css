@@ -1,10 +1,5 @@
 @charset "utf-8";
 
-html {
-    -webkit-text-size-adjust: none; /*Chrome, Safari, newer versions of Opera*/
-    -moz-text-size-adjust: none; /*Firefox*/
-}
-
 @font-face {
     font-family: "Pretendard Variable";
     src: url('PretendardVariable.woff2') format('woff2');
@@ -33,11 +28,16 @@ html {
     font-style: normal;
 }
 
+html {
+    -webkit-text-size-adjust: none; /*Chrome, Safari, newer versions of Opera*/
+    -moz-text-size-adjust: none; /*Firefox*/
+}
+
 body {
     margin: 0;
     padding: 0;
     height: 100vh;
-    background-color: var(--back);
+    background-color: #212121;
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
     font-size: 16px;
     background-image: url('background.jpg');
@@ -46,6 +46,8 @@ body {
     word-break: keep-all;
     overflow-wrap: anywhere;
 }
+
+input { font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif; }
 
 header {
     display: flex;
@@ -58,24 +60,46 @@ header {
     align-items: flex-end;
 }
 
-.title { box-sizing: border-box; margin-left: auto; width: 576px; padding: 0 35px 10px; font-size: 30px; font-weight: 900; color: #212121; }
-.toolbar { box-sizing: border-box; margin-right: auto; width: 576px; padding: 0 35px 10px; text-align: right; }
-.toolbar button { border: none; background: transparent; font-size: 24px; cursor: pointer; }
-#redo-btn { opacity: 0; }
+.title { box-sizing: border-box; margin-left: auto; width: 576px; padding: 0 35px 10px; }
+.title h1 { margin: 0; padding: 0; font-size: 30px; font-weight: 900; color: #212121; }
+.toolbar { box-sizing: border-box; display: flex; margin-right: auto; width: 576px; padding: 0 35px 10px; justify-content: flex-end; }
+.toolbar .tool-btn { width: 30px; height: 30px; }
+.toolbar button { margin: 0; padding: 0; border: none; background: transparent; font-size: 24px; opacity: .7; cursor: pointer; }
+.toolbar button:hover { opacity: 1; }
+#redo-btn { display: none; }
 
-input { font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif; }
+#grid {
+    display: flex;
+    height: calc(100% - 80px);
+}
+
+#control, #log-view {
+    box-sizing: border-box;
+    width: 576px;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+#control {
+    margin-left: auto;
+    padding: 35px;
+    background-color: white;
+}
+
+#control::-webkit-scrollbar, #control textarea::-webkit-scrollbar {
+    display: none;
+}
 
 #control textarea {
+    box-sizing: border-box;
+    height: 100%;
+    padding: 8px 10px;
     border: none;
     border-radius: 6px;
     background: #333;
     color: white;
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
     resize: none;
-}
-
-#control textarea::-webkit-scrollbar {
-    display: none;
 }
 
 #control button {
@@ -90,40 +114,17 @@ input { font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacS
     cursor: pointer;
 }
 
-#control button:hover {
-    background: #212121
-}
-
-#grid {
-    display: flex;
-    height: calc(100% - 80px);
-}
-
-#control {
-    margin-left: auto;
-    padding: 35px;
-    background-color: white;
-}
-
-#control::-webkit-scrollbar {
-    display: none;
-}
-
-#control, #log-view {
-    box-sizing: border-box;
-    width: 576px;
-    height: 100%;
-    overflow-y: scroll;
-}
+#control button:hover { background: #212121; }
 
 #section-edit, #section-custom {
     display: none;
 }
 
-#what {
-    cursor: pointer;
-    margin-bottom: 10px;
-}
+.help svg { position: relative; top: 2px; }
+.help svg .icon { fill: #999; }
+.help:hover > svg .icon { fill: #212121; }
+
+#what { cursor: pointer; margin-bottom: 10px; }
 
 .pop-up {
     position: fixed;
@@ -143,20 +144,16 @@ input { font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacS
     z-index: 10;
 }
 
-.pop-up img {
-    max-width: 90vw;
-}
+.pop-up img { max-width: 90vw; }
+.pop-up.active { transform: translate(-50%, -50%) scale(1); opacity: 1; }
 
-.pop-up.active {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-}
+.file-box { display: flex; height: 160px; }
 
-.log-box { display: flex; }
-
-#log-upload {
+.upload-box {
+    box-sizing: border-box;
+    padding: 8px;
     width: 30%;
-    height: 160px;
+    height: 100%;
     overflow: hidden;
     background: #f1f1f1;
     border-radius: 6px;
@@ -165,33 +162,21 @@ input { font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacS
     text-align: center;
 }
 
-#log-upload.active {
-    background: #ddd;
-    border: 2px dashed #333;
-}
-
-#html-view { font-size: 11px; line-height: 1.2; }
-
+.upload-box.active { background: #ddd; border: 2px dashed #333; }
+.upload-box input { opacity: 0; }
 .upload-icon { font-size: 30px; }
 
-#log-text {
-    width: 70%;
-}
+#html-text { width: 70%; }
+#sample { margin-top: 4px; font-size: 14px; }
+.file-list { font-size: 11px; line-height: 1.2; }
 
-#log-html {opacity: 0;}
-
-#css-select {
-    max-width: 100%;
-}
-
-#eraser {
-    cursor: pointer;
-    color: blue;
-    text-decoration: underline;
-}
+#css-select { max-width: 100%; }
+#css-img { width: 40%; border-radius: 6px; overflow: hidden; }
+#css-img div { display: flex; box-sizing: border-box; height: 100%; padding: 8px; text-align: center; align-items: center; background: #f1f1f1; font-size: 14px; line-height: 1.4; }
+#css-img img { display: none; width: 100%; height: 100%; object-fit: cover; object-position: left top; }
+#css-upload, #css-download { width: 30%; }
 
 #avatar-list img { max-width: 28px; max-height: 28px; cursor: pointer; }
-
 #avatar-box { min-height: 300px; background-color: #ddd; border-radius: 6px; }
 #avatar-box #avatar-img img { width: 30%; }
 
@@ -200,14 +185,14 @@ input { font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacS
     height: 30px;
 }
 
-#log-view {
-    margin-right: auto;
-    padding: 0 75px 0 0;
-    background: white;
+#start-edit {
+    margin-top: 30px;
 }
 
-.message:hover > .hdl-body {
-    opacity: 1;
+#log-view {
+    margin-right: auto;
+    padding: 20px 75px 20px 0;
+    background: white;
 }
 
 .hdl-body {
@@ -220,7 +205,7 @@ input { font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacS
 }
 
 .hdl-move {
-    width: 90px;
+    width: 0;
     height: 100%;
     border-right: 4px solid #999;
     cursor: move;
@@ -235,6 +220,7 @@ input { font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacS
     font-size: 0;
 }
 
+.message:hover > .hdl-body { opacity: 1; }
 .hdl-box:hover { background: #212121; }
 .hdl-body:has(.hdl-box:hover) .hdl-move { border-right: 4px solid #212121; }
 
@@ -282,31 +268,20 @@ input { font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacS
     transition: width 0.3s ease;
 }
 
-#remove-ts { display: none; }
+#remove-ts, #remove-hidden { display: none; }
 
 .css-download { display: none; }
-
-#toolbar button,
-#final-toolbar button,
-#css-tools button {
-    margin-right: 10px;
-}
 
 textarea.inline-editor {
     min-width: 100%;
     max-width: 100%;
-    height: 80px;
+    height: 60px;
     box-sizing: border-box;
     font-family: inherit;
 }
 
-.inline-editor {
-    width: 100%;
-    height: 60px;
-}
-
 .message-placeholder {
-    height: 30px;
+    height: 40px;
     background-color: #f1f1f1;
     border: 2px dashed #999;
     margin-bottom: 5px;
@@ -333,6 +308,7 @@ textarea.inline-editor {
 
 @media (hover: hover) and (pointer: fine) {
     .mobile { display: none;}
+    .hdl-move { width: 90px; }
 }
 
 @media all and (max-width: 1152px) {
@@ -340,7 +316,12 @@ textarea.inline-editor {
 }
 
 @media all and (max-width: 649px) {
-    #grid { display: block; }
+    header { position: fixed; }
+    header .title { width: 70%; padding-left: 20px; }
+    header .toolbar { width: 30%; padding-right: 20px; }
+    #grid { display: block; padding-top: 60px; }
     #control, #log-view { width: 100%; height: auto; }
+    #control { padding: 20px; }
     #log-view { padding-left: 20px; }
+    ::-webkit-scrollbar { display: none; }
 }
