@@ -710,23 +710,24 @@ $('.css-download').on('click', function() {
     URL.revokeObjectURL(url);
 });
 
-// HTML 저장
+// HTML 추출
 function saveHtml(styleTag) {
-    const oriContent = $('#log-view').clone().find('.hdl-body').remove().end().html();
+    const $content = $('#log-view').clone()
+    $content.find('.hdl-body').remove();
     if ($('#include-css').is(':checked')) { 
-        if ($(oriContent).find('style').length > 0) {
+        if ($content.find('style').length > 0) {
             if (confirm('기존 서식을 덮어쓸까요? 취소 시 기존 서식을 유지한 채 서식을 추가로 적용합니다.')) {
-                htmlContent = styleTag + $(oriContent).find('style').remove();
-            } else {
-                htmlContent = styleTag + oriContent;
+                $content.find('style').remove();
             }
-        } else { htmlContent = styleTag + oriContent; }
-    } else { htmlContent = oriContent; }
+        }
+        $content.prepend(styleTag);
+    }
+    return $content.html();
 }
 
 // 현재 코드 복사
 $('#copy-html').on('click', function() {
-    saveHtml(styleTag);
+    htmlContent = saveHtml(styleTag);
     navigator.clipboard.writeText(htmlContent)
         .then(() => alert('HTML 내용이 복사되었습니다.'))
         .catch(() => alert('복사 실패'));
@@ -734,7 +735,7 @@ $('#copy-html').on('click', function() {
 
 // HTML 파일로 저장
 $('#download-html').on('click', function() {
-    saveHtml(styleTag);
+    htmlContent = saveHtml(styleTag);
     const blob = new Blob([htmlContent], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -748,7 +749,7 @@ $('#download-html').on('click', function() {
 
 // TXT 파일로 저장
 $('#download-txt').on('click', function() {
-    saveHtml(styleTag);
+    htmlContent = saveHtml(styleTag);
     const blob = new Blob([htmlContent], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
