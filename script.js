@@ -633,9 +633,9 @@ $('#avatar-btn').on('click', function() {
         $('#avatar-list').html().replaceAll(find, replace)
     );
     $('#img-org').attr('src', replace);
-    $('#img-chg').removeAttr('src');
+    $('#img-chg').removeAttr('src').hide();
     $('#link-org').val(replace);
-    $('#link-chg').val('').hide();
+    $('#link-chg').val('');
     $('#null-chg').show();
 });
 
