@@ -666,6 +666,7 @@ $('#rpl-btn').on('click', function() {
     $('#log-view').html(
         $('#log-view').html().replaceAll(find, rpl)
     );
+    $('#rpl-num').text('일괄 바꾸기 완료');
 });
 
 // 일괄 삭제
