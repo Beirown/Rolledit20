@@ -631,6 +631,14 @@ $('#log-view').on('click', '.hdl-delete', function() {
 // 아바타 목록 새로 불러오기
 $('#avatar-reload').on('click', avatarimg);
 
+// 이미지 확대
+$('#avatar-list').on('click', '.img-box img', function(e) {
+    e.stopPropagation();
+    let src = $(this).attr('src');
+    $('#pop-view img').attr('src', src);
+    $('#pop-view').addClass('active');
+});
+
 // 링크 변경
 $('#avatar-list').on('input', '.link-chg', function() {
     const avatarLink = $(this).val();

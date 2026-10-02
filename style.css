@@ -219,7 +219,7 @@ button#avatar-reload:hover { background: transparent; }
 #avatar-list .avatar-chr .avatar-img input[readonly]:focus { outline: none; }
 #avatar-list .avatar-chr .avatar-img .link-org.roll20 { background-color: #FFE1E2; color: #E10085; border-color: #E10085; }
 #avatar-list label { margin: auto 0; cursor: pointer; }
-#avatar-list img { max-width: 100%; max-height: 100%; }
+#avatar-list img { max-width: 100%; max-height: 100%; cursor: zoom-in; }
 .avatar-button { display: grid; grid-template-columns: 4fr 1fr;}
 
 #check { display: none; }
