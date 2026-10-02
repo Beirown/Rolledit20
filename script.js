@@ -350,16 +350,17 @@ function avatarimg() {
 
         srcSet.forEach(src => {
             avatar += `
-                <div class="img-box">
-                    <div class="img-org"><img src="${src}"></div>
-                    <div class="img-chg"><img></div>
+                <div class="avatar-img">
+                    <div class="img-box">
+                        <div class="img-org"><img src="${src}"></div>
+                        <div class="img-chg"><img></div>
+                    </div>
+                    <input type="text" class="link-org" value="${src}" readonly>
+                    <input type="text" class="link-chg" placeholder="변경할 이미지 링크를 붙여넣어 주세요.">
+                    <label><input type="checkbox" class="delete">제거</label>
                 </div>
-                <input type="text" class="link-org" value="${src}" readonly>
-                <input type="text" class="link-chg" placeholder="변경할 이미지 링크를 붙여넣어 주세요.">
-                <label><input type="checkbox" class="delete">제거</label>
             `;
         });
-
         $('#avatar-list').append(`
             <div class="avatar-chr">
                 <div class="avatar-by">${by}</div>
