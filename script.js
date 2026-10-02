@@ -210,13 +210,12 @@ $('#css-select').on('change', function() {
     cssFile = $(this).val();
     if (!cssFile) return;
     if ($('#custom').is('style')) {
-        if (confirm('업로드한 커스텀 시트 CSS가 사라집니다. 계속하시겠습니까?')) {
-            $('#css-list').text('여기에 커스텀 시트 CSS 파일을 업로드해 주세요.');
-            $('#css-upload .upload-icon').show();
-            $('.css-download').hide();
-            styleTag = null;
-            $('head style#custom').remove();
-        } else return;
+        if (!confirm('업로드한 커스텀 시트 CSS가 사라집니다. 계속하시겠습니까?')) return;
+        $('#css-list').text('여기에 커스텀 시트 CSS 파일을 업로드해 주세요.');
+        $('#css-upload .upload-icon').show();
+        $('.css-download').hide();
+        styleTag = null;
+        $('head style#custom').remove();
     }
     if (sheet[cssFile]) {
         $('#css-img img').attr('src', sheet[cssFile]).show();
@@ -287,10 +286,9 @@ function uploadCss(file) {
 
 // 파일 바꾸기
 $('#show-file').on('click', function() {
-    if (confirm('돌아올 때 편집 내역이 초기화됩니다. 계속하시겠습니까?')) {
-        $('#section-edit').hide();
-        $('#section-upload').show();
-    } else return;
+    if (!confirm('돌아올 때 편집 내역이 초기화됩니다. 계속하시겠습니까?')) return;
+    $('#section-edit').hide();
+    $('#section-upload').show();
 });
 
 // 커스텀 시트 없는 경우 CSS 후속 작업
@@ -361,6 +359,7 @@ function avatarimg() {
                 </div>
             `;
         });
+
         $('#avatar-list').append(`
             <div class="avatar-chr">
                 <div class="avatar-by">${by}</div>
@@ -624,10 +623,9 @@ $('#log-view').on('click', '.hdl-copy', function() {
 
 // 핸들 - 삭제
 $('#log-view').on('click', '.hdl-delete', function() {
-    if (confirm('이 메시지를 삭제하시겠습니까?')) {
-        saveState();
-        $(this).closest('.message').remove();
-    }
+    if (!confirm('이 메시지를 삭제하시겠습니까?')) return;
+    saveState();
+    $(this).closest('.message').remove();
 });
 
 // 아바타 목록 새로 불러오기
@@ -713,8 +711,8 @@ $('#rpl-find').on('change', function() {
         $('#rpl-num').text('');
     } else {
         const count = find
-        ? $('#log-view').html().split(find).length - 1
-        : 0;
+            ? $('#log-view').html().split(find).length - 1
+            : 0;
 
         $('#rpl-num').text(`${count}건 검색됨`);
     }
@@ -733,59 +731,55 @@ $('#rpl-btn').on('click', function() {
     $('#log-view').html(
         $('#log-view').html().replaceAll(find, rpl)
     );
+    const count = find
+        ? $('#log-view').html().split(find).length - 1
+        : 0;
+    $('#rpl-num').text(`${count}건 검색됨`);
 });
 
 // 일괄 삭제
 $('#remove-ts').on('click', function() {
-    if (confirm('타임스탬프를 모두 삭제하시겠습니까?')) {
-        saveState();
-        $('#log-view .message .tstamp').remove();
-        $('#log-view #check').removeClass('ts');
-        $('#check-ts').show(); $('#remove-ts').hide();
-    }
+    if (!confirm('타임스탬프를 모두 삭제하시겠습니까?')) return;
+    saveState();
+    $('#log-view .message .tstamp').remove();
+    $('#log-view #check').removeClass('ts');
+    $('#check-ts').show(); $('#remove-ts').hide();
 });
 
 $('#remove-hidden').on('click', function() {
-    if (confirm('hidden message를 모두 삭제하시겠습니까?')) {
-        saveState();
-        $('#log-view .message.hidden-message').remove();
-        $('#log-view #check').removeClass('hidden');
-        $('#check-hidden').show(); $('#remove-hidden').hide();
-    }
+    if (!confirm('hidden message를 모두 삭제하시겠습니까?')) return;
+    saveState();
+    $('#log-view .message.hidden-message').remove();
+    $('#log-view #check').removeClass('hidden');
+    $('#check-hidden').show(); $('#remove-hidden').hide();
 });
 
 $('#remove-aria').on('click', function() {
-    if (confirm('코드가 더 짧아지지만, 로그를 스크린 리더로 읽기 어려워집니다. 계속하시겠습니까?')) {
-        saveState();
-        $('#log-view .message .avatar').removeAttr('aria-hidden');
-        $('#log-view #check').removeClass('aria');
-        $('#check-aria').show(); $('#remove-aria').hide();
-    }
+    if (!confirm('코드가 더 짧아지지만, 로그를 스크린 리더로 읽기 어려워집니다. 계속하시겠습니까?')) return;
+    saveState();
+    $('#log-view .message .avatar').removeAttr('aria-hidden');
+    $('#log-view #check').removeClass('aria');
+    $('#check-aria').show(); $('#remove-aria').hide();
 })
 
 $('#remove-repeat').on('click', function() {
-    const $msg = $('#log-view .message');
+    if (!confirm('롤20 오류로 중복된 메시지를 모두 삭제합니다. 계속하시겠습니까?')) return;
+    let $msg = $('#log-view .message');
 
-    for (let i = 0; i < $msg.length; i += 2) {
-        const first = $msg.eq(i)
-            .clone()
-            .find('.spacer, .avatar, .tstamp, .by')
-            .remove()
-            .end()
-            .text()
-            .trim();
+    const getCleanText = ($el) => $el.clone()
+        .find('.spacer, .avatar, .tstamp, .by')
+        .remove()
+        .end()
+        .text()
+        .trim();
 
-        const second = $msg.eq(i + 1)
-            .clone()
-            .find('.spacer, .avatar, .tstamp, .by')
-            .remove()
-            .end()
-            .text()
-            .trim();
+    for (let i = 1; i < $msg.length; i++) {
+        const prev = getCleanText($msg.eq(i - 1));
+        const current = getCleanText($msg.eq(i));
 
-        if (first !== second) break;
-
-        $msg.eq(i + 1).remove();
+        if (prev === current) {
+            $msg.eq(i).remove();
+        }
     }
 });
 
