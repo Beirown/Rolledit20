@@ -53,7 +53,7 @@ input {
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
 
-input[type="checkbox"] { height: auto; cursor: pointer; }
+input[type="checkbox"] { height: auto; cursor: pointer; accent-color: #333; }
 
 select {
     height: 24px;
