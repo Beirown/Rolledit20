@@ -69,7 +69,11 @@ function undo() {
     const prev = undoStack.pop();
     restoreState(prev);
     $('#redo-btn').show();
+    if ($('#check').hasClass('ts')) { $('#check-ts').hide(); $('#remove-ts').show(); }
+    if ($('#check').hasClass('hidden')) { $('#check-hidden').hide(); $('#remove-hidden').show(); }
+    if ($('#check').hasClass('aria')) { $('#check-aria').hide(); $('#remove-aria').show(); }
 }
+
 
 function redo() {
     if (redoStack.length === 0) return;
@@ -78,11 +82,14 @@ function redo() {
     const next = redoStack.pop();
     restoreState(next);
     $('#undo-btn').show();
+    if (!$('#check').hasClass('ts')) { $('#check-ts').show(); $('#remove-ts').hide(); }
+    if (!$('#check').hasClass('hidden')) { $('#check-hidden').show(); $('#remove-hidden').hide(); }
+    if (!$('#check').hasClass('aria')) { $('#check-aria').show(); $('#remove-aria').hide(); }
 }
 
 $(document).on('keydown', function(e) {
     if (e.ctrlKey && e.key === 'z') { e.preventDefault(); undo(); }
-    else if (e.ctrlKey && (e.key === 'y' || (e.shiftKey && e.key === 'Z'))) { e.preventDefault(); redo(); }
+    else if (e.ctrlKey && e.key === 'y') { e.preventDefault(); redo(); }
 });
 
 // Undo/Redo 버튼
@@ -213,8 +220,10 @@ $('#css-select').on('change', function() {
     }
     if (sheet[cssFile]) {
         $('#css-img img').attr('src', sheet[cssFile]).show();
+        $('#css-img .img-null').hide();
     } else {
         $('#css-img img').hide();
+        $('#css-img .img-null').show();
     }
 })
 
@@ -307,26 +316,64 @@ function compress() {
 
 // 아바타 src 수집
 function avatarimg() {
-    srcSet.clear();
+    const chrMap = new Map();
+    const toMap = new Map();
+    const avatarList = new Map();
 
-    $('#log-view .message .avatar img').each(function() {
-    const src = $(this).attr('src');
-    if (src) {
-        srcSet.add(src);
-    }
+    $('#log-view .message').each(function() {
+        const src = $(this).find('.avatar img').attr('src');
+        let by = $(this).find('.by').text().slice(0, -1);
+
+        if (!src || !by) return;
+
+        if (by.startsWith('(From ')) by = by.slice(6, -1);
+
+        const isTo = by.startsWith('(To ');
+        const targetMap = isTo ? toMap : chrMap;
+        targetMap.set(src, { by, src });
+    });
+
+    for (const src of chrMap.keys()) { toMap.delete(src); }
+
+    const allItems = [...chrMap.values(), ...toMap.values()];
+
+    allItems.forEach(item => {
+        if (!avatarList.has(item.by)) { avatarList.set(item.by, new Set()); }
+        avatarList.get(item.by).add(item.src);
     });
 
     $('#avatar-list').empty();
 
     // img 추가
-    srcSet.forEach(function(src) {
-    $('<img>', {
-        src: src
-    }).appendTo('#avatar-list');
+    avatarList.forEach((srcSet, by) => {
+        let avatar = '';
+
+        srcSet.forEach(src => {
+            avatar += `
+                <div class="img-box">
+                    <div class="img-org"><img src="${src}"></div>
+                    <div class="img-chg"><img></div>
+                </div>
+                <input type="text" class="link-org" value="${src}" readonly>
+                <input type="text" class="link-chg" placeholder="변경할 이미지 링크를 붙여넣어 주세요.">
+                <label><input type="checkbox" class="delete">제거</label>
+            `;
+        });
+
+        $('#avatar-list').append(`
+            <div class="avatar-chr">
+                <div class="avatar-by">${by}</div>
+                <div class="avatar-img">${avatar}</div>
+            </div>
+        `);
     });
+
+    $('.link-org').each(function() {
+    if ($(this).val().startsWith('https://files.d20.io/images') || $(this).val().startsWith('https://app.roll20.net')) { $(this).addClass('roll20'); }
+});
 }
 
-// 🔹 sleep 유틸
+// sleep 유틸
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -357,7 +404,7 @@ async function attachHdl() {
     }
 }
 
-// 🔹 정렬 기능 초기화 비동기
+// 정렬 기능 초기화 비동기
 async function initSortable(selector) {
     // DOM 안정화 잠깐 대기
     await sleep(50);
@@ -395,28 +442,23 @@ $('#start-edit').on('click', async function() {
     const htmlCode = $('#html-text').val();
     $('#log-view').html(htmlCode);
 
-    updateLoadingProgress(33, '코드 압축 중⋯');
+    updateLoadingProgress(30, '코드 압축 중⋯');
     await sleep(30);
     compress();
+    $('#log-view .message .avatar img[src^="/users"]').each(function () {
+        $(this).attr('src', 'https://app.roll20.net' + $(this).attr('src'));
+    });
     avatarimg();
 
-    updateLoadingProgress(66, '편집 기능 로딩 중⋯');
+    updateLoadingProgress(60, '편집 기능 로딩 중⋯');
     await attachHdl();
     if (cssFile) { internalcss(cssFile); }
 
-    if ($('#log-view .tstamp').length > 0) {
-        $('#check-ts').hide();
-        $('#remove-ts').show();
-    }
-
-    if ($('#log-view .hidden-message').length > 0) {
-        $('#check-hidden').hide();
-        $('#remove-hidden').show();
-    }
+    scan();
 
     $('.showtip').tipsy({ gravity: autoGrav, opacity: 1.0, html: true });
 
-    updateLoadingProgress(90, '정렬 기능 로딩 중⋯');
+    updateLoadingProgress(80, '정렬 기능 로딩 중⋯');
     await initSortable('#log-view');
 
     window.onbeforeunload = function() { return '변경 내용이 사라질 수 있습니다. 페이지를 나가시겠습니까?'; }
@@ -430,7 +472,7 @@ $('#start-edit').on('click', async function() {
     hideLoadingOverlay();
 });
 
-// 🔹 로딩 오버레이 생성
+// 로딩 오버레이 생성
 function showLoadingOverlay() {
     if ($('#loading-overlay').length === 0) {
         const overlay = $(`
@@ -497,7 +539,6 @@ $('#log-view').on('click', '.hdl-edit', function() {
     const tstampHTMLs = [];
     const byTexts = [];
     const byHTMLs = [];
-    const spacerHTMLs = [];
 
     // 아바타 원본 저장
     originalHTML.replace(/<div[^>]*class="avatar"[^>]*>[\s\S]*?<\/div>/g, function(match) {
@@ -588,55 +629,80 @@ $('#log-view').on('click', '.hdl-delete', function() {
     }
 });
 
-// 아바타 선택
-$('#avatar-list').on('click', 'img', function() {
-    const avatarLink = this.src;
-    $('#null-org').hide();
-    $('#img-org').attr('src', avatarLink).show();
-    $('#link-org').val(avatarLink);
-    $('#link-chg').val('');
+// 아바타 목록 새로 불러오기
+$('#avatar-reload').on('click', avatarimg);
+
+// 링크 변경
+$('#avatar-list').on('input', '.link-chg', function() {
+    const avatarLink = $(this).val();
+    const $imgBox = $(this).closest('.avatar-img').find('.img-box');
+    if (avatarLink === '') {
+        $imgBox.find('.img-chg img').removeAttr('src').hide();
+        $imgBox.removeClass('enter');
+    } else {
+        $imgBox.find('.img-chg img').attr('src', avatarLink).show();
+        $imgBox.addClass('enter');
+    }
 });
 
-$('#link-chg').on('input', function() {
-    const avatarLink = $(this).val();
-    if (avatarLink === '') { 
-        $('#img-chg').hide();
-        $('#null-chg').show();
+// 아바타 제거 체크
+$('#avatar-list').on('change', '.delete', function() {
+    const $avatar = $(this).closest('.avatar-img');
+    if ($(this).prop('checked')) {
+        $avatar.find('.img-chg img').hide();
+        $avatar.find('.img-box').removeClass('enter');
+        $avatar.find('.link-chg').val('아바타 이미지를 제거합니다.').prop('readonly', true);
     } else {
-        $('#null-chg').hide();
-        $('#img-chg').attr('src', avatarLink).show();
-    }
+        $avatar.find('.img-chg img').show();
+        $avatar.find('.link-chg').removeAttr('readonly').val('');
+        $('.link-chg').trigger('input');
+    }   
 });
 
 // 구글 드라이브 링크 변환
 $('#avatar-ggl').on('click', function() {
-    const avatarLink = $('#link-chg').val().replace('drive.google.com/file', 'lh3.googleusercontent.com').replace('/view?usp=drive_link', '').replace('/view?usp=sharing', '');
-    $('#link-chg').val(avatarLink);
-    $('#img-chg').attr('src', avatarLink);
+    $('.avatar-img').each(function() {
+        let sharedLink = $(this).find('.link-chg').val();
+        if (!sharedLink.startsWith('https://drive.google.com/file/d')) return;
+
+        let match = sharedLink.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+        if (!match) return;
+
+        let fileId = match[1];
+        let viewLink = $('#pic').prop('checked') 
+            ? `https://lh3.googleusercontent.com/d/${fileId}` 
+            : `https://drive.google.com/thumbnail?id=${fileId}&name=image.png`;
+        $(this).find('.link-chg').val(viewLink);
+        $(this).find('.img-box .img-chg img').attr('src', viewLink);
+    });
 });
 
 // 아바타 바꾸기
 $('#avatar-btn').on('click', function() {
-    let find = $('#link-org').val();
-    let replace = $('#link-chg').val();
-
-    if (find === '') {
-        alert('찾을 내용이 없습니다.');
-        return;
-    }
-
     saveState();
-    $('#log-view').html(
-        $('#log-view').html().replaceAll(find, replace)
-    );
-    $('#avatar-list').html(
-        $('#avatar-list').html().replaceAll(find, replace)
-    );
-    $('#img-org').attr('src', replace);
-    $('#img-chg').removeAttr('src').hide();
-    $('#link-org').val(replace);
-    $('#link-chg').val('');
-    $('#null-chg').show();
+    $('.avatar-img').each(function() {
+        let find = $(this).find('.link-org').val();
+        let replace = $(this).find('.link-chg').val();
+
+        if (find === '') return;
+
+        if ($(this).find('.delete').prop('checked')) {
+            $(`#log-view .avatar img[src="${find}"]`).remove();
+            $(this).hide();
+            
+        } else {
+            if (replace === '') return;
+            $('#log-view').html($('#log-view').html().replaceAll(find, replace));
+            $('#avatar-list').html($('#avatar-list').html().replaceAll(find, replace));
+            $(this).find('.img-org').attr('src', replace);
+            $(this).find('.link-org').val(replace);
+        }
+    });
+    $('.img-box').removeClass('enter');
+    $('.link-chg').val('');
+    $('.link-org').each(function() {
+        if ($(this).val().startsWith('https://files.d20.io/images') && $(this).val().startsWith('https://app.roll20.net')) { $(this).removeClass('roll20'); }
+    })
 });
 
 // 일괄 바꾸기
@@ -666,7 +732,6 @@ $('#rpl-btn').on('click', function() {
     $('#log-view').html(
         $('#log-view').html().replaceAll(find, rpl)
     );
-    $('#rpl-num').text('일괄 바꾸기 완료');
 });
 
 // 일괄 삭제
@@ -674,8 +739,8 @@ $('#remove-ts').on('click', function() {
     if (confirm('타임스탬프를 모두 삭제하시겠습니까?')) {
         saveState();
         $('#log-view .message .tstamp').remove();
-        $('#remove-ts').hide();
-        $('#check-ts').show();
+        $('#log-view #check').removeClass('ts');
+        $('#check-ts').show(); $('#remove-ts').hide();
     }
 });
 
@@ -683,10 +748,77 @@ $('#remove-hidden').on('click', function() {
     if (confirm('hidden message를 모두 삭제하시겠습니까?')) {
         saveState();
         $('#log-view .message.hidden-message').remove();
-        $('#remove-hidden').hide();
-        $('#check-hidden').show();
+        $('#log-view #check').removeClass('hidden');
+        $('#check-hidden').show(); $('#remove-hidden').hide();
     }
 });
+
+$('#remove-aria').on('click', function() {
+    if (confirm('코드가 더 짧아지지만, 로그를 스크린 리더로 읽기 어려워집니다. 계속하시겠습니까?')) {
+        saveState();
+        $('#log-view .message .avatar').removeAttr('aria-hidden');
+        $('#log-view #check').removeClass('aria');
+        $('#check-aria').show(); $('#remove-aria').hide();
+    }
+})
+
+$('#remove-repeat').on('click', function() {
+    const $msg = $('#log-view .message');
+
+    for (let i = 0; i < $msg.length; i += 2) {
+        const first = $msg.eq(i)
+            .clone()
+            .find('.spacer, .avatar, .tstamp, .by')
+            .remove()
+            .end()
+            .text()
+            .trim();
+
+        const second = $msg.eq(i + 1)
+            .clone()
+            .find('.spacer, .avatar, .tstamp, .by')
+            .remove()
+            .end()
+            .text()
+            .trim();
+
+        if (first !== second) break;
+
+        $msg.eq(i + 1).remove();
+    }
+});
+
+// 삭제 요소 검사
+function scan() {
+    $('#log-view').prepend('<div id="check"></div>');
+
+    if ($('#log-view .tstamp').length > 0) {
+        $('#check-ts').hide();
+        $('#remove-ts').show();
+        $('#check').addClass('ts');
+    } else {
+        $('#check-ts').show();
+        $('#remove-ts').hide();
+    }
+
+    if ($('#log-view .hidden-message').length > 0) {
+        $('#check-hidden').hide();
+        $('#remove-hidden').show();
+        $('#check').addClass('hidden');
+    } else {
+        $('#check-hidden').show();
+        $('#remove-hidden').hide();
+    }
+
+    if ($('#log-view .avatar').is('[aria-hidden]')) {
+        $('#check-aria').hide();
+        $('#remove-aria').show();
+        $('#check').addClass('aria');
+    } else {
+        $('#check-aria').show();
+        $('#remove-aria').hide();
+    }
+}
 
 // 템플릿 CSS 포함
 $('#include-css').on('change', function() {
@@ -712,6 +844,7 @@ $('.css-download').on('click', function() {
 // HTML 추출
 function saveHtml(styleTag) {
     const $content = $('#log-view').clone()
+    $content.find('#check').remove();
     $content.find('.hdl-body').remove();
     if ($('#include-css').is(':checked')) { 
         if ($content.find('style').length > 0) {
