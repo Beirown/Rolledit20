@@ -702,7 +702,7 @@ $('#avatar-btn').on('click', function() {
     $('.img-box').removeClass('enter');
     $('.link-chg').val('');
     $('.link-org').each(function() {
-        if ($(this).val().startsWith('https://files.d20.io/images') && $(this).val().startsWith('https://app.roll20.net')) { $(this).removeClass('roll20'); }
+        if (!$(this).val().startsWith('https://files.d20.io/images') && !$(this).val().startsWith('https://app.roll20.net')) { $(this).removeClass('roll20'); }
     })
 });
 
