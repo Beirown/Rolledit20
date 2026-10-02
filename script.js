@@ -364,7 +364,7 @@ function avatarimg() {
         $('#avatar-list').append(`
             <div class="avatar-chr">
                 <div class="avatar-by">${by}</div>
-                <div class="avatar-img">${avatar}</div>
+                ${avatar}
             </div>
         `);
     });
