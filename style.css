@@ -280,8 +280,8 @@ button#avatar-reload:hover { background: transparent; }
     cursor: pointer;
 }
 
-.hdl-body .hdl-edit { background-image: url(edit.svg); }
 .hdl-body .hdl-copy { background-image: url(copy.svg); }
+.hdl-body .hdl-edit { background-image: url(edit.svg); }
 .hdl-body .hdl-delete { background-image: url(delete.svg); }
 
 .hdl-body.active { opacity: 1; }
@@ -312,7 +312,6 @@ button#avatar-reload:hover { background: transparent; }
 }
 
 #rpl-num { color: #999; }
-#remove-ts, #remove-hidden { display: none; }
 
 textarea.inline-editor {
     min-width: 100%;

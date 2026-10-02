@@ -390,8 +390,8 @@ async function attachHdl() {
                     <div class="hdl-body">
                         <div class="hdl-move"></div>
                         <div class="hdl-box">
-                        <button class="hdl-edit" alt="수정"/>
                         <button class="hdl-copy" alt="복제"/>
+                        <button class="hdl-edit" alt="수정"/>
                         <button class="hdl-delete" alt="삭제"/>
                         </div>
                     </div>
@@ -514,6 +514,13 @@ $('#log-view').on('mousedown', '.hdl-move', function() {
     saveState();
 });
 
+// 핸들 - 복제
+$('#log-view').on('click', '.hdl-copy', function() {
+    saveState();
+    $(this).closest('.message').after($(this).closest('.message').clone());
+    $('.showtip').tipsy({ gravity: autoGrav, opacity: 1.0, html: true });
+});
+
 // 핸들 - 수정
 $('#log-view').on('click', '.hdl-edit', function() {
     saveState();
@@ -612,13 +619,6 @@ $('#log-view').on('click', '.hdl-edit', function() {
         // 핸들 고정 해제 & 이동 활성화
         $msg.find('.hdl-body').removeClass('active');
     });
-});
-
-// 핸들 - 복제
-$('#log-view').on('click', '.hdl-copy', function() {
-    saveState();
-    $(this).closest('.message').after($(this).closest('.message').clone());
-    $('.showtip').tipsy({ gravity: autoGrav, opacity: 1.0, html: true });
 });
 
 // 핸들 - 삭제
