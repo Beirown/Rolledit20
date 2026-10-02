@@ -83,9 +83,11 @@
 
         <h2>아바타 이미지 일괄 바꾸기 <button id="avatar-reload" class="showtip" alt="아바타 목록 새로 불러오기" title="아바타 목록 새로 불러오기"><svg width="20" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path class="icon" d="m5.32861 24.88086-3.10156-15.68359a1.9702 1.9702 0 0 1 1.12061-2.20264 1.971 1.971 0 0 1 2.40576.56837l3.94726 4.95752a29.618 29.618 0 0 1 51.61768 15.15917 1.99331 1.99331 0 0 1 -1.623 2.24707l-3.90478.72265a2.01611 2.01611 0 0 1 -2.34331-1.71041 21.85182 21.85182 0 0 0 -17.27637-18.1973 21.574 21.574 0 0 0 -18.48389 5.023l6.77686 1.14258a1.99983 1.99983 0 0 1 .2998 3.86914l-16.84033 5.61323a2.00027 2.00027 0 0 1 -2.59473-1.50879zm56.25539 29.92676-3.10253-15.688a2.00061 2.00061 0 0 0 -2.59473-1.50928l-16.83108 5.61329a1.99975 1.99975 0 0 0 .29932 3.86914l6.77783 1.14258a21.56248 21.56248 0 0 1 -18.48388 5.023 21.87957 21.87957 0 0 1 -17.26514-18.11135 2.01262 2.01262 0 0 0 -2.28223-1.709l-3.92578.60449a2.00444 2.00444 0 0 0 -1.68262 2.25244 29.86619 29.86619 0 0 0 23.834 24.81787 30.32891 30.32891 0 0 0 5.562.51612 29.37837 29.37837 0 0 0 22.22119-10.13966l3.94776 4.95263a1.99975 1.99975 0 0 0 3.52589-1.63427z"/></svg></button></h2>
         <div id="avatar-list"></div>
-          <p><label class="showtip tipsy-side" title="체크하고 Google Drive 링크 변환 시 이미지를 원본 화질로 가져옵니다."><input type="checkbox" id="pic">원본 화질 <svg width="16" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><g class="icon"><path d="m10 1a9 9 0 1 0 9 9 9.01 9.01 0 0 0 -9-9zm1 13a1 1 0 0 1 -2 0v-4a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zm-1-7a1 1 0 1 1 1-1 1 1 0 0 1 -1 1z"/></g></svg></label> <button id="avatar-ggl" class="showtip" title="교체 이미지 링크에 Google Drive 링크 넣고 적용 전 클릭">Google Drive 링크 변환</button>
-          <button id="avatar-btn">적용</button></p>
-          <div id="help-img" class="help"><svg width="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g class="icon"><path d="m12 1a11 11 0 1 0 11 11 11.013 11.013 0 0 0 -11-11zm0 18a1 1 0 1 1 1-1 1 1 0 0 1 -1 1zm2.262-6.1a2.524 2.524 0 0 0 -1.262 2.1 1 1 0 0 1 -2 0 4.509 4.509 0 0 1 2.2-3.8 2.28 2.28 0 0 0 1.01-2.476 2.275 2.275 0 0 0 -4.482.549 1 1 0 0 1 -2 0 4.251 4.251 0 0 1 1.61-3.342 4.294 4.294 0 0 1 3.656-.818 4.274 4.274 0 0 1 1.268 7.787z"/></g></svg> Google Drive 링크 따는 법</div>
+        <div class="avatar-button">
+          <div><p><button id="avatar-ggl" class="showtip" title="교체 이미지 링크에 Google Drive 링크 넣고 적용 전 클릭">Google Drive 링크 변환</button> <label class="showtip tipsy-side" title="체크하고 Google Drive 링크 변환 시 이미지를 원본 화질로 가져옵니다."><input type="checkbox" id="pic">원본 화질 <svg width="16" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><g class="icon"><path d="m10 1a9 9 0 1 0 9 9 9.01 9.01 0 0 0 -9-9zm1 13a1 1 0 0 1 -2 0v-4a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zm-1-7a1 1 0 1 1 1-1 1 1 0 0 1 -1 1z"/></g></svg></label></p>
+            <div id="help-img" class="help"><svg width="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g class="icon"><path d="m12 1a11 11 0 1 0 11 11 11.013 11.013 0 0 0 -11-11zm0 18a1 1 0 1 1 1-1 1 1 0 0 1 -1 1zm2.262-6.1a2.524 2.524 0 0 0 -1.262 2.1 1 1 0 0 1 -2 0 4.509 4.509 0 0 1 2.2-3.8 2.28 2.28 0 0 0 1.01-2.476 2.275 2.275 0 0 0 -4.482.549 1 1 0 0 1 -2 0 4.251 4.251 0 0 1 1.61-3.342 4.294 4.294 0 0 1 3.656-.818 4.274 4.274 0 0 1 1.268 7.787z"/></g></svg> Google Drive 링크 따는 법</div></div>
+          <div style="width: 100%; text-align: right;"><button id="avatar-btn">바꾸기 적용</button></div>
+        </div>
 
         <h2>일괄 바꾸기</h2>
         <p><label>찾을 내용 <input type="text" id="rpl-find"></label> <span id="rpl-num"></span></p>
@@ -94,8 +96,9 @@
         <h2>일괄 삭제</h2>
         <p><span id="check-ts">이 로그에는 타임스탬프가 포함되어 있지 않습니다.</span><button id="remove-ts">타임스탬프 삭제</button></p>
         <p><span id="check-hidden">이 로그에는 hidden mesaage가 포함되어 있지 않습니다.</span><button id="remove-hidden">hidden message 삭제</button></p>
-        <p><span id="check-aria">이미 더 압축된 로그입니다.</span><button id="remove-aria">로그 더 압축하기</button></p>
         <p><button id="remove-repeat">중복 메시지 삭제</button></p>
+<br>
+        <p><span id="check-aria">이미 더 압축된 로그입니다.</span><button id="remove-aria">로그 더 압축하기</button></p>
 <br><br>
         <p><label class="showtip tipsy-side" title="체크 시 백업용 CSS를 따로 삽입하지 않아도 되지만, 코드가 길어집니다. 이미 CSS가 포함되어 있다면 체크하지 마세요."><input type="checkbox" id="include-css"> 주사위 템플릿 CSS 포함 <svg width="16" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><g class="icon"><path d="m10 1a9 9 0 1 0 9 9 9.01 9.01 0 0 0 -9-9zm1 13a1 1 0 0 1 -2 0v-4a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zm-1-7a1 1 0 1 1 1-1 1 1 0 0 1 -1 1z"/></g></svg></label></p>
         <p><button id="copy-html">현재 코드 복사</button>
