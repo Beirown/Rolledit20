@@ -206,7 +206,6 @@ button#avatar-reload:hover { background: transparent; }
 .remove-item { padding: 6px; font-size: 14px; text-indent: 10px; }
 .remove-item p { word-break: break-all; }
 .remove-item button { width: 100%; }
-#check-repeat { display: none; }
 
 @container (max-width: 500px) {.remove-box { grid-template-columns: 1fr 1fr; }}
 @container (max-width: 290px) {.remove-box { grid-template-columns: 1fr; }}

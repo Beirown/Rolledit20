@@ -755,12 +755,32 @@ $('#remove-ts').on('click', function() {
 });
 
 $('#remove-hidden').on('click', function() {
-    const count = $('#log-view .message.hidden-message').length;
+    const $hidden = $('#log-view .message.hidden-message');
+    const count = $hidden.length;
+    
+    if (count === 0) { alert('삭제할 hidden message가 없습니다.'); return; }
     if (!confirm(`hidden message ${count}개가 완전히 삭제됩니다. 계속하시겠습니까?`)) return;
+    
     saveState();
+
+    $hidden.each(function() {
+        const $this = $(this);
+
+        if ($this.find('.by').length > 0) {
+            const $next =$this.next('.message');
+
+            if ($next.length > 0 && $next.hasClass('general') && $next.find('.by').length === 0) {
+                $this.removeClass('hidden-message').removeAttr('style').html($this.html().replace('This message has been hidden.', ''));
+                $this.append($next.html());
+                $next.remove();
+            }
+        }
+    });
     $('#log-view .message.hidden-message').remove();
+    
     $('#log-view #check').removeClass('hidden');
-    $('#check-hidden').show(); $('#remove-hidden').hide();
+    $('#check-hidden').show(); 
+    $('#remove-hidden').hide();
 });
 
 $('#remove-you').on('click', function() {
@@ -851,6 +871,9 @@ function scan() {
         $('#check-aria').show();
         $('#remove-aria').hide();
     }
+
+    $('#check-repeat').hide();
+    $('#remove-repeat').show();
 }
 
 // 템플릿 CSS 포함
