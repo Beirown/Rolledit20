@@ -747,7 +747,7 @@ $('#rpl-btn').on('click', function() {
 
 // 일괄 삭제
 $('#remove-ts').on('click', function() {
-    if (!confirm('타임스탬프를 모두 삭제하시겠습니까?')) return;
+    if (!confirm('타임스탬프가 완전히 삭제됩니다. 계속하시겠습니까?')) return;
     saveState();
     $('#log-view .message .tstamp').remove();
     $('#log-view #check').removeClass('ts');
@@ -755,7 +755,8 @@ $('#remove-ts').on('click', function() {
 });
 
 $('#remove-hidden').on('click', function() {
-    if (!confirm('hidden message를 모두 삭제하시겠습니까?')) return;
+    const count = $('#log-view .message.hidden-message').length;
+    if (!confirm(`hidden message ${count}개가 완전히 삭제됩니다. 계속하시겠습니까?`)) return;
     saveState();
     $('#log-view .message.hidden-message').remove();
     $('#log-view #check').removeClass('hidden');
@@ -763,7 +764,7 @@ $('#remove-hidden').on('click', function() {
 });
 
 $('#remove-you').on('click', function() {
-    if (!confirm('보낸 메시지를 받은 메시지와 구분할 수 없게 됩니다. 계속하시겠습니까?')) return;
+    if (!confirm('보낸 메시지 커스텀을 할 수 없게 됩니다. 계속하시겠습니까?')) return;
     saveState();
     $('#log-view .message.you').removeClass('you');
     $('#log-view #check').removeClass('you');
@@ -771,7 +772,7 @@ $('#remove-you').on('click', function() {
 });
 
 $('#remove-aria').on('click', function() {
-    if (!confirm('코드가 더 짧아지지만, 로그를 스크린 리더로 읽기 어려워집니다. 계속하시겠습니까?')) return;
+    if (!confirm('로그를 스크린 리더로 읽기 어려워집니다. 계속하시겠습니까?')) return;
     saveState();
     $('#log-view .message .avatar').removeAttr('aria-hidden');
     $('#log-view #check').removeClass('aria');
@@ -779,7 +780,7 @@ $('#remove-aria').on('click', function() {
 })
 
 $('#remove-repeat').on('click', function() {
-    if (!confirm('롤20 오류로 중복된 메시지를 모두 삭제합니다. 계속하시겠습니까?')) return;
+    if (!confirm('롤20 오류로 중복된 메시지를 일괄 삭제합니다. 계속하시겠습니까?')) return;
     saveState();
     let $msg = $('#log-view .message');
 
