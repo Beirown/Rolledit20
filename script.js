@@ -69,11 +69,11 @@ function undo() {
     const prev = undoStack.pop();
     restoreState(prev);
     $('#redo-btn').show();
-    if ($('#check').hasClass('ts')) { $('#check-ts').hide(); $('#remove-ts').show(); }
-    if ($('#check').hasClass('hidden')) { $('#check-hidden').hide(); $('#remove-hidden').show(); }
-    if ($('#check').hasClass('aria')) { $('#check-aria').hide(); $('#remove-aria').show(); }
+    const $check =$('#check');
+    ['ts', 'hidden', 'you', 'aria'].forEach(cls => {
+        if ($check.hasClass(cls)) { $(`#check-${cls}`).hide(); $(`#remove-${cls}`).show(); }
+    });
 }
-
 
 function redo() {
     if (redoStack.length === 0) return;
@@ -82,9 +82,10 @@ function redo() {
     const next = redoStack.pop();
     restoreState(next);
     $('#undo-btn').show();
-    if (!$('#check').hasClass('ts')) { $('#check-ts').show(); $('#remove-ts').hide(); }
-    if (!$('#check').hasClass('hidden')) { $('#check-hidden').show(); $('#remove-hidden').hide(); }
-    if (!$('#check').hasClass('aria')) { $('#check-aria').show(); $('#remove-aria').hide(); }
+    const $check =$('#check');
+    ['ts', 'hidden', 'you', 'aria'].forEach(cls => {
+        if ($check.hasClass(cls)) { $(`#check-${cls}`).show(); $(`#remove-${cls}`).hide(); }
+    });
 }
 
 $(document).on('keydown', function(e) {
@@ -761,6 +762,14 @@ $('#remove-hidden').on('click', function() {
     $('#check-hidden').show(); $('#remove-hidden').hide();
 });
 
+$('#remove-you').on('click', function() {
+    if (!confirm('내 메시지를 타인의 메시지와 동일한 서식으로 만듭니다. 계속하시겠습니까?')) return;
+    saveState();
+    $('#log-view .message.you').removeClass('you');
+    $('#log-view #check').removeClass('you');
+    $('#check-you').show(); $('#remove-you').hide();
+});
+
 $('#remove-aria').on('click', function() {
     if (!confirm('코드가 더 짧아지지만, 로그를 스크린 리더로 읽기 어려워집니다. 계속하시겠습니까?')) return;
     saveState();
@@ -811,6 +820,15 @@ function scan() {
     } else {
         $('#check-hidden').show();
         $('#remove-hidden').hide();
+    }
+
+    if ($('#log-view .message.you').length > 0) {
+        $('#check-you').hide();
+        $('#remove-you').show();
+        $('#check').addClass('you');
+    } else {
+        $('#check-you').show();
+        $('#remove-you').hide();
     }
 
     if ($('#log-view .avatar').is('[aria-hidden]')) {
