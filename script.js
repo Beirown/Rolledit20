@@ -661,8 +661,7 @@ $('#avatar-list').on('change', '.delete', function() {
         $avatar.find('.link-chg').val('아바타 이미지를 제거합니다.').prop('readonly', true);
     } else {
         $avatar.find('.img-chg img').show();
-        $avatar.find('.link-chg').removeAttr('readonly').val('');
-        $('.link-chg').trigger('input');
+        $avatar.find('.link-chg').removeAttr('readonly').val('').trigger('input');
     }   
 });
 
