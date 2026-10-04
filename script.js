@@ -772,6 +772,7 @@ $('#remove-aria').on('click', function() {
 
 $('#remove-repeat').on('click', function() {
     if (!confirm('롤20 오류로 중복된 메시지를 모두 삭제합니다. 계속하시겠습니까?')) return;
+    saveState();
     let $msg = $('#log-view .message');
 
     const getCleanText = ($el) => $el.clone()
