@@ -70,7 +70,7 @@ function undo() {
     restoreState(prev);
     $('#redo-btn').show();
     const $check =$('#check');
-    ['ts', 'hidden', 'you', 'aria'].forEach(cls => {
+    ['ts', 'hidden', 'you', 'aria', 'repeat'].forEach(cls => {
         if ($check.hasClass(cls)) { $(`#check-${cls}`).hide(); $(`#remove-${cls}`).show(); }
     });
 }
@@ -83,7 +83,7 @@ function redo() {
     restoreState(next);
     $('#undo-btn').show();
     const $check =$('#check');
-    ['ts', 'hidden', 'you', 'aria'].forEach(cls => {
+    ['ts', 'hidden', 'you', 'aria', 'repeat'].forEach(cls => {
         if ($check.hasClass(cls)) { $(`#check-${cls}`).show(); $(`#remove-${cls}`).hide(); }
     });
 }
@@ -763,7 +763,7 @@ $('#remove-hidden').on('click', function() {
 });
 
 $('#remove-you').on('click', function() {
-    if (!confirm('내 메시지를 타인의 메시지와 동일한 서식으로 만듭니다. 계속하시겠습니까?')) return;
+    if (!confirm('보낸 메시지를 받은 메시지와 구분할 수 없게 됩니다. 계속하시겠습니까?')) return;
     saveState();
     $('#log-view .message.you').removeClass('you');
     $('#log-view #check').removeClass('you');
@@ -790,19 +790,30 @@ $('#remove-repeat').on('click', function() {
         .text()
         .trim();
 
-    for (let i = 1; i < $msg.length; i++) {
-        const prev = getCleanText($msg.eq(i - 1));
-        const current = getCleanText($msg.eq(i));
+    const messages = $msg.toArray();
+    const texts = messages.map(el => getCleanText($(el)));
 
-        if (prev === current) {
-            $msg.eq(i).remove();
+    let i = 0;
+
+    while (i < messages.length) {
+        const start = i;
+        let pairCount = 0;
+
+        while (i + 1 < messages.length && texts[i] === texts[i + 1]) { pairCount++; i += 2; }
+
+        if (pairCount >= 4) {
+            for (let j = start + 1; j < start + pairCount * 2; j += 2) { $(messages[j]).remove(); }
         }
+        if (i === start) { i++; }
     }
+
+    $('#log-view #check').removeClass('repeat');
+    $('#check-repeat').show(); $('#remove-repeat').hide();
 });
 
 // 삭제 요소 검사
 function scan() {
-    $('#log-view').prepend('<div id="check"></div>');
+    $('#log-view').prepend('<div id="check" class="repeat"></div>');
 
     if ($('#log-view .tstamp').length > 0) {
         $('#check-ts').hide();

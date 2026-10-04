@@ -97,12 +97,13 @@
         <p><label>바꿀 내용 <input type="text" id="rpl-replace"></label> <button id="rpl-btn">적용</button></p>
 
         <h2>일괄 삭제</h2>
-        <p><span id="check-ts">이 로그에는 타임스탬프가 포함되어 있지 않습니다.</span><button id="remove-ts">타임스탬프 삭제</button></p>
-        <p><span id="check-hidden">이 로그에는 hidden mesaage가 포함되어 있지 않습니다.</span><button id="remove-hidden">hidden message 삭제</button></p>
-        <p><span id="check-you">이 로그에서 내 메시지가 인식되지 않습니다.</span><button id="remove-you">내 메시지 구분 삭제</button></p>
-        <p><button id="remove-repeat">중복 메시지 삭제</button></p>
-<br>
-        <p><span id="check-aria">이미 더 압축된 로그입니다.</span><button id="remove-aria">로그 더 압축하기</button></p>
+        <div class="remove-box">
+          <div class="remove-item"><h3>타임스탬프</h3><p>로그상 보이지 않는 타임스탬프를 삭제해 코드 길이를 줄입니다.</p><p><a href="https://rollstory20.tistory.com/9" target="_blank">커스텀</a>을 통해 타임스탬프를 보이거나 숨길 수 있습니다.</p><p id="check-ts">(현재 타임스탬프 없음)</p><button id="remove-ts">타임스탬프 삭제</button></div>
+          <div class="remove-item"><h3>hidden message</h3><p>hidden message를 일괄 삭제합니다.</p><p><a href="https://rollstory20.tistory.com/9" target="_blank">커스텀</a>을 통해 hidden message를 삭제하지 않고 숨길 수 있습니다.</p><p id="check-hidden">(현재 hidden 없음)</p><button id="remove-hidden">hidden message 삭제</button></div>
+          <div class="remove-item"><h3>보낸 메시지 구분</h3><p><span style="background-color: #D3E5F5;">보낸 메시지</span>를 <span style="background-color: #F1F1F1;">받은 메시지</span>와 같은 서식으로 만듭니다.</p><p><a href="https://rollstory20.tistory.com/9" target="_blank">커스텀</a>을 통해 보낸 메시지 서식을 커스텀할 수 있습니다.</p><p id="check-you">(현재 구분 없음)</p><button id="remove-you">보낸 메시지 구분 삭제</button></div>
+          <div class="remove-item"><h3>웹 접근성 속성</h3><p>웹 접근성을 위한 aria-hidden 속성을 삭제해 코드 길이를 줄입니다.</p><p>스크린 리더로 로그를 읽기 어려워집니다.</p><p id="check-aria">(현재 해당 속성 없음)</p><button id="remove-aria">웹 접근성 속성 삭제</button></div>
+          <div class="remove-item"><h3>중복 메시지</h3><p>롤20 오류로 중복된 메시지를 일괄 삭제합니다.</p><p>이 옵션은 중복 메시지가 없을 때도 활성화되어 있을 수 있습니다.</p><p id="check-repeat">(중복 메시지 삭제 완료)</p><button id="remove-repeat">중복 메시지 삭제</button></div>
+        </div>
 <br><br>
         <p><label class="showtip tipsy-side" title="체크 시 백업용 CSS를 따로 삽입하지 않아도 되지만, 코드가 길어집니다. 이미 CSS가 포함되어 있다면 체크하지 마세요."><input type="checkbox" id="include-css"> 주사위 템플릿 CSS 포함 <svg width="16" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><g class="icon"><path d="m10 1a9 9 0 1 0 9 9 9.01 9.01 0 0 0 -9-9zm1 13a1 1 0 0 1 -2 0v-4a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zm-1-7a1 1 0 1 1 1-1 1 1 0 0 1 -1 1z"/></g></svg></label></p>
         <p><button id="copy-html">현재 코드 복사</button>
