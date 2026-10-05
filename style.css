@@ -68,8 +68,8 @@ a:hover, a:focus {
   outline: none;
 }
 
-.back { position: fixed; top: 45%; right: calc(50% - 130px); width: 260px; height: 100vh; margin: auto; text-align: center; }
-.p { position: fixed; bottom: 45%; width: 100%; text-align: center; color: white; }
+.back { position: fixed; top: 40%; right: calc(50% - 130px); width: 260px; height: 100vh; margin: auto; text-align: center; }
+.p { position: fixed; top: calc(40% + 60px); width: 100%; text-align: center; color: white; }
 
 a::before, a span::before, a::after, a span::after {
   content: '';
