@@ -202,8 +202,8 @@ button#avatar-reload:hover { background: transparent; }
 #avatar-list img { max-width: 100%; max-height: 100%; cursor: zoom-in; }
 .avatar-button { display: grid; grid-template-columns: 4fr 1fr;}
 
-.remove-box { display: grid; width: 100%; grid-template-columns: 1fr 1fr 1fr; row-gap: 13px; }
-.remove-item { padding: 6px; font-size: 14px; text-indent: 10px; }
+.remove-box { display: grid; width: 100%; grid-template-columns: 1fr 1fr 1fr; column-gap: 14px; row-gap: 24px; }
+.remove-item { font-size: 14px; text-indent: 10px; }
 .remove-item p { word-break: break-all; }
 .remove-item button { width: 100%; }
 

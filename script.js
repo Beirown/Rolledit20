@@ -70,7 +70,7 @@ function undo() {
     restoreState(prev);
     $('#redo-btn').show();
     const $check =$('#check');
-    ['ts', 'hidden', 'you', 'aria', 'repeat'].forEach(cls => {
+    ['repeat', 'hidden', 'you', 'ts', 'aria'].forEach(cls => {
         if ($check.hasClass(cls)) { $(`#check-${cls}`).hide(); $(`#remove-${cls}`).show(); }
     });
 }
@@ -83,7 +83,7 @@ function redo() {
     restoreState(next);
     $('#undo-btn').show();
     const $check =$('#check');
-    ['ts', 'hidden', 'you', 'aria', 'repeat'].forEach(cls => {
+    ['repeat', 'hidden', 'you', 'ts', 'aria'].forEach(cls => {
         if ($check.hasClass(cls)) { $(`#check-${cls}`).show(); $(`#remove-${cls}`).hide(); }
     });
 }
@@ -494,13 +494,13 @@ function showLoadingOverlay() {
     }
 }
 
-// 🔹 진행률 업데이트
+// 진행률 업데이트
 function updateLoadingProgress(percent, text) {
     $('#loading-bar').css('width', `${percent}%`);
     $('#loading-text').text(text);
 }
 
-// 🔹 오버레이 제거
+// 오버레이 제거
 function hideLoadingOverlay() {
     $('#loading-overlay').fadeOut(300, function() {
         $(this).remove();
@@ -746,12 +746,65 @@ $('#rpl-btn').on('click', function() {
 });
 
 // 일괄 삭제
-$('#remove-ts').on('click', function() {
-    if (!confirm('타임스탬프가 완전히 삭제됩니다. 계속하시겠습니까?')) return;
+$('#remove-repeat').on('click', function() {
+    if (!confirm('중복 메시지를 일괄 삭제합니다. 계속하시겠습니까?')) return;
     saveState();
-    $('#log-view .message .tstamp').remove();
-    $('#log-view #check').removeClass('ts');
-    $('#check-ts').show(); $('#remove-ts').hide();
+    let $msg = $('#log-view .message');
+
+    const getCleanText = ($el) => $el.clone()
+        .find('.spacer, .avatar, .tstamp, .by')
+        .remove()
+        .end()
+        .text()
+        .trim();
+
+    const messages = $msg.toArray();
+    const texts = messages.map(el => getCleanText($(el)));
+
+    let i = 0;
+
+    while (i < messages.length) {
+        const start = i;
+        let pairCount = 0;
+
+        while (i + 1 < messages.length && texts[i] === texts[i + 1]) { pairCount++; i += 2; }
+
+        if (pairCount >= 4) {
+            for (let j = start + 1; j < start + pairCount * 2; j += 2) { $(messages[j]).remove(); }
+        }
+        if (i === start) { i++; }
+    }
+
+    $('#log-view #check').removeClass('repeat');
+    $('#check-repeat').show(); $('#remove-repeat').hide();
+});
+
+$('#remove-by').on('click', function() {
+    if (!confirm('화자 중복 표시를 일괄 삭제합니다. 계속하시겠습니까?')) return;
+    saveState();
+    $('#log-view .message.general').each(function() {
+        const $currentMessage = $(this);
+        const $currentBy = $currentMessage.find('.by');
+
+        if ($currentBy.length === 0) return;
+        const currentText = $currentBy.text().trim();
+        
+        let $next = $currentMessage.next();
+        while ($next.length > 0) {
+            if (!$next.hasClass('general')) break;
+            const $nextBy = $next.find('.by');
+            if ($nextBy.length > 0) {
+                const nextText = $nextBy.text().trim();
+                if (nextText === currentText) {
+                    $next.find('.spacer, .avatar, .tstamp, .by').remove();
+                } else break;
+            }
+            $next = $next.next();
+        }
+    });
+    $('#log-view #check').removeClass('by');
+    $('#check-by').show(); 
+    $('#remove-by').hide();
 });
 
 $('#remove-hidden').on('click', function() {
@@ -784,11 +837,19 @@ $('#remove-hidden').on('click', function() {
 });
 
 $('#remove-you').on('click', function() {
-    if (!confirm('보낸 메시지 커스텀을 할 수 없게 됩니다. 계속하시겠습니까?')) return;
+    if (!confirm('보낸 메시지를 따로 커스텀할 수 없게 됩니다. 계속하시겠습니까?')) return;
     saveState();
     $('#log-view .message.you').removeClass('you');
     $('#log-view #check').removeClass('you');
     $('#check-you').show(); $('#remove-you').hide();
+});
+
+$('#remove-ts').on('click', function() {
+    if (!confirm('타임스탬프가 완전히 삭제됩니다. 계속하시겠습니까?')) return;
+    saveState();
+    $('#log-view .message .tstamp').remove();
+    $('#log-view #check').removeClass('ts');
+    $('#check-ts').show(); $('#remove-ts').hide();
 });
 
 $('#remove-aria').on('click', function() {
@@ -799,9 +860,11 @@ $('#remove-aria').on('click', function() {
     $('#check-aria').show(); $('#remove-aria').hide();
 })
 
-$('#remove-repeat').on('click', function() {
-    if (!confirm('롤20 오류로 중복된 메시지를 일괄 삭제합니다. 계속하시겠습니까?')) return;
-    saveState();
+// 삭제 요소 검사
+function scan() {
+    $('#log-view').prepend('<div id="check"></div>');
+
+    // 중복 메시지
     let $msg = $('#log-view .message');
 
     const getCleanText = ($el) => $el.clone()
@@ -815,6 +878,7 @@ $('#remove-repeat').on('click', function() {
     const texts = messages.map(el => getCleanText($(el)));
 
     let i = 0;
+    let pair = false;
 
     while (i < messages.length) {
         const start = i;
@@ -823,28 +887,44 @@ $('#remove-repeat').on('click', function() {
         while (i + 1 < messages.length && texts[i] === texts[i + 1]) { pairCount++; i += 2; }
 
         if (pairCount >= 4) {
-            for (let j = start + 1; j < start + pairCount * 2; j += 2) { $(messages[j]).remove(); }
+            $('#check-repeat').hide(); $('#remove-repeat').show(); $('#check').addClass('repeat');
+            pair = true;
+            break;
         }
         if (i === start) { i++; }
     }
 
-    $('#log-view #check').removeClass('repeat');
-    $('#check-repeat').show(); $('#remove-repeat').hide();
-});
+    if (!pair) { $('#check-repeat').show(); $('#remove-repeat').hide(); }
 
-// 삭제 요소 검사
-function scan() {
-    $('#log-view').prepend('<div id="check" class="repeat"></div>');
+    // 중복 화자 표시
+    let chat = false;
+    $('#log-view .message.general').each(function() {
+        const $currentMessage = $(this);
+        const $currentBy = $currentMessage.find('.by');
 
-    if ($('#log-view .tstamp').length > 0) {
-        $('#check-ts').hide();
-        $('#remove-ts').show();
-        $('#check').addClass('ts');
-    } else {
-        $('#check-ts').show();
-        $('#remove-ts').hide();
-    }
+        if ($currentBy.length === 0) return;
+        const currentText = $currentBy.text().trim();
+        
+        let $next = $currentMessage.next();
+        while ($next.length > 0) {
+            if (!$next.hasClass('general')) break;
+            const $nextBy = $next.find('.by');
+            if ($nextBy.length > 0) {
+                const nextText = $nextBy.text().trim();
+                if (nextText === currentText) {
+                    $('#check-by').hide();
+                    $('#remove-by').show();
+                    $('#check').addClass('by');
+                    chat = true;
+                    break;
+                } else break;
+            }
+            $next = $next.next();
+        }
+    });
+    if (!chat) { $('#check-by').show(); $('#remove-by').hide(); }
 
+    // hidden message
     if ($('#log-view .hidden-message').length > 0) {
         $('#check-hidden').hide();
         $('#remove-hidden').show();
@@ -854,6 +934,7 @@ function scan() {
         $('#remove-hidden').hide();
     }
 
+    // 보낸 메시지 구분
     if ($('#log-view .message.you').length > 0) {
         $('#check-you').hide();
         $('#remove-you').show();
@@ -863,6 +944,17 @@ function scan() {
         $('#remove-you').hide();
     }
 
+    // 타임스탬프
+    if ($('#log-view .tstamp').length > 0) {
+        $('#check-ts').hide();
+        $('#remove-ts').show();
+        $('#check').addClass('ts');
+    } else {
+        $('#check-ts').show();
+        $('#remove-ts').hide();
+    }
+
+    // 웹 접근성 코드
     if ($('#log-view .avatar').is('[aria-hidden]')) {
         $('#check-aria').hide();
         $('#remove-aria').show();
@@ -871,9 +963,6 @@ function scan() {
         $('#check-aria').show();
         $('#remove-aria').hide();
     }
-
-    $('#check-repeat').hide();
-    $('#remove-repeat').show();
 }
 
 // 템플릿 CSS 포함
