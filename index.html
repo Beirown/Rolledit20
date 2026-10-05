@@ -5,145 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi" />
   <title>Rolleditor - 롤20 로그 편집기</title>
-  <script type='text/javascript' src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script type='text/javascript' src="https://code.jquery.com/ui/1.13.3/jquery-ui.min.js"></script>
-  <script type='text/javascript' src='./jquery.tipsy.js'></script>
-  <script src="./script.js" defer></script>
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css"/>
   <link rel="stylesheet" href="./style.css"/>
-  <link rel="stylesheet" id="css-chat" href="./Roll20_style.css"/>
 </head>
 
 <body>
-  <header>
-    <div class="title"><h1>Rolleditor</h1></div>
-    <div class="toolbar" role="toolbar">
-      <div class="tool-btn"><button id="undo-btn" class="tool-btn showtip" alt="실행 취소" title="실행 취소(Ctrl+Z)"><svg width="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path class="icon" d="m8.0865067 2c-.18989146-.01681362-.39099893.02170898-.58201043.13085938l-6.9997496 4c-.32495272.18527247-.51935064.53640686-.50388823.91015625.01468018.34373316.20500507.65578858.50388823.82617188l6.9997496 4c.76500772.43781606 1.6811886-.25635914 1.4667444-1.1113281l-.31660159-1.270692a.3907077.3907077 128.00462 0 1 .37911724-.48516735h6.4665477c2.5088809 0 4.499839 1.9910294 4.499839 4.5s-1.9909581 4.5-4.499839 4.5h-7.4997317c-1.10453 0-1.9999285.8954305-1.9999285 2s.89539847 2 1.9999285 2h7.4997317c4.670564 0 8.499696-3.8292689 8.499696-8.5s-3.8291319-8.5-8.499696-8.5h-6.4685007a.39049669.39049669 52.010399 0 1 -.37886295-.48510392l.31830036-1.2746617c.1590673-.64055607-.31505961-1.1897935-.88473398-1.2402344z"/></svg></button></div>
-      <div class="tool-btn"><button id="redo-btn" class="tool-btn showtip" alt="다시 실행" title="다시 실행(Ctrl+Y)"><svg width="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path class="icon" d="m8.0865067 2c-.18989146-.01681362-.39099893.02170898-.58201043.13085938l-6.9997496 4c-.32495272.18527247-.51935064.53640686-.50388823.91015625.01468018.34373316.20500507.65578858.50388823.82617188l6.9997496 4c.76500772.43781606 1.6811886-.25635914 1.4667444-1.1113281l-.31660159-1.270692a.3907077.3907077 128.00462 0 1 .37911724-.48516735h6.4665477c2.5088809 0 4.499839 1.9910294 4.499839 4.5s-1.9909581 4.5-4.499839 4.5h-7.4997317c-1.10453 0-1.9999285.8954305-1.9999285 2s.89539847 2 1.9999285 2h7.4997317c4.670564 0 8.499696-3.8292689 8.499696-8.5s-3.8291319-8.5-8.499696-8.5h-6.4685007a.39049669.39049669 52.010399 0 1 -.37886295-.48510392l.31830036-1.2746617c.1590673-.64055607-.31505961-1.1897935-.88473398-1.2402344z"/></svg></button></div>
-    </div>
-  </header>
-  <div id="pop-what" class="pop-up">
-    <img src="https://lh3.googleusercontent.com/d/1tQgoZ5Bryb0jxFeaIYit_iEjI5M5vXZS">
+  <div class="back">
+    <a href="https://rolleditor.beirown.workers.dev/"><span>새 편집기 바로가기</span></a>
   </div>
-  <div id="pop-img" class="pop-up">
-    <img src="https://lh3.googleusercontent.com/d/1PGlxdGuHUNhOPIrE4iz3e7of12KWfQ7u">
-  </div>
-  <div id="pop-view" class="pop-up">
-    <img>
-  </div>
-  <div id="grid">
-    <link rel="stylesheet" id="css-sheet">
-    <div id="control">
-      <div id="section-upload">
-        <h2>HTML 입력하기</h2>
-        <div id="help-what" class="help"><svg width="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g class="icon"><path d="m12 1a11 11 0 1 0 11 11 11.013 11.013 0 0 0 -11-11zm0 18a1 1 0 1 1 1-1 1 1 0 0 1 -1 1zm2.262-6.1a2.524 2.524 0 0 0 -1.262 2.1 1 1 0 0 1 -2 0 4.509 4.509 0 0 1 2.2-3.8 2.28 2.28 0 0 0 1.01-2.476 2.275 2.275 0 0 0 -4.482.549 1 1 0 0 1 -2 0 4.251 4.251 0 0 1 1.61-3.342 4.294 4.294 0 0 1 3.656-.818 4.274 4.274 0 0 1 1.268 7.787z"/></g></svg> 무엇을 넣어야 하나요?</div>
-        <div class="file-box">
-          <textarea id="html-text" rows="10" cols="60" placeholder="복사한 HTML을 붙여넣어 주세요.">&lt;div class=&quot;textchatcontainer&quot; id=&quot;textchat&quot;&gt;
-&lt;div class=&quot;content&quot;&gt;&lt;div class=&quot;message emote&quot; data-messageid=&quot;-OvULQA0UP3H1GsKNyTX&quot;&gt;&lt;div class=&quot;avatar&quot; aria-hidden=&quot;true&quot;&gt;&lt;/div&gt;&lt;div class=&quot;spacer&quot;&gt;&lt;/div&gt;   Rolleditor&lt;/div&gt;&lt;div class=&quot;message desc&quot; data-messageid=&quot;-OvULQAHvNZwwsCBei_n&quot;&gt;&lt;div class=&quot;spacer&quot;&gt;&lt;/div&gt; by 연갈(Beirown)&lt;/div&gt;&lt;div class=&quot;message desc&quot; data-messageid=&quot;-OvULQATi9oELAxtSilA&quot;&gt;&lt;div class=&quot;spacer&quot;&gt;&lt;/div&gt; 최종 업데이트 2026. 10. 05.&lt;/div&gt;&lt;div class=&quot;message general you&quot; data-messageid=&quot;-OvUL_ceXlrS_uH4Jpv0&quot;&gt;&lt;div class=&quot;spacer&quot;&gt;&lt;/div&gt;&lt;div class=&quot;avatar&quot; aria-hidden=&quot;true&quot;&gt;&lt;/div&gt;&lt;span class=&quot;tstamp&quot; aria-hidden=&quot;true&quot;&gt;9:00PM&lt;/span&gt;&lt;span class=&quot;by&quot;&gt;나:&lt;/span&gt;이것은 채팅 로그 샘플입니다.&lt;/div&gt;&lt;div class=&quot;message general&quot; data-messageid=&quot;-OvULgENgqImnc1xOml5&quot;&gt;&lt;div class=&quot;spacer&quot;&gt;&lt;/div&gt;&lt;div class=&quot;avatar&quot; aria-hidden=&quot;true&quot;&gt;&lt;img src=&quot;https://files.d20.io/images/161131137/lx-HiiSya6RwITGsC8yPHg/max.png?1598766394&quot;&gt;&lt;/div&gt;&lt;span class=&quot;tstamp&quot; aria-hidden=&quot;true&quot;&gt;9:00PM&lt;/span&gt;&lt;span class=&quot;by&quot;&gt;GM:&lt;/span&gt;메시지에 마우스를 얹으면 복제/수정/삭제 버튼이 나타납니다.&lt;/div&gt;&lt;div class=&quot;message general&quot; data-messageid=&quot;-OvULgEYYnS9G9OM_DgT&quot;&gt;메시지 우측을 잡고 드래그하면 위치를 이동할 수 있습니다.&lt;/div&gt;&lt;div class=&quot;message general&quot; data-messageid=&quot;-OvULgEf4Lq8TWiX-FiD&quot;&gt;일부 주사위는 수정을 지원하지 않습니다.&lt;/div&gt;&lt;div class=&quot;message general&quot; data-messageid=&quot;-OvULgEnWMbgrHFbgHuu&quot;&gt;편집 시 화면 우상단에 실행 취소(Ctrl+Z)와 다시 실행(Ctrl+Y) 버튼이 활성화됩니다. 단축키로도 동작합니다.&lt;/div&gt;&lt;div class=&quot;message hidden-message you&quot; data-messageid=&quot;-OvcUwpXb81EShf6GXMN&quot; style=&quot;font-style: italic; position: relative;&quot;&gt;&lt;div id=&quot;menu-OvcUwpXb81EShf6GXMN&quot; class=&quot;flyout&quot;&gt;&lt;/div&gt;&lt;div class=&quot;spacer&quot;&gt;&lt;/div&gt;&lt;div class=&quot;avatar&quot; aria-hidden=&quot;true&quot;&gt;&lt;/div&gt;&lt;span class=&quot;tstamp&quot; aria-hidden=&quot;true&quot;&gt;9:00PM&lt;/span&gt;&lt;span class=&quot;by&quot;&gt;나:&lt;/span&gt;This message has been hidden.&lt;/div&gt;&lt;div class=&quot;message general&quot; data-messageid=&quot;-OvULiWJxyuZimsjUc6X&quot;&gt;&lt;div class=&quot;spacer&quot;&gt;&lt;/div&gt;&lt;div class=&quot;avatar&quot; aria-hidden=&quot;true&quot;&gt;&lt;img src=&quot;https://files.d20.io/images/486803841/1zpYIr_0BoOstU79s_1Qbw/med.png?1778685470&quot;&gt;&lt;/div&gt;&lt;span class=&quot;tstamp&quot; aria-hidden=&quot;true&quot;&gt;9:00PM&lt;/span&gt;&lt;span class=&quot;by&quot;&gt;연갈:&lt;/span&gt;왼쪽 검은 영역에 채팅 로그 데이터를 붙여넣으면 자동으로 시트 템플릿이 인식됩니다.&lt;/div&gt;&lt;div class=&quot;message general&quot; data-messageid=&quot;-OvULiWRIU8NF85Tg1IB&quot;&gt;인식되지 않거나 인식된 템플릿이 틀렸을 경우 수동으로 선택할 수도 있습니다.&lt;/div&gt;&lt;div class=&quot;message private whisper&quot; data-messageid=&quot;-OvULlOioHLtM2GN47Ak&quot;&gt;&lt;div class=&quot;spacer&quot;&gt;&lt;/div&gt;&lt;div class=&quot;avatar&quot; aria-hidden=&quot;true&quot;&gt;&lt;img src=&quot;https://files.d20.io/images/161131137/lx-HiiSya6RwITGsC8yPHg/max.png?1598766394&quot;&gt;&lt;/div&gt;&lt;span class=&quot;tstamp&quot; aria-hidden=&quot;true&quot;&gt;9:00PM&lt;/span&gt;&lt;span class=&quot;by&quot;&gt;(From GM):&lt;/span&gt; 커스텀 시트는 CSS 파일을 올려주시면 자동으로 템플릿 부분만 추출됩니다.&lt;/div&gt;&lt;div class=&quot;message desc&quot; data-messageid=&quot;-OvULmVvqq8M8vOOAJJN&quot;&gt;&lt;div class=&quot;spacer&quot;&gt;&lt;/div&gt; 업로드된 모든 파일 및 텍스트는 일절 수집되지 않고 사용자의 브라우저 내에서 처리됩니다.&lt;/div&gt;&lt;div class=&quot;message general you&quot; data-messageid=&quot;-OvULnitmxQQZZhWnONZ&quot;&gt;&lt;div class=&quot;spacer&quot;&gt;&lt;/div&gt;&lt;div class=&quot;avatar&quot; aria-hidden=&quot;true&quot;&gt;&lt;/div&gt;&lt;span class=&quot;tstamp&quot; aria-hidden=&quot;true&quot;&gt;9:00PM&lt;/span&gt;&lt;span class=&quot;by&quot;&gt;나:&lt;/span&gt;&lt;a href=&quot;https://posty.pe/5uknq5&quot;&gt;여기 링크된 방법&lt;/a&gt;으로 백업하시는 분들 전용이니 주의해 주세요!&lt;/div&gt;&lt;div class=&quot;message general&quot; data-messageid=&quot;-OvULs1JqNyOJLgpTnh6&quot;&gt;&lt;div class=&quot;spacer&quot;&gt;&lt;/div&gt;&lt;div class=&quot;avatar&quot; aria-hidden=&quot;true&quot;&gt;&lt;img src=&quot;https://files.d20.io/images/486803841/1zpYIr_0BoOstU79s_1Qbw/med.png?1778685470&quot;&gt;&lt;/div&gt;&lt;span class=&quot;tstamp&quot; aria-hidden=&quot;true&quot;&gt;9:00PM&lt;/span&gt;&lt;span class=&quot;by&quot;&gt;연갈:&lt;/span&gt;GPT가 저지른 똥 수습하고 천천히 편의성 개선 중입니다. 현생과 병행하고 있어 패치가 느린 점 양해 부탁드립니다.&lt;/div&gt;&lt;div class=&quot;message general&quot; data-messageid=&quot;-OvULq3DgySCv9N6UZiX&quot;&gt;&lt;div class=&quot;spacer&quot;&gt;&lt;/div&gt;&lt;div class=&quot;avatar&quot; aria-hidden=&quot;true&quot;&gt;&lt;/div&gt;&lt;span class=&quot;tstamp&quot; aria-hidden=&quot;true&quot;&gt;9:00PM&lt;/span&gt;&lt;span class=&quot;by&quot;&gt;플레이어:&lt;/span&gt;이제 절반쯤 수습한 것 같네요...&lt;/div&gt;&lt;/div&gt;
-&lt;/div&gt;</textarea>
-        <label id="html-upload" class="upload-box">
-          <input type="file" accept="text/html, text/plain, .html, .txt" id="html-input">
-          <span id="html-list" class="file-list">왼쪽에 코드를 붙여넣거나 여기에 HTML/TXT 파일을 업로드해 주세요.</span>
-          <div class="upload-icon">+</div>
-        </label>
-        </div>
-        <div id="sample"><span>샘플 데이터입니다. 클릭 시 칸이 비워집니다.</span></div>
-        <br>
-
-        <label style="display: block; margin-bottom: 20px;">템플릿 선택
-          <select id="css-select">
-            <option value="적용 중인 템플릿 없음"> </option>
-            <option value="Roll20_agon.css">AGON by Evil Hat Productions</option>
-            <option value="Roll20_callofcthulhu.css">Call of Cthulhu 7th Edition by Roll20</option>
-            <option value="Roll20_coc.css">Call of Cthulhu 7th Edition</option>
-            <option value="Roll20_Dx3Dice.css">Double Cross 3rd Edition by F.E.A.R</option>
-            <option value="Roll20_dw.css">Dungeon World by Roll20</option>
-            <option value="Roll20_Ins.css">inSANe(2025~)</option>
-            <option value="Roll20_Magic.css">Magica Logia</option>
-            <option value="Roll20_Nc.css">Nechronica -The Long Long Sequel-</option>
-            <option value="Roll20_daegong.css">Please Rule the North with me, Grand Duke! by Choi Mika</option>
-            <option value="Roll20_Ninpo.css">Shinobi Gami, inSANe(~2025)</option>
-            <option value="Roll20_Strato.css">Strato Shout</option>
-          </select>
-        </label>
-        <div class="file-box">
-          <div id="css-img"><img><div class="img-null">HTML 입력 시 자동으로 시트 템플릿이 인식됩니다.</div><div id="css-custom">커스텀 시트는 미리보기가 제공되지 않습니다.<button class="css-download">백업용 CSS 다운로드 <svg width="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g class="icon"><path d="m12 16c-.205 0-.401-.084-.542-.232l-5.25-5.5c-.455-.476-.117-1.268.542-1.268h2.75v-5.75c0-.689.561-1.25 1.25-1.25h2.5c.689 0 1.25.561 1.25 1.25v5.75h2.75c.659 0 .997.792.542 1.268l-5.25 5.5c-.141.148-.337.232-.542.232z"/><path d="m22.25 22h-20.5c-.965 0-1.75-.785-1.75-1.75v-.5c0-.965.785-1.75 1.75-1.75h20.5c.965 0 1.75.785 1.75 1.75v.5c0 .965-.785 1.75-1.75 1.75z"/></g></svg></button></div></div>
-          <label id="css-upload" class="upload-box">
-            <input type="file" accept="text/css" id="css-input">
-            <span id="css-list" class="file-list">여기에 커스텀 시트 CSS 파일을 업로드해 주세요.</span>
-            <div class="upload-icon">+</div>
-          </label>
-        </div>
-
-        <button id="start-edit" class="change">샘플 편집 시작</button>
-        <p>업로드된 모든 파일 및 텍스트는 일절 수집되지 않습니다.</p>
-      </div>
-      <div id="section-edit">
-        <button id="show-file" class="change">파일 바꾸기</button>
-        <h2>적용 중인 CSS</h2>
-        <p>Roll20_style.css (기본)</p>
-        <p><span id="css-view">적용 중인 시트 템플릿 없음</span> <button class="css-download">백업용 CSS 다운로드 <svg width="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g class="icon"><path d="m12 16c-.205 0-.401-.084-.542-.232l-5.25-5.5c-.455-.476-.117-1.268.542-1.268h2.75v-5.75c0-.689.561-1.25 1.25-1.25h2.5c.689 0 1.25.561 1.25 1.25v5.75h2.75c.659 0 .997.792.542 1.268l-5.25 5.5c-.141.148-.337.232-.542.232z"/><path d="m22.25 22h-20.5c-.965 0-1.75-.785-1.75-1.75v-.5c0-.965.785-1.75 1.75-1.75h20.5c.965 0 1.75.785 1.75 1.75v.5c0 .965-.785 1.75-1.75 1.75z"/></g></svg></button></p>
-
-        <h2>아바타 이미지 일괄 바꾸기 <button id="avatar-reload" class="ico showtip" alt="아바타 목록 다시 불러오기" title="아바타 목록 다시 불러오기"><svg width="20" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path class="icon" d="m5.32861 24.88086-3.10156-15.68359a1.9702 1.9702 0 0 1 1.12061-2.20264 1.971 1.971 0 0 1 2.40576.56837l3.94726 4.95752a29.618 29.618 0 0 1 51.61768 15.15917 1.99331 1.99331 0 0 1 -1.623 2.24707l-3.90478.72265a2.01611 2.01611 0 0 1 -2.34331-1.71041 21.85182 21.85182 0 0 0 -17.27637-18.1973 21.574 21.574 0 0 0 -18.48389 5.023l6.77686 1.14258a1.99983 1.99983 0 0 1 .2998 3.86914l-16.84033 5.61323a2.00027 2.00027 0 0 1 -2.59473-1.50879zm56.25539 29.92676-3.10253-15.688a2.00061 2.00061 0 0 0 -2.59473-1.50928l-16.83108 5.61329a1.99975 1.99975 0 0 0 .29932 3.86914l6.77783 1.14258a21.56248 21.56248 0 0 1 -18.48388 5.023 21.87957 21.87957 0 0 1 -17.26514-18.11135 2.01262 2.01262 0 0 0 -2.28223-1.709l-3.92578.60449a2.00444 2.00444 0 0 0 -1.68262 2.25244 29.86619 29.86619 0 0 0 23.834 24.81787 30.32891 30.32891 0 0 0 5.562.51612 29.37837 29.37837 0 0 0 22.22119-10.13966l3.94776 4.95263a1.99975 1.99975 0 0 0 3.52589-1.63427z"/></svg></button></h2>
-        <div id="avatar-list"></div>
-        <div class="avatar-button">
-          <div><p><button id="avatar-ggl" class="showtip" title="변경할 이미지 링크로 Google Drive 링크 넣고 적용 전 클릭">Google Drive 링크 변환</button> <label class="showtip tipsy-side" title="체크하고 Google Drive 링크 변환 시 이미지를 원본 화질로 가져옵니다."><input type="checkbox" id="pic"> 원본 화질 <svg width="16" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><g class="icon"><path d="m10 1a9 9 0 1 0 9 9 9.01 9.01 0 0 0 -9-9zm1 13a1 1 0 0 1 -2 0v-4a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zm-1-7a1 1 0 1 1 1-1 1 1 0 0 1 -1 1z"/></g></svg></label></p>
-            <div id="help-img" class="help"><svg width="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g class="icon"><path d="m12 1a11 11 0 1 0 11 11 11.013 11.013 0 0 0 -11-11zm0 18a1 1 0 1 1 1-1 1 1 0 0 1 -1 1zm2.262-6.1a2.524 2.524 0 0 0 -1.262 2.1 1 1 0 0 1 -2 0 4.509 4.509 0 0 1 2.2-3.8 2.28 2.28 0 0 0 1.01-2.476 2.275 2.275 0 0 0 -4.482.549 1 1 0 0 1 -2 0 4.251 4.251 0 0 1 1.61-3.342 4.294 4.294 0 0 1 3.656-.818 4.274 4.274 0 0 1 1.268 7.787z"/></g></svg> Google Drive 링크 따는 법</div></div>
-          <div style="width: 100%; text-align: right;"><p><button id="avatar-btn">바꾸기 적용</button></p></div>
-        </div>
-
-        <h2>일괄 바꾸기</h2>
-        <p><label>찾을 내용 <input type="text" id="rpl-find"></label> <span id="rpl-num"></span></p>
-        <p><label>바꿀 내용 <input type="text" id="rpl-replace"></label> <button id="rpl-btn">적용</button></p>
-
-        <h2>일괄 삭제 옵션 <button id="remove-reload" class="ico showtip" alt="현황 다시 불러오기" title="현황 다시 불러오기"><svg width="20" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path class="icon" d="m5.32861 24.88086-3.10156-15.68359a1.9702 1.9702 0 0 1 1.12061-2.20264 1.971 1.971 0 0 1 2.40576.56837l3.94726 4.95752a29.618 29.618 0 0 1 51.61768 15.15917 1.99331 1.99331 0 0 1 -1.623 2.24707l-3.90478.72265a2.01611 2.01611 0 0 1 -2.34331-1.71041 21.85182 21.85182 0 0 0 -17.27637-18.1973 21.574 21.574 0 0 0 -18.48389 5.023l6.77686 1.14258a1.99983 1.99983 0 0 1 .2998 3.86914l-16.84033 5.61323a2.00027 2.00027 0 0 1 -2.59473-1.50879zm56.25539 29.92676-3.10253-15.688a2.00061 2.00061 0 0 0 -2.59473-1.50928l-16.83108 5.61329a1.99975 1.99975 0 0 0 .29932 3.86914l6.77783 1.14258a21.56248 21.56248 0 0 1 -18.48388 5.023 21.87957 21.87957 0 0 1 -17.26514-18.11135 2.01262 2.01262 0 0 0 -2.28223-1.709l-3.92578.60449a2.00444 2.00444 0 0 0 -1.68262 2.25244 29.86619 29.86619 0 0 0 23.834 24.81787 30.32891 30.32891 0 0 0 5.562.51612 29.37837 29.37837 0 0 0 22.22119-10.13966l3.94776 4.95263a1.99975 1.99975 0 0 0 3.52589-1.63427z"/></svg></button></h2>
-        <div class="remove-box">
-          <div class="remove-item"><h3>중복 메시지</h3>
-            <p><b>롤20 로그 출력 오류</b>로 인해 4회 이상 중복된 메시지를 일괄 삭제합니다.</p>
-            <p id="check-repeat">(현재 중복 메시지 없음)</p>
-            <button id="remove-repeat">중복 메시지 삭제</button></div>
-          <div class="remove-item"><h3>화자 중복 표시</h3>
-            <p>연속 메시지로 인해 여러 번 표시된 화자를 <b>첫 1회만 남기고</b> 일괄 삭제합니다.</p>
-            <p id="check-by">(현재 중복 표시 없음)</p>
-            <button id="remove-by">화자 중복 표시 삭제</button></div>
-          <div class="remove-item"><h3>hidden message</h3>
-            <p>hidden된 메시지를 일괄 삭제합니다.</p>
-            <p id="check-hidden">(현재 hidden 없음)</p>
-            <button id="remove-hidden">hidden message 삭제</button></div>
-          <div class="remove-item"><h3>보낸 메시지 구분</h3>
-            <p><span style="background-color: #D3E5F5;">보낸 메시지</span> 구분을 없애고 서식을 통일합니다.</p>
-            <p><a href="https://rollstory20.tistory.com/9" target="_blank">커스텀</a>을 통해 보낸 메시지 서식을 자유롭게 바꿀 수 있습니다.</p>
-            <p id="check-you">(현재 구분 없음)</p>
-            <button id="remove-you">보낸 메시지 구분 삭제</button></div>
-          <div class="remove-item"><h3>타임스탬프</h3>
-            <p>로그상 보이지 않는 타임스탬프를 삭제해 <b>코드 길이를 줄입니다.</b></p>
-            <p><a href="https://rollstory20.tistory.com/9" target="_blank">커스텀</a>을 통해 타임스탬프를 보일 수 있습니다.</p>
-            <p id="check-ts">(현재 타임스탬프 없음)</p>
-            <button id="remove-ts">타임스탬프 삭제</button></div>
-          <div class="remove-item"><h3>웹 접근성 코드</h3>
-            <p>웹 접근성을 위한 aria-hidden 속성을 삭제해 <b>코드 길이를 더욱 줄입니다.</b></p>
-            <p>로그를 스크린 리더로 읽기 어려워집니다.</p>
-            <p id="check-aria">(현재 해당 속성 없음)</p>
-            <button id="remove-aria">웹 접근성 코드 삭제</button></div>
-        </div>
-<br><br>
-        <p><label class="showtip tipsy-side" title="체크 시 백업용 CSS를 따로 삽입하지 않아도 되지만, 코드가 길어집니다. 이미 CSS가 포함되어 있다면 체크하지 마세요."><input type="checkbox" id="include-css"> 주사위 템플릿 CSS 포함 <svg width="16" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><g class="icon"><path d="m10 1a9 9 0 1 0 9 9 9.01 9.01 0 0 0 -9-9zm1 13a1 1 0 0 1 -2 0v-4a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zm-1-7a1 1 0 1 1 1-1 1 1 0 0 1 -1 1z"/></g></svg></label></p>
-        <p><button id="copy-html">현재 코드 복사</button>
-          <button id="download-html">HTML 파일로 저장</button>
-          <button id="download-txt">TXT 파일로 저장</button></p>
-        <p>파일로 저장해 두면 나중에 이어서 편집할 수 있습니다.</p>
-        <p>해당 페이지에 <a href="https://posty.pe/5uknq5" target="_blank" rel="noopener">CSS가 삽입</a>되어 있는 경우에만
-          정상적으로 보이니 주의해 주세요!</p>
-      </div>
-      <div class="mobile"><p>마우스가 없는 기기에서는 이동 기능을 사용할 수 없습니다.</p></div>
-    </div>
-
-    <div id="log-view">
-      <div class="textchatcontainer" id="textchat">
-        <div class="content"><div class="message emote" data-messageid="-OvULQA0UP3H1GsKNyTX"><div class="avatar" aria-hidden="true"></div><div class="spacer"></div>   Rolleditor</div><div class="message desc" data-messageid="-OvULQAHvNZwwsCBei_n"><div class="spacer"></div> by 연갈(Beirown)</div><div class="message desc" data-messageid="-OvULQATi9oELAxtSilA"><div class="spacer"></div> 최종 업데이트 2026. 10. 05.</div><div class="message general you" data-messageid="-OvUL_ceXlrS_uH4Jpv0"><div class="spacer"></div><div class="avatar" aria-hidden="true"></div><span class="tstamp" aria-hidden="true">9:00PM</span><span class="by">나:</span>이것은 채팅 로그 샘플입니다.</div><div class="message general" data-messageid="-OvULgENgqImnc1xOml5"><div class="spacer"></div><div class="avatar" aria-hidden="true"><img src="https://files.d20.io/images/161131137/lx-HiiSya6RwITGsC8yPHg/max.png?1598766394"></div><span class="tstamp" aria-hidden="true">9:00PM</span><span class="by">GM:</span>메시지에 마우스를 얹으면 복제/수정/삭제 버튼이 나타납니다.</div><div class="message general" data-messageid="-OvULgEYYnS9G9OM_DgT">메시지 우측을 잡고 드래그하면 위치를 이동할 수 있습니다.</div><div class="message general" data-messageid="-OvULgEf4Lq8TWiX-FiD">일부 주사위는 수정을 지원하지 않습니다.</div><div class="message general" data-messageid="-OvULgEnWMbgrHFbgHuu">편집 시 화면 우상단에 실행 취소(Ctrl+Z)와 다시 실행(Ctrl+Y) 버튼이 활성화됩니다. 단축키로도 동작합니다.</div><div class="message hidden-message you" data-messageid="-OvcUwpXb81EShf6GXMN" style="font-style: italic; position: relative;"><div id="menu-OvcUwpXb81EShf6GXMN" class="flyout"></div><div class="spacer"></div><div class="avatar" aria-hidden="true"></div><span class="tstamp" aria-hidden="true">9:00PM</span><span class="by">나:</span>This message has been hidden.</div><div class="message general" data-messageid="-OvULiWJxyuZimsjUc6X"><div class="spacer"></div><div class="avatar" aria-hidden="true"><img src="https://files.d20.io/images/486803841/1zpYIr_0BoOstU79s_1Qbw/med.png?1778685470"></div><span class="tstamp" aria-hidden="true">9:00PM</span><span class="by">연갈:</span>왼쪽 검은 영역에 채팅 로그 데이터를 붙여넣으면 자동으로 시트 템플릿이 인식됩니다.</div><div class="message general" data-messageid="-OvULiWRIU8NF85Tg1IB">인식되지 않거나 인식된 템플릿이 틀렸을 경우 수동으로 선택할 수도 있습니다.</div><div class="message private whisper" data-messageid="-OvULlOioHLtM2GN47Ak"><div class="spacer"></div><div class="avatar" aria-hidden="true"><img src="https://files.d20.io/images/161131137/lx-HiiSya6RwITGsC8yPHg/max.png?1598766394"></div><span class="tstamp" aria-hidden="true">9:00PM</span><span class="by">(From GM):</span> 커스텀 시트는 CSS 파일을 올려주시면 자동으로 템플릿 부분만 추출됩니다.</div><div class="message desc" data-messageid="-OvULmVvqq8M8vOOAJJN"><div class="spacer"></div> 업로드된 모든 파일 및 텍스트는 일절 수집되지 않고 사용자의 브라우저 내에서 처리됩니다.</div><div class="message general you" data-messageid="-OvULnitmxQQZZhWnONZ"><div class="spacer"></div><div class="avatar" aria-hidden="true"></div><span class="tstamp" aria-hidden="true">9:00PM</span><span class="by">나:</span><a href="https://posty.pe/5uknq5">여기 링크된 방법</a>으로 백업하시는 분들 전용이니 주의해 주세요!</div><div class="message general" data-messageid="-OvULs1JqNyOJLgpTnh6"><div class="spacer"></div><div class="avatar" aria-hidden="true"><img src="https://files.d20.io/images/486803841/1zpYIr_0BoOstU79s_1Qbw/med.png?1778685470"></div><span class="tstamp" aria-hidden="true">9:00PM</span><span class="by">연갈:</span>GPT가 저지른 똥 수습하고 천천히 편의성 개선 중입니다. 현생과 병행하고 있어 패치가 느린 점 양해 부탁드립니다.</div><div class="message general" data-messageid="-OvULq3DgySCv9N6UZiX"><div class="spacer"></div><div class="avatar" aria-hidden="true"></div><span class="tstamp" aria-hidden="true">9:00PM</span><span class="by">플레이어:</span>이제 절반쯤 수습한 것 같네요...</div></div>
-      </div>
-    </div>
-  </div>
+  <div class="p">급한 기능은 거의 추가가 완료되어 이사했습니다! 새 주소에서 만나요~</div>
 </body>
 
 </html>
