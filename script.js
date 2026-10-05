@@ -454,7 +454,8 @@ $('#start-edit').on('click', async function() {
     updateLoadingProgress(60, '편집 기능 로딩 중⋯');
     await attachHdl();
     if (cssFile) { internalcss(cssFile); }
-
+    
+    $('#log-view').prepend('<div id="check"></div>');
     scan();
 
     $('.showtip').tipsy({ gravity: autoGrav, opacity: 1.0, html: true });
@@ -746,6 +747,8 @@ $('#rpl-btn').on('click', function() {
 });
 
 // 일괄 삭제
+$('#remove-reload').on('click', scan);
+
 $('#remove-repeat').on('click', function() {
     if (!confirm('중복 메시지를 일괄 삭제합니다. 계속하시겠습니까?')) return;
     saveState();
@@ -782,16 +785,24 @@ $('#remove-repeat').on('click', function() {
 $('#remove-by').on('click', function() {
     if (!confirm('화자 중복 표시를 일괄 삭제합니다. 계속하시겠습니까?')) return;
     saveState();
-    $('#log-view .message.general').each(function() {
-        const $currentMessage = $(this);
-        const $currentBy = $currentMessage.find('.by');
 
-        if ($currentBy.length === 0) return;
+    const $msg = $('#log-view .message');
+    const len = $msg.length;
+    
+    let i = 0;
+    while (i < len) {
+        const $currentMsg = $msg.eq(i);
+        if (!$currentMsg.hasClass('general')) { i++; continue; }
+        const $currentBy = $currentMsg.find('.by');
+        if ($currentBy.length === 0) { i++; continue; }
+
         const currentText = $currentBy.text().trim();
-        
-        let $next = $currentMessage.next();
-        while ($next.length > 0) {
+        let j = i + 1;
+
+        while (j < len) {
+            const $next = $msg.eq(j);
             if (!$next.hasClass('general')) break;
+
             const $nextBy = $next.find('.by');
             if ($nextBy.length > 0) {
                 const nextText = $nextBy.text().trim();
@@ -799,9 +810,11 @@ $('#remove-by').on('click', function() {
                     $next.find('.spacer, .avatar, .tstamp, .by').remove();
                 } else break;
             }
-            $next = $next.next();
+            j++;
         }
-    });
+        i = j;
+    }
+
     $('#log-view #check').removeClass('by');
     $('#check-by').show(); 
     $('#remove-by').hide();
@@ -811,7 +824,12 @@ $('#remove-hidden').on('click', function() {
     const $hidden = $('#log-view .message.hidden-message');
     const count = $hidden.length;
     
-    if (count === 0) { alert('삭제할 hidden message가 없습니다.'); return; }
+    if (count === 0) {
+        alert('삭제할 hidden message가 없습니다.');
+        $('#log-view #check').removeClass('hidden');
+        $('#check-hidden').show(); 
+        $('#remove-hidden').hide();
+        return; }
     if (!confirm(`hidden message ${count}개가 완전히 삭제됩니다. 계속하시겠습니까?`)) return;
     
     saveState();
@@ -862,8 +880,6 @@ $('#remove-aria').on('click', function() {
 
 // 삭제 요소 검사
 function scan() {
-    $('#log-view').prepend('<div id="check"></div>');
-
     // 중복 메시지
     let $msg = $('#log-view .message');
 
@@ -897,17 +913,22 @@ function scan() {
     if (!pair) { $('#check-repeat').show(); $('#remove-repeat').hide(); }
 
     // 중복 화자 표시
+    const len = $msg.length;
     let chat = false;
-    $('#log-view .message.general').each(function() {
-        const $currentMessage = $(this);
-        const $currentBy = $currentMessage.find('.by');
+    i = 0;
+    while (i < len) {
+        const $currentMsg = $msg.eq(i);
+        if (!$currentMsg.hasClass('general')) { i++; continue; }
+        const $currentBy = $currentMsg.find('.by');
+        if ($currentBy.length === 0) { i++; continue; }
 
-        if ($currentBy.length === 0) return;
         const currentText = $currentBy.text().trim();
-        
-        let $next = $currentMessage.next();
-        while ($next.length > 0) {
+        let j = i + 1;
+
+        while (j < len) {
+            const $next = $msg.eq(j);
             if (!$next.hasClass('general')) break;
+
             const $nextBy = $next.find('.by');
             if ($nextBy.length > 0) {
                 const nextText = $nextBy.text().trim();
@@ -919,9 +940,10 @@ function scan() {
                     break;
                 } else break;
             }
-            $next = $next.next();
+            j++;
         }
-    });
+        i = j;
+    }
     if (!chat) { $('#check-by').show(); $('#remove-by').hide(); }
 
     // hidden message
