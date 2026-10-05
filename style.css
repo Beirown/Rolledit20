@@ -33,6 +33,18 @@ html {
     -moz-text-size-adjust: none; /*Firefox*/
 }
 
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    color: #333;
+    background-color: #353535;
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    font-size: 16px;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+}
+
 *, *:after, *:before {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -41,7 +53,7 @@ html {
 
 a {
   color: rgba(255, 255, 255, 0.8);
-  font-family: Lato;
+  font-family: inherit;
   font-size: 17pt;
   font-weight: 400;
   padding: 15px 25px;
@@ -54,18 +66,6 @@ a {
 
 a:hover, a:focus {
   outline: none;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    color: #333;
-    background-color: #353535;
-    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-    font-size: 16px;
-    word-break: keep-all;
-    overflow-wrap: anywhere;
 }
 
 .back { position: fixed; top: 45%; right: calc(50% - 130px); width: 260px; height: 100vh; margin: auto; text-align: center; }
